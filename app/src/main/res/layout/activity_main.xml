@@ -40,15 +40,6 @@
         android:layout_marginTop="35dp"
         android:textSize="18sp" />
 
-    <Button
-        android:text="Take me there"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/map_it"
-        android:layout_marginTop="63dp"
-        android:layout_below="@+id/lon_text"
-        android:layout_centerHorizontal="true" />
-
     <TextView
         android:text="Lat goes here"
         android:layout_width="wrap_content"
@@ -57,6 +48,15 @@
         android:id="@+id/lat_text"
         android:textSize="18sp"
         android:layout_below="@+id/info"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="Take me there"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/map_it"
+        android:layout_marginTop="63dp"
+        android:layout_below="@+id/lon_text"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
