@@ -11,6 +11,7 @@ git clone https://github.com/PeterAzra/Two2er-AndroidApp.git
 Andorid Studio
 
 ## Authors
+* **Elvis oliveric** - *Initial work* - [Elvis](https://github.com/eoliveric)
 * **Nithun Harikrishnan** - *Initial work* - [Nithun](https://github.com/nithunx)
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
