@@ -101,6 +101,6 @@ public class GetUsers extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void result) {
-        System.out.println(myMapActivity.usersAround.get(1).get("name"));
+        //System.out.println(myMapActivity.usersAround.get(1).get("name"));
     }
 }
