@@ -19,6 +19,9 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+import com.stormpath.sdk.Stormpath;
+import com.stormpath.sdk.StormpathConfiguration;
+import com.stormpath.sdk.StormpathLogger;
 
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -28,15 +31,25 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private TextView lat_t;
     private TextView lon_t;
     private Button locate;
+    private Button register;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.location_page);
 
+        if (!Stormpath.isInitialized()) {
+            Stormpath.setLogLevel(StormpathLogger.VERBOSE);
+            StormpathConfiguration stormpathConfiguration = new StormpathConfiguration.Builder()
+                    .baseUrl("https://two2er.apps.stormpath.io/")
+                    .build();
+            Stormpath.init(this, stormpathConfiguration);
+        }
+
         lat_t = (TextView)findViewById(R.id.lat_text);
         lon_t = (TextView)findViewById(R.id.lon_text);
         locate = (Button)findViewById(R.id.map_it);
+        register = (Button)findViewById(R.id.register);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -50,6 +63,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             @Override
             public void onClick(View view){
                 startActivity(new Intent(MainActivity.this, MapActivity.class));
+
+            }
+        });
+
+        register.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                startActivity(new Intent(MainActivity.this, RegisterActivity.class));
 
             }
         });
