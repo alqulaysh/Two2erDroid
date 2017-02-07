@@ -59,4 +59,13 @@
         android:layout_below="@+id/lon_text"
         android:layout_centerHorizontal="true" />
 
+    <Button
+        android:text="Register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/register"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/map_it"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>
