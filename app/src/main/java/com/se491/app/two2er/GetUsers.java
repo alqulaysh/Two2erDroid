@@ -16,9 +16,9 @@ import java.util.HashMap;
 public class GetUsers extends AsyncTask<Void, Void, Void> {
     private static final String SERVER_API_URL = "http://server.scilingo.net:8080/api/users";
 
-    private MapActivity myMapActivity;
+    private SideMenuActivity myMapActivity;
 
-    public GetUsers(MapActivity myActivity) {
+    public GetUsers(SideMenuActivity myActivity) {
         myMapActivity = myActivity;
     }
 
@@ -101,6 +101,6 @@ public class GetUsers extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void result) {
-        System.out.println(myMapActivity.usersAround.get(1).get("name"));
+
     }
 }

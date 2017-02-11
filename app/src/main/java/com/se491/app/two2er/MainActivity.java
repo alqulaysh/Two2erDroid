@@ -1,16 +1,14 @@
 package com.se491.app.two2er;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.Manifest;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,9 +16,6 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
-import com.stormpath.sdk.Stormpath;
-import com.stormpath.sdk.StormpathConfiguration;
-import com.stormpath.sdk.StormpathLogger;
 
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -36,43 +31,49 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        boolean bIsRegistered = false;
 
-        if (!Stormpath.isInitialized()) {
-            Stormpath.setLogLevel(StormpathLogger.VERBOSE);
-            StormpathConfiguration stormpathConfiguration = new StormpathConfiguration.Builder()
-                    .baseUrl("https://two2er.apps.stormpath.io/")
-                    .build();
-            Stormpath.init(this, stormpathConfiguration);
-        }
+        if(bIsRegistered)
+            startActivity(new Intent(MainActivity.this, SideMenuActivity.class));
+        else
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
 
-        lat_t = (TextView)findViewById(R.id.lat_text);
-        lon_t = (TextView)findViewById(R.id.lon_text);
-        locate = (Button)findViewById(R.id.map_it);
-        register = (Button)findViewById(R.id.register);
+//        if (!Stormpath.isInitialized()) {
+//            Stormpath.setLogLevel(StormpathLogger.VERBOSE);
+//            StormpathConfiguration stormpathConfiguration = new StormpathConfiguration.Builder()
+//                    .baseUrl("https://two2er.apps.stormpath.io/")
+//                    .build();
+//            Stormpath.init(this, stormpathConfiguration);
+//        }
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.ACCESS_FINE_LOCATION },
-                    PERMISSION_ACCESS_FINE_LOCATION);
-        }
+//        lat_t = (TextView)findViewById(R.id.lat_text);
+//        lon_t = (TextView)findViewById(R.id.lon_text);
+//        locate = (Button)findViewById(R.id.map_it);
+//        register = (Button)findViewById(R.id.register);
 
-        googleApiClient = new GoogleApiClient.Builder(this, this, this).addApi(LocationServices.API).build();
+//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+//                != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.ACCESS_FINE_LOCATION },
+//                    PERMISSION_ACCESS_FINE_LOCATION);
+//        }
 
-        locate.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                startActivity(new Intent(MainActivity.this, MapActivity.class));
+      //  googleApiClient = new GoogleApiClient.Builder(this, this, this).addApi(LocationServices.API).build();
 
-            }
-        });
-
-        register.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                startActivity(new Intent(MainActivity.this, RegisterActivity.class));
-
-            }
-        });
+//        locate.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View view){
+//                startActivity(new Intent(MainActivity.this, MapActivity.class));
+//
+//            }
+//        });
+//
+//        register.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View view){
+//                startActivity(new Intent(MainActivity.this, RegisterActivity.class));
+//
+//            }
+// });
 
     }
 
@@ -100,7 +101,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     @Override
     protected void onStop() {
-        googleApiClient.disconnect();
         super.onStop();
     }
 

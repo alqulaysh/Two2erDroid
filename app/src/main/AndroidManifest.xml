@@ -36,6 +36,10 @@
         <activity
             android:name=".LoginActivity"
             android:label="Sign in to Two2er" />
+        <activity
+            android:name=".SideMenuActivity"
+            android:label="@string/title_activity_main2"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
