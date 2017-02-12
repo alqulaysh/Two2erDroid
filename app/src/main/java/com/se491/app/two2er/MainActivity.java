@@ -16,6 +16,11 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+import com.stormpath.sdk.Stormpath;
+import com.stormpath.sdk.StormpathCallback;
+import com.stormpath.sdk.StormpathConfiguration;
+import com.stormpath.sdk.StormpathLogger;
+import com.stormpath.sdk.models.StormpathError;
 
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -31,20 +36,30 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        boolean bIsRegistered = false;
 
-        if(bIsRegistered)
-            startActivity(new Intent(MainActivity.this, SideMenuActivity.class));
-        else
-            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+        if (!Stormpath.isInitialized()) {
+            Stormpath.setLogLevel(StormpathLogger.VERBOSE);
+            StormpathConfiguration stormpathConfiguration = new StormpathConfiguration.Builder()
+                    .baseUrl("https://two2er.apps.stormpath.io/")
+                    .build();
+            Stormpath.init(this, stormpathConfiguration);
+        }
 
-//        if (!Stormpath.isInitialized()) {
-//            Stormpath.setLogLevel(StormpathLogger.VERBOSE);
-//            StormpathConfiguration stormpathConfiguration = new StormpathConfiguration.Builder()
-//                    .baseUrl("https://two2er.apps.stormpath.io/")
-//                    .build();
-//            Stormpath.init(this, stormpathConfiguration);
-//        }
+        if (Stormpath.getAccessToken() != null) {
+            Stormpath.refreshAccessToken(new StormpathCallback<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    startActivity(new Intent(MainActivity.this, SideMenuActivity.class));
+                }
+                @Override
+                public void onFailure(StormpathError error) {
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                }
+            });
+        }
+        else {
+            startActivity(new Intent(MainActivity.this, RegisterActivity.class));
+        }
 
 //        lat_t = (TextView)findViewById(R.id.lat_text);
 //        lon_t = (TextView)findViewById(R.id.lon_text);

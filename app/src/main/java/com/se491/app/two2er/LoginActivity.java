@@ -4,26 +4,31 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.stormpath.sdk.Stormpath;
-import com.stormpath.sdk.StormpathConfiguration;
-import com.stormpath.sdk.StormpathLogger;
+import com.stormpath.sdk.StormpathCallback;
+import com.stormpath.sdk.models.StormpathError;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+    private Button login;
+    private EditText emailInput;
+    private EditText passwordInput;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // setting default screen to login.xml
         setContentView(R.layout.activity_login);
 
-        if (!Stormpath.isInitialized()) {
-            Stormpath.setLogLevel(StormpathLogger.VERBOSE);
-            StormpathConfiguration stormpathConfiguration = new StormpathConfiguration.Builder()
-                    .baseUrl("https://two2er.apps.stormpath.io/")
-                    .build();
-            Stormpath.init(this, stormpathConfiguration);
-        }
+        login = (Button)findViewById(R.id.btnLogin);
+        emailInput = (EditText) findViewById(R.id.login_email);
+        passwordInput = (EditText) findViewById(R.id.login_password);
+
+        login.setOnClickListener(this);
 
         TextView registerScreen = (TextView) findViewById(R.id.link_to_register);
 
@@ -38,5 +43,31 @@ public class LoginActivity extends AppCompatActivity {
 
     public void handleLogin(View v){
         startActivity(new Intent(LoginActivity.this, SideMenuActivity.class));
+    }
+
+    @Override
+    public void onClick(View v) {
+        String email = emailInput.getText().toString();
+        String password = passwordInput.getText().toString();
+
+        if (email.contentEquals(""))
+            email = "dummy@test.com";
+
+        if (password.contentEquals(""))
+            password = "FakePassword123";
+
+        Stormpath.login(email, password, new StormpathCallback<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                startActivity(new Intent(LoginActivity.this, SideMenuActivity.class));
+            }
+
+            @Override
+            public void onFailure(StormpathError error) {
+                Toast.makeText(LoginActivity.this, "LI-"+error.message(), Toast.LENGTH_LONG).show();
+
+
+            }
+        });
     }
 }

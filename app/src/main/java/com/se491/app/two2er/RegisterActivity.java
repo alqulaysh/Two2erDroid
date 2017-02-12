@@ -112,7 +112,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         final String responseStr = response.body().string();
                         Log.d("Android : ", responseStr);
 
-                        new Thread()
+                        startActivity(new Intent(RegisterActivity.this, SideMenuActivity.class));
+
+                        /*new Thread()
                         {
                             public void run()
                             {
@@ -124,7 +126,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                     }
                                 });
                             }
-                        }.start();
+                        }.start();*/
                     }
                 });
             }
