@@ -104,7 +104,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 okHttpClient.newCall(request).enqueue(new Callback() {
                     @Override public
                     void onFailure(Call call, IOException e) {
-                        Log.d("Android : ", "E-"+e.getMessage());
+                        Log.d("Android : ", e.getMessage());
                     }
 
                     @Override public void onResponse(Call call, Response response)
@@ -113,34 +113,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         Log.d("Android : ", responseStr);
 
                         startActivity(new Intent(RegisterActivity.this, SideMenuActivity.class));
-
-                        /*new Thread()
-                        {
-                            public void run()
-                            {
-                                RegisterActivity.this.runOnUiThread(new Runnable()
-                                {
-                                    public void run()
-                                    {
-                                        Toast.makeText(RegisterActivity.this, responseStr, Toast.LENGTH_LONG).show();
-                                    }
-                                });
-                            }
-                        }.start();*/
                     }
                 });
             }
 
             @Override
             public void onFailure(StormpathError error) {
-                Toast.makeText(RegisterActivity.this, "LI-"+error.message(), Toast.LENGTH_LONG).show();
-
-
+                Toast.makeText(RegisterActivity.this, error.message(), Toast.LENGTH_LONG).show();
             }
         });
-
-        //startActivity(new Intent(this, MainActivity.class));
-        //finish();
     }
 
     private Headers buildStandardHeaders(String accessToken) {
