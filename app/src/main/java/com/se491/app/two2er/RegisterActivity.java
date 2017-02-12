@@ -96,7 +96,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         .build();
 
                 Request request = new Request.Builder()
-                        .url("http://10.0.0.37:8080/apiauth/users")
+                        .url("http://server.scilingo.net:8080/apiauth/users")
                         .headers(buildStandardHeaders(Stormpath.getAccessToken()))
                         .post(requestBody)
                         .build();
@@ -113,6 +113,22 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         Log.d("Android : ", responseStr);
 
                         startActivity(new Intent(RegisterActivity.this, SideMenuActivity.class));
+                        Log.d("Android : ", "Started Side Menu");
+                        finish();
+
+                        /*new Thread()
+                        {
+                            public void run()
+                            {
+                                RegisterActivity.this.runOnUiThread(new Runnable()
+                                {
+                                    public void run()
+                                    {
+                                        Toast.makeText(RegisterActivity.this, responseStr, Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                            }
+                        }.start();*/
                     }
                 });
             }
