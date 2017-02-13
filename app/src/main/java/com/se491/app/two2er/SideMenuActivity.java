@@ -1,6 +1,7 @@
 package com.se491.app.two2er;
 
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -31,6 +32,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.se491.app.two2er.Fragments.UserProfileFragment;
+import com.stormpath.sdk.Stormpath;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -157,6 +159,9 @@ public class SideMenuActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_manage) {
 
+        } else if (id == R.id.nav_logout) {
+            Stormpath.logout();
+            startActivity(new Intent(SideMenuActivity.this, LoginActivity.class));
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
