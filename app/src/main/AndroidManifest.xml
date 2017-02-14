@@ -9,7 +9,7 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="2TR"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
@@ -32,10 +32,10 @@
 
         <activity
             android:name=".RegisterActivity"
-            android:label="Register New Account" />
+            android:label="New Account" />
         <activity
             android:name=".LoginActivity"
-            android:label="Sign in to Two2er" />
+            android:label="Sign in" />
         <activity
             android:name=".SideMenuActivity"
             android:label="@string/title_activity_main2"
