@@ -4,6 +4,7 @@
 package com.se491.app.two2er;
 
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -35,7 +36,7 @@ public class GetUsers extends AsyncTask<Void, Void, Void> {
         String url = SERVER_API_URL;
         String jsonStr = sh.makeServiceCall(url);
 
-        //Log.e(TAG, "Response from url: " + jsonStr);
+        Log.e("Inside doInBackGround", "Response from url: " + jsonStr);
         if (jsonStr != null) {
             try {
                 JSONArray users = new JSONArray(jsonStr);

@@ -59,7 +59,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Stormpath.login(email, password, new StormpathCallback<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                startActivity(new Intent(LoginActivity.this, SideMenuActivity.class));
+                Intent loginIntent = new Intent(LoginActivity.this, SideMenuActivity.class);
+                loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(loginIntent);
             }
 
             @Override

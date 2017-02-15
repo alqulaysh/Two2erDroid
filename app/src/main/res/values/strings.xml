@@ -8,8 +8,24 @@
     <string name="title_activity_register">RegisterActivity</string>
     <string name="title_activity_login">Sign in</string>
 
+    <string name="loading_please">Loading Please Wait.....</string>
+
+    <!-- Strings related to Register -->
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="existing_account">Already have account? Login here.</string>
+    <string name="signup">Sign Up</string>
+    <string name="create_pw">Create Password</string>
+
     <!-- Strings related to login -->
+    <string name="curr_version">Version 1.0</string>
+    <string name="button_login">Login</string>
     <string name="prompt_email">Email</string>
+    <string name="prompt_emailad">Email Address</string>
+    <string name="password">Password</string>
+    <string name="create_account">Create Account</string>
+    <string name="forgot_pw">Forgot Password?</string>
+
     <string name="prompt_password">Password (optional)</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>

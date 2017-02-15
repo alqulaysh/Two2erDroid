@@ -2,6 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:fillViewport="true"
@@ -14,10 +15,10 @@
         android:layout_height="513dp">
 
         <TextView
-            android:text="Forgot Password?"
+            android:text="@string/forgot_pw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView3"
+            android:id="@+id/forgot_pw_link"
             android:fontFamily="sans-serif-smallcaps"
             android:layout_alignBaseline="@+id/link_to_register"
             android:layout_alignBottom="@+id/link_to_register"
@@ -27,7 +28,7 @@
         <TextView android:id="@+id/link_to_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Create Account"
+            android:text="@string/create_account"
             android:gravity="center"
             android:layout_marginBottom="139dp"
             android:fontFamily="sans-serif-smallcaps"
@@ -40,7 +41,7 @@
             android:layout_width="128dp"
             android:layout_height="128dp"
             app:srcCompat="@drawable/logo"
-            android:id="@+id/imageView3"
+            android:id="@+id/login_logo"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp" />
@@ -48,12 +49,12 @@
         <Button android:id="@+id/btnLogin"
             android:layout_width="300dp"
             android:onClick="handleLogin"
-            android:text="Login"
+            android:text="@string/button_login"
             android:textAlignment="center"
             android:background="@drawable/loginbutton"
             android:layout_height="38dp"
             android:textColor="@color/cast_expanded_controller_text_color"
-            android:layout_above="@+id/textView3"
+            android:layout_above="@+id/forgot_pw_link"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="15dp" />
 
@@ -61,20 +62,21 @@
             android:layout_width="300dp"
             android:singleLine="true"
             android:password="true"
-            android:hint="     Password"
+            android:hint="@string/password"
             android:textSize="14dp"
             android:fontFamily="sans-serif-condensed"
             android:textColorHint="#fff"
             android:background="@drawable/passwordbackground"
             android:layout_height="45dp"
             android:layout_centerVertical="true"
-            android:layout_alignStart="@+id/btnLogin" />
+            android:layout_alignStart="@+id/btnLogin"
+            android:paddingLeft="10dp" />
 
         <EditText android:id="@+id/login_email"
         android:layout_width="300dp"
         android:layout_height="45dp"
             android:singleLine="false"
-            android:hint="     Email"
+            android:hint="@string/prompt_email"
             android:textSize="14dp"
             android:fontFamily="sans-serif-condensed"
             android:textColorHint="#fff"
@@ -82,17 +84,18 @@
             android:selectAllOnFocus="false"
             android:layout_marginBottom="11dp"
             android:layout_above="@+id/login_password"
-            android:layout_alignStart="@+id/login_password" />
+            android:layout_alignStart="@+id/login_password"
+            android:paddingLeft="10dp" />
 
         <TextView
-            android:text="Version 1.0"
+            android:text="@string/curr_version"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView4"
+            android:id="@+id/current_version"
             android:layout_marginBottom="54dp"
-            android:textSize="6sp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
+            android:textColor="@color/cast_expanded_controller_text_color"
             android:fontFamily="monospace" />
 
     </RelativeLayout>

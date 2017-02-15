@@ -4,6 +4,7 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -31,6 +32,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.se491.app.two2er.Fragments.ScheduleFragment;
 import com.se491.app.two2er.Fragments.UserProfileFragment;
 import com.stormpath.sdk.Stormpath;
 
@@ -72,7 +74,8 @@ public class SideMenuActivity extends AppCompatActivity
 
 
         usersAround = new ArrayList<>();
-        new GetUsers(this).execute();
+        //task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new GetUsers(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         System.out.println(usersAround.size());
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -128,9 +131,9 @@ public class SideMenuActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -148,6 +151,7 @@ public class SideMenuActivity extends AppCompatActivity
 
         if (id == R.id.nav_userprofile) {
             fm.beginTransaction().replace(R.id.content_frame, new UserProfileFragment()).commit();
+
         } else if (id == R.id.nav_map) {
 
             if (!sMapFragment.isAdded())
@@ -156,12 +160,13 @@ public class SideMenuActivity extends AppCompatActivity
                 sFm.beginTransaction().show(sMapFragment).commit();
 
         } else if (id == R.id.nav_schedule) {
-
+            fm.beginTransaction().replace(R.id.content_frame, new ScheduleFragment()).commit();
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_logout) {
             Stormpath.logout();
             startActivity(new Intent(SideMenuActivity.this, LoginActivity.class));
+            finish();
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {

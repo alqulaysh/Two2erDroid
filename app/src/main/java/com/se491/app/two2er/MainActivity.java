@@ -50,15 +50,18 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 @Override
                 public void onSuccess(Void aVoid) {
                     startActivity(new Intent(MainActivity.this, SideMenuActivity.class));
+                    finish();
                 }
                 @Override
                 public void onFailure(StormpathError error) {
                     startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                    finish();
                 }
             });
         }
         else {
             startActivity(new Intent(MainActivity.this, RegisterActivity.class));
+            finish();
         }
 
 //        lat_t = (TextView)findViewById(R.id.lat_text);
