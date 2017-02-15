@@ -56,23 +56,11 @@
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:orientation="horizontal"
+    <RatingBar
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:id="@+id/ratingBar"
+        android:numStars="5"
+        android:rating="4" />
 
-        <Button
-            android:text="Info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_info"
-            android:layout_weight="1" />
-
-        <Button
-            android:text="Book"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_book"
-            android:layout_weight="1" />
-    </LinearLayout>
 </LinearLayout>
