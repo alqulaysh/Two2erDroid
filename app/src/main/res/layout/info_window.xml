@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_width="wrap_content">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -14,14 +14,16 @@
             app:srcCompat="@drawable/genuser"
             android:id="@+id/user_image"
             android:layout_weight="1"
-            android:layout_width="100dp"
-            android:layout_height="match_parent" />
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="8dp" />
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:padding="5dp">
 
             <TextView
                 android:text="Ron Swanson"
@@ -31,23 +33,26 @@
                 android:textSize="18sp" />
 
             <TextView
-                android:text="Hunting, Woodworking"
+                android:text="Harvard University, Ph.D"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/user_subjects"
                 android:textSize="14sp" />
 
             <TextView
-                android:text="Available now "
+                android:text="Major: Finance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/user_major"
+                android:textSize="14sp" />
+
+            <TextView
+                android:text="Availability: Now"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/user_availability"
                 android:textSize="14sp" />
 
-            <RatingBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/user_rating" />
         </LinearLayout>
     </LinearLayout>
 

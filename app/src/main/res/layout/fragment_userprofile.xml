@@ -1,12 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <TextView
+
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="My User Profile Place Holder"
-        android:id="@+id/textView2"
-        android:layout_gravity="center" />
-</FrameLayout>
+        app:srcCompat="@drawable/genuser"
+        android:id="@+id/profile_img"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="43dp" />
+
+    <TextView
+        android:text="School:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/schoolText"
+        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/lastNameText" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="John"
+        android:ems="10"
+        android:id="@+id/nameField"
+        android:layout_alignBaseline="@+id/nameText"
+        android:layout_alignBottom="@+id/nameText"
+        android:layout_toEndOf="@+id/nameText"
+        android:layout_marginStart="24dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="DePaul University"
+        android:ems="10"
+        android:id="@+id/univField"
+        android:layout_alignBaseline="@+id/schoolText"
+        android:layout_alignBottom="@+id/schoolText"
+        android:layout_alignStart="@+id/lNameField" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="Doe"
+        android:ems="10"
+        android:id="@+id/lNameField"
+        android:layout_alignBaseline="@+id/lastNameText"
+        android:layout_alignBottom="@+id/lastNameText"
+        android:layout_alignStart="@+id/nameField" />
+
+
+    <Button
+        android:text="Update"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/majorField"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="37dp"
+        android:id="@+id/update_btn" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="Math"
+        android:ems="10"
+        android:id="@+id/majorField"
+        android:layout_alignBaseline="@+id/majorText"
+        android:layout_alignBottom="@+id/majorText"
+        android:layout_alignStart="@+id/univField" />
+
+    <TextView
+        android:text="Last name:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lastNameText"
+        android:layout_marginBottom="14dp"
+        android:layout_above="@+id/univField"
+        android:layout_alignStart="@+id/nameText" />
+
+    <TextView
+        android:text="First name:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:id="@+id/nameText"
+        android:layout_marginBottom="14dp"
+        android:layout_above="@+id/lNameField"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="Major:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
+        android:id="@+id/majorText"
+        android:layout_below="@+id/univField"
+        android:layout_alignStart="@+id/schoolText" />
+
+</RelativeLayout>
