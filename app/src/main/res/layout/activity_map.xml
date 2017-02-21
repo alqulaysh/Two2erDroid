@@ -8,15 +8,11 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="300dp"
-        android:layout_height="300dp">
-        <!-- Google Maps Fragment -->
+
+
         <fragment
             android:layout_width="2dp"
             android:layout_height="match_parent"
             android:name="com.google.android.gms.maps.MapFragment"
             android:id="@+id/mapFragment" />
-    </LinearLayout>
 </android.support.v4.widget.DrawerLayout>

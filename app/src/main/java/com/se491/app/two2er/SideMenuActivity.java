@@ -4,7 +4,6 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,6 +17,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -54,8 +56,10 @@ public class SideMenuActivity extends AppCompatActivity
 
         //Google Map Variable:
         GoogleMap mGoogleMap;
+        View mapView;
 
-        //Location Variables:
+
+    //Location Variables:
         LocationRequest mLocationReq;
         Location mLastLocation;
         Marker mCurrLocationMarker;
@@ -74,8 +78,8 @@ public class SideMenuActivity extends AppCompatActivity
 
 
         usersAround = new ArrayList<>();
-        //task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        new GetUsers(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+        new GetUsers(this).execute(); //executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         System.out.println(usersAround.size());
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -146,11 +150,18 @@ public class SideMenuActivity extends AppCompatActivity
 
         int id = item.getItemId();
 
+        Button filterButton = (Button)findViewById(R.id.but_filter);
+        Spinner filterSubjects = (Spinner)findViewById(R.id.spinner_subjects);
+        Spinner filterDistance = (Spinner)findViewById(R.id.spinner_distance);
+
         if (sMapFragment.isAdded())
             sFm.beginTransaction().hide(sMapFragment).commit();
 
         if (id == R.id.nav_userprofile) {
             fm.beginTransaction().replace(R.id.content_frame, new UserProfileFragment()).commit();
+            filterButton.setVisibility(View.GONE);
+            filterSubjects.setVisibility(View.GONE);
+            filterDistance.setVisibility(View.GONE);
 
         } else if (id == R.id.nav_map) {
 
@@ -158,9 +169,15 @@ public class SideMenuActivity extends AppCompatActivity
                 sFm.beginTransaction().add(R.id.map, sMapFragment).commit();
             else
                 sFm.beginTransaction().show(sMapFragment).commit();
+            filterButton.setVisibility(View.VISIBLE);
+            filterSubjects.setVisibility(View.VISIBLE);
+            filterDistance.setVisibility(View.VISIBLE);
 
         } else if (id == R.id.nav_schedule) {
             fm.beginTransaction().replace(R.id.content_frame, new ScheduleFragment()).commit();
+            filterButton.setVisibility(View.GONE);
+            filterSubjects.setVisibility(View.GONE);
+            filterDistance.setVisibility(View.GONE);
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_logout) {
@@ -269,6 +286,17 @@ public class SideMenuActivity extends AppCompatActivity
             return;
         }
         mGoogleMap.setMyLocationEnabled(true);
+
+        //Move My Position button to bottom left:
+        mapView = sMapFragment.getView();
+        View locationButton = ((View) mapView.findViewById(Integer.parseInt("1")).getParent()).findViewById(Integer.parseInt("2"));
+        RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) locationButton.getLayoutParams();
+        // position on right bottom
+        rlp.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0);
+        rlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
+        rlp.setMargins(0, 0, 30, 30);
+
+
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(LocationServices.API)

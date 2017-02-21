@@ -37,9 +37,24 @@
         completions."
     </string>
     <string name="title_activity_main2">Two2er</string>
+    <string name="filter_button">Filter</string>
+
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+    <string-array name="array_subjects">
+        <item>Math</item>
+        <item>English</item>
+        <item>Science</item>
+    </string-array>
+
+    <string-array name="array_distance">
+        <item>5 mi</item>
+        <item>10 mi</item>
+        <item>15 mi</item>
+    </string-array>
+
 </resources>
