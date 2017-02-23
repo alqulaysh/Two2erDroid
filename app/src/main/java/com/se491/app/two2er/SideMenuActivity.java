@@ -3,6 +3,8 @@ package com.se491.app.two2er;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -330,10 +332,20 @@ public class SideMenuActivity extends AppCompatActivity
             String sTitle = usersAround.get(i).get("name");
 
             markerOptions.position(lNewLocation).title(sTitle);
-            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.genuser));
+            markerOptions.icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("genuser",100,100))); //icon and size of tutors icons inside Google Map
 
             mGoogleMap.addMarker(markerOptions);
             //mMap.moveCamera(CameraUpdateFactory.newLatLng(lNewLocation));
         }
+
     }
+
+    // This method for changing the size of the tutors icons inside Google Map
+    private Bitmap resizeMapIcons(String iconName, int width, int height){
+        Bitmap imageBitmap = BitmapFactory.decodeResource(getResources(),getResources().getIdentifier(iconName, "drawable", getPackageName()));
+        Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, width, height, false);
+        return resizedBitmap;
+    }
+
+
 }
