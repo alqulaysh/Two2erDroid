@@ -39,6 +39,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             }
         });
+
+        TextView forgotPasswordScreen = (TextView) findViewById(R.id.forgot_pw_link);
+
+        // Listening to forgot password link
+        forgotPasswordScreen.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class));
+            }
+        });
     }
 
     public void handleLogin(View v){

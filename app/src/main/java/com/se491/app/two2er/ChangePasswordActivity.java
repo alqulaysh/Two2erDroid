@@ -8,12 +8,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.stormpath.sdk.Stormpath;
-import com.stormpath.sdk.StormpathCallback;
-import com.stormpath.sdk.models.Account;
-import com.stormpath.sdk.models.StormpathError;
 import com.stormpath.sdk.utils.StringUtils;
 
 import java.io.IOException;
