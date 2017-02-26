@@ -186,6 +186,9 @@ public class SideMenuActivity extends AppCompatActivity
             Stormpath.logout();
             startActivity(new Intent(SideMenuActivity.this, LoginActivity.class));
             finish();
+        } else if (id == R.id.nav_changepassword) {
+            startActivity(new Intent(SideMenuActivity.this, ChangePasswordActivity.class));
+            finish();
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {

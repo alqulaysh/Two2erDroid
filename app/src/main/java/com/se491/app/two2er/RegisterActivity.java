@@ -96,7 +96,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         .build();
 
                 Request request = new Request.Builder()
-                        .url("http://server.scilingo.net:8080/apiauth/users")
+                        .url("http://lowcost-env.niuk5squp9.us-east-2.elasticbeanstalk.com/apiauth/users")
                         .headers(buildStandardHeaders(Stormpath.getAccessToken()))
                         .post(requestBody)
                         .build();
