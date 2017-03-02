@@ -83,7 +83,7 @@
             android:layout_width="300dp"
             android:layout_height="35dp"
             android:text="@string/signup"
-            android:background="@drawable/hdbutton"
+            android:background="@drawable/buttonclick"
             android:layout_marginBottom="31dp"
             android:textColor="@color/cast_expanded_controller_text_color"
             android:layout_above="@+id/link_to_login"

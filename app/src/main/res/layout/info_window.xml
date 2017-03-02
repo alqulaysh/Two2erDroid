@@ -14,9 +14,8 @@
             app:srcCompat="@drawable/genuser"
             android:id="@+id/user_image"
             android:layout_width="64dp"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:layout_weight="0.47" />
+            android:layout_height="78dp"
+            android:padding="8dp" />
 
         <LinearLayout
             android:orientation="vertical"
@@ -61,6 +60,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/ratingBar"
         android:numStars="5"
-        android:rating="4" />
+        android:rating="4"
+        style="@android:style/Widget.Holo.RatingBar" />
 
 </LinearLayout>

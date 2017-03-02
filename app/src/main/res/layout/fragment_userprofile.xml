@@ -4,15 +4,6 @@
     android:layout_width="match_parent" android:layout_height="match_parent">
 
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/genuser"
-        android:id="@+id/profile_img"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="43dp" />
-
     <TextView
         android:text="School:"
         android:layout_width="wrap_content"
