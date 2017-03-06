@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_vertical"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/linearLayout">
+        <TextView
+            android:id="@+id/ap_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:text="ID"
+            android:textSize="10sp"
+            android:layout_gravity="center"
+            android:paddingRight="5dp"
+            android:paddingLeft="5dp" />
+
+        <TextView
+            android:id="@+id/ap_type"
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:textSize="10sp"
+            android:paddingRight="5dp"
+            android:paddingLeft="5dp"
+            android:background="#4BABF4" />
+
+        <ImageView
+            android:layout_gravity="center"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:id="@+id/list_img"
+            android:paddingLeft="5dp"
+            />
+
+        <TextView
+            android:id="@+id/ap_title"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Title Placeholdernnnnnnnnnnnnnnnnnnn"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:paddingLeft="10dp"
+            android:freezesText="false"
+            android:forceHasOverlappingRendering="false"
+            android:ellipsize="end"
+            android:elevation="0dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_width="150dp" />
+
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:id="@+id/button_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:nestedScrollingEnabled="true"
+            android:text="Accept"
+            android:allowUndo="false" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:id="@+id/button_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:text="Decline" />
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout"
+        android:id="@+id/linearLayout3"></LinearLayout>
+
+</LinearLayout>

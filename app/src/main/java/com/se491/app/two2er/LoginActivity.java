@@ -66,11 +66,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (password.contentEquals(""))
             password = "Password123";
 
+        final String finalEmail = email;
         Stormpath.login(email, password, new StormpathCallback<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Intent loginIntent = new Intent(LoginActivity.this, SideMenuActivity.class);
                 loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                loginIntent.putExtra("UserEmail", finalEmail);
                 startActivity(loginIntent);
             }
 
