@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "653740443974",
+    "firebase_url": "https://two2er-messaging-de669.firebaseio.com",
+    "project_id": "two2er-messaging-de669",
+    "storage_bucket": "two2er-messaging-de669.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:653740443974:android:7400d2f8de92e060",
+        "android_client_info": {
+          "package_name": "com.se491.app.two2er"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "653740443974-uf4asmvpgsi7b2ou127igjlq51rgjnau.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.se491.app.two2er",
+            "certificate_hash": "68366c28b40e38ffc980a16ece6776ea380d1813"
+          }
+        },
+        {
+          "client_id": "653740443974-jabv3cbd37t7bf63jubkca55msi3togr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.se491.app.two2er",
+            "certificate_hash": "eac699c3941c00c5a1e6364bfd78eafcdaea105e"
+          }
+        },
+        {
+          "client_id": "653740443974-aohnp2sa5lkqmlshpj0betsqjprmn9h1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCph8zODlKKY8Hx-UnuT7x3qrE5cKnsXP8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "653740443974-aohnp2sa5lkqmlshpj0betsqjprmn9h1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -16,12 +16,12 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.stormpath.sdk.Stormpath;
 import com.stormpath.sdk.StormpathCallback;
 import com.stormpath.sdk.StormpathConfiguration;
 import com.stormpath.sdk.StormpathLogger;
 import com.stormpath.sdk.models.StormpathError;
-
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
@@ -64,6 +64,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             finish();
         }
 
+        if(FirebaseInstanceId.getInstance() != null){
+            Log.d("Refreshed Token", FirebaseInstanceId.getInstance().getToken());
+
+        }
 //        lat_t = (TextView)findViewById(R.id.lat_text);
 //        lon_t = (TextView)findViewById(R.id.lon_text);
 //        locate = (Button)findViewById(R.id.map_it);
