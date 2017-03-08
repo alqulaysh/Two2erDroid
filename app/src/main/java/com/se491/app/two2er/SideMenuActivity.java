@@ -16,12 +16,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -33,21 +32,27 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.se491.app.two2er.Fragments.NotificationFragment;
 import com.se491.app.two2er.Fragments.ScheduleFragment;
 import com.se491.app.two2er.Fragments.UserProfileFragment;
 import com.stormpath.sdk.Stormpath;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 public class SideMenuActivity extends AppCompatActivity
         implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         com.google.android.gms.location.LocationListener,
+        GoogleMap.OnCameraMoveListener,
+        GoogleMap.OnCameraIdleListener,
         NavigationView.OnNavigationItemSelectedListener{
 
         SupportMapFragment sMapFragment;
@@ -67,7 +72,11 @@ public class SideMenuActivity extends AppCompatActivity
         Marker mCurrLocationMarker;
 
         //Get list of users around me:
-        ArrayList<HashMap<String, String>> usersAround;
+        HashMap<String, UserObject> usersAround;
+        HashMap<String, UserObject> tempRecUsers = new HashMap<String, UserObject>();
+
+    //MyUser Profile:
+        UserObject myUserProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,19 +88,21 @@ public class SideMenuActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
 
-        usersAround = new ArrayList<>();
+        usersAround = new HashMap<String, UserObject>();
+        myUserProfile = new UserObject();
+        System.out.println(myUserProfile.name + " 1++++++++++++++++++++++++++");
 
-        new GetUsers(this).execute(); //executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        System.out.println(usersAround.size());
+        //Wait until we get our User Info before continuing:
+        try {
+            new GetUsers(this).execute().get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+        //System.out.println(myUserProfile.name + " 2++++++++++++++++++++++++++");
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -152,39 +163,38 @@ public class SideMenuActivity extends AppCompatActivity
 
         int id = item.getItemId();
 
-        Button filterButton = (Button)findViewById(R.id.but_filter);
-        Spinner filterSubjects = (Spinner)findViewById(R.id.spinner_subjects);
-        Spinner filterDistance = (Spinner)findViewById(R.id.spinner_distance);
 
         if (sMapFragment.isAdded())
             sFm.beginTransaction().hide(sMapFragment).commit();
 
         if (id == R.id.nav_userprofile) {
-            fm.beginTransaction().replace(R.id.content_frame, new UserProfileFragment()).commit();
-            filterButton.setVisibility(View.GONE);
-            filterSubjects.setVisibility(View.GONE);
-            filterDistance.setVisibility(View.GONE);
+            Bundle bundle = new Bundle();
+            if(myUserProfile != null ){
+                System.out.println(myUserProfile.name + " 3++++++++++++++++++++++++++");
+                bundle.putString("fname", myUserProfile.name);
+                UserProfileFragment userProfileFragment = new UserProfileFragment();
+                userProfileFragment.setArguments(bundle);
 
+                fm.beginTransaction().replace(R.id.content_frame,userProfileFragment).commit();
+            }
         } else if (id == R.id.nav_map) {
 
             if (!sMapFragment.isAdded())
                 sFm.beginTransaction().add(R.id.map, sMapFragment).commit();
             else
                 sFm.beginTransaction().show(sMapFragment).commit();
-            filterButton.setVisibility(View.VISIBLE);
-            filterSubjects.setVisibility(View.VISIBLE);
-            filterDistance.setVisibility(View.VISIBLE);
 
         } else if (id == R.id.nav_schedule) {
             fm.beginTransaction().replace(R.id.content_frame, new ScheduleFragment()).commit();
-            filterButton.setVisibility(View.GONE);
-            filterSubjects.setVisibility(View.GONE);
-            filterDistance.setVisibility(View.GONE);
         } else if (id == R.id.nav_manage) {
-
+            fm.beginTransaction().replace(R.id.content_frame, new NotificationFragment()).commit();
+            //fm.beginTransaction().replace(R.id.content_framePad, new NotificationFragment()).commit();
         } else if (id == R.id.nav_logout) {
             Stormpath.logout();
             startActivity(new Intent(SideMenuActivity.this, LoginActivity.class));
+            finish();
+        } else if (id == R.id.nav_uploadimage) {
+            startActivity(new Intent(SideMenuActivity.this, UploadImageActivity.class));
             finish();
         } else if (id == R.id.nav_changepassword) {
             startActivity(new Intent(SideMenuActivity.this, ChangePasswordActivity.class));
@@ -210,7 +220,7 @@ public class SideMenuActivity extends AppCompatActivity
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
 
         //Loop through the user array that we got from the webservice/api of Two2er
-        addUsersAroundMe();
+        //addUsersAroundMe(); //Moved to CameraMove
 
         //move map camera
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
@@ -259,7 +269,13 @@ public class SideMenuActivity extends AppCompatActivity
     public void onMapReady(GoogleMap googleMap) {
         mGoogleMap = googleMap;
 
+
+
         if(mGoogleMap != null){
+
+            //Set the listener for the Camera
+            mGoogleMap.setOnCameraIdleListener(this);
+
             mGoogleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter(){
 
                 @Override
@@ -313,34 +329,39 @@ public class SideMenuActivity extends AppCompatActivity
 
     }
 
-    public void handleFindTutor(View v){
+    public void handleFindTutor(){
         addUsersAroundMe();
     }
+
     //Helper Function To Get Users Around Me:
     private void addUsersAroundMe(){
-        //new GetUsers(this).execute();
+
+        //mGoogleMap.clear();
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.genuser));
+        Log.e("Inside onCameraIdle", "Json parsing usersAround: " + usersAround.size());
+        Log.e("Inside onCameraIdle", "Json parsing tempRecUsers: " + tempRecUsers.size());
 
-        for(int i = 0; i < usersAround.size(); i++){
-            //Get our coords into a String Array by splitting up what was parsed from the JSON:
-            String[] coords = usersAround.get(i).get("cords").replace("[", "").replace("]", "").split(",");
-            //Split the array into the proper double varaibales:
-            double dLong = Double.parseDouble(coords[0]);
-            double dLat = Double.parseDouble(coords[1]);
+        if(tempRecUsers.size() != usersAround.size()) {
+            tempRecUsers.putAll(usersAround);
+            Iterator it = tempRecUsers.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry) it.next();
+                System.out.println(pair.getKey() + " = " + pair.getValue());
+                UserObject user = (UserObject) pair.getValue();
+                LatLng lNewLocation = new LatLng(user.dLat, user.dLong);
+                //Get the users name:
+                String sTitle = user.name;
 
-            LatLng lNewLocation = new LatLng(dLat, dLong);
+                markerOptions.position(lNewLocation).title(sTitle);
+                markerOptions.icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("genuser", 100, 100))); //icon and size of tutors icons inside Google Map
 
-            //Get the users name:
-            String sTitle = usersAround.get(i).get("name");
+                float nCameraZoom = mGoogleMap.getCameraPosition().zoom;
 
-            markerOptions.position(lNewLocation).title(sTitle);
-            markerOptions.icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("genuser",100,100))); //icon and size of tutors icons inside Google Map
-
-            mGoogleMap.addMarker(markerOptions);
-            //mMap.moveCamera(CameraUpdateFactory.newLatLng(lNewLocation));
+                mGoogleMap.addMarker(markerOptions);
+                //it.remove(); // avoids a ConcurrentModificationException
+            }
         }
-
     }
 
     // This method for changing the size of the tutors icons inside Google Map
@@ -351,4 +372,27 @@ public class SideMenuActivity extends AppCompatActivity
     }
 
 
+
+    @Override
+    public void onCameraMove() {
+
+    }
+
+    @Override
+    public void onCameraIdle() {
+        CameraPosition fMyCameraPostion = mGoogleMap.getCameraPosition();
+        LatLng ltMyCameraCoords = fMyCameraPostion.target;
+        double myCameraLong = ltMyCameraCoords.longitude;
+        double myCameraLat = ltMyCameraCoords.latitude;
+        float fMyCameraZoom = fMyCameraPostion.zoom;
+        //Clear before we make a call for new Users Around Me:
+        try {
+            Integer result = new GetUsers(this, 5.0, myCameraLong, myCameraLat).execute().get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+    }
 }

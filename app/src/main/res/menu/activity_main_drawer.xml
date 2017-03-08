@@ -18,7 +18,11 @@
         <item
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:title="Notification" />
+        <item
+            android:id="@+id/nav_uploadimage"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Change Profile Image" />
         <item
             android:id="@+id/nav_changepassword"
             android:icon="@drawable/changepassword"
