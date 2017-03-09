@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         }
 
         if (FirebaseInstanceId.getInstance() != null) {
-            Log.d("Refreshed Token", FirebaseInstanceId.getInstance().getToken());
+            Log.d("Refreshed Token", "FB Token: " + FirebaseInstanceId.getInstance().getToken());
 
         }
     }

@@ -2,7 +2,6 @@ package com.se491.app.two2er;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -84,9 +83,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         Stormpath.login(emailInput.getText().toString(), passwordInput.getText().toString(), new StormpathCallback<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-                StrictMode.setThreadPolicy(policy);
-
                 OkHttpClient okHttpClient = new OkHttpClient.Builder()
                         .build();
 
@@ -115,20 +111,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         startActivity(new Intent(RegisterActivity.this, SideMenuActivity.class));
                         Log.d("Android : ", "Started Side Menu");
                         finish();
-
-                        /*new Thread()
-                        {
-                            public void run()
-                            {
-                                RegisterActivity.this.runOnUiThread(new Runnable()
-                                {
-                                    public void run()
-                                    {
-                                        Toast.makeText(RegisterActivity.this, responseStr, Toast.LENGTH_LONG).show();
-                                    }
-                                });
-                            }
-                        }.start();*/
                     }
                 });
             }

@@ -183,15 +183,11 @@ public class UploadImageActivity extends AppCompatActivity {
                                 final String responseStr = response.body().string();
                                 Log.d("Android : ", responseStr);
 
-                                //startActivity(new Intent(UploadImageActivity.this, SideMenuActivity.class));
-                                //Log.d("Android : ", "Started Side Menu");
-                                //finish();
+                                startActivity(new Intent(UploadImageActivity.this, SideMenuActivity.class));
+                                Log.d("Android : ", "Started Side Menu");
+                                finish();
                             }
                         });
-
-                        startActivity(new Intent(UploadImageActivity.this, SideMenuActivity.class));
-                        Log.d("Android : ", "Started Side Menu");
-                        finish();
                     }
                 });
             }
