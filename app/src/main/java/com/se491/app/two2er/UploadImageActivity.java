@@ -189,66 +189,11 @@ public class UploadImageActivity extends AppCompatActivity {
                             }
                         });
 
-                        //startActivity(new Intent(UploadImageActivity.this, SideMenuActivity.class));
-                        //Log.d("Android : ", "Started Side Menu");
-                        //finish();
+                        startActivity(new Intent(UploadImageActivity.this, SideMenuActivity.class));
+                        Log.d("Android : ", "Started Side Menu");
+                        finish();
                     }
                 });
-
-                /*Stormpath.getAccount(new StormpathCallback() {
-
-                    @Override
-                    public void onSuccess(Object o) {
-                        Account account = (Account)o;
-                        // If map fails, try hash map
-                        Object cdObj = account.getCustomData();
-                        HashMap<String, String> customData =  (HashMap<String, String>)cdObj;
-
-                        String userId = customData.get("user_id");
-
-                        AmazonS3 s3 = new AmazonS3Client(new BasicAWSCredentials("AKIAIQI5PG7PW7ZEOQ7A", "7PvprdK3qErADi10IOmHZyK+KMazfdCu+9iBfdss"));
-                        s3.setRegion(Region.getRegion(Regions.US_EAST_2));
-                        s3.putObject("two2er", "images/" + userId + "." + extension, fileToUpload);
-
-                        String imageUrl = "https://s3.us-east-2.amazonaws.com/two2er/images/" + userId + "." + extension;
-
-                        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                                .build();
-
-                        RequestBody requestBody = new FormBody.Builder()
-                                .add("user_id", userId)
-                                .add("image_url", imageUrl)
-                                .build();
-
-                        Request request = new Request.Builder()
-                                .url("http://lowcost-env.niuk5squp9.us-east-2.elasticbeanstalk.com/apiauth/users/update")
-                                .headers(buildStandardHeaders(Stormpath.getAccessToken()))
-                                .post(requestBody)
-                                .build();
-
-                        okHttpClient.newCall(request).enqueue(new Callback() {
-                            @Override public
-                            void onFailure(Call call, IOException e) {
-                                Log.d("Android : ", e.getMessage());
-                            }
-
-                            @Override public void onResponse(Call call, Response response)
-                                    throws IOException {
-                                final String responseStr = response.body().string();
-                                Log.d("Android : ", responseStr);
-
-                                startActivity(new Intent(UploadImageActivity.this, SideMenuActivity.class));
-                                Log.d("Android : ", "Started Side Menu");
-                                finish();
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onFailure(StormpathError error) {
-                        Log.d("Android : ", error.message());
-                    }
-                });*/
             }
         }.start();
 
