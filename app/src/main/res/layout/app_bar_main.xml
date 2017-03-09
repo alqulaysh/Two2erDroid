@@ -32,7 +32,7 @@
                 android:layout_height="?attr/actionBarSize" />
 
         </android.support.design.widget.AppBarLayout>
-        <LinearLayout
+       <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -45,23 +45,23 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical|center_horizontal|center">
-
+                <!--
                 <Spinner
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/spinner_distance"
                     android:entries="@array/array_distance"
                     android:gravity="center_vertical|center_horizontal" />
-
-                <Spinner
+                -->
+                <!--<Spinner
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/spinner_subjects"
                     android:entries="@array/array_subjects"
-                    android:gravity="center_vertical|center_horizontal" />
+                    android:gravity="center_vertical|center_horizontal" /> -->
             </LinearLayout>
 
-            <Button
+            <!--<Button
                 android:text="@string/filter_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
                 android:fontFamily="sans-serif-condensed"
                 android:textColorHint="#fff"
                 android:paddingLeft="10dp"
-                />
+                /> -->
 
         </LinearLayout>
     </LinearLayout>

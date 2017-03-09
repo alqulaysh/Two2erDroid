@@ -7,101 +7,157 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.stormpath.sdk.Stormpath;
+import com.stormpath.sdk.utils.StringUtils;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.HashMap;
 
+import okhttp3.Callback;
+import okhttp3.Headers;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 
-public class GetUsers extends AsyncTask<Void, Void, Void> {
-    private static final String SERVER_API_URL = "http://server.scilingo.net:8080/api/users";
+
+public class GetUsers extends AsyncTask<Void, Void, Integer> {
+    private static final String SERVER_API_URL = "http://lowcost-env.niuk5squp9.us-east-2.elasticbeanstalk.com/apiauth/users";
+    //http://server.scilingo.net:8080/api/users/findWithin/milesLonLat/1000/-83/53
 
     private SideMenuActivity myMapActivity;
+    private HashMap<String, UserObject> tempUsersList = new HashMap<String, UserObject>();
+    private String additionalURL = "";
+    private int typeOfCall;
+    private UserObject myTempUser;
+    private OkHttpClient okHttpClient;
 
     public GetUsers(SideMenuActivity myActivity) {
+        additionalURL = "/me";
         myMapActivity = myActivity;
+        typeOfCall = 2;
+    }
+
+    public GetUsers(SideMenuActivity myActivity, Double distance, Double lon, Double lat) {
+        additionalURL = String.format("/findWithin/milesLonLat/%1$.4f/%2$.4f/%3$.4f", distance, lon, lat);
+        myMapActivity = myActivity;
+        typeOfCall = 1;
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        Toast.makeText(myMapActivity,"Connecting to the Two2er Server.",Toast.LENGTH_LONG).show();
+        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
+            @Override
+            public void log(String message) {
+                Stormpath.logger().d(message);
+            }
+        });
+
+        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        this.okHttpClient = new OkHttpClient.Builder()
+                .addNetworkInterceptor(httpLoggingInterceptor)
+                .build();
     }
 
+    private Headers buildStandardHeaders(String accessToken) {
+        Headers.Builder builder = new Headers.Builder();
+        builder.add("Accept", "application/json");
+
+        if (StringUtils.isNotBlank(accessToken)) {
+            builder.add("Authorization", "Bearer " + accessToken);
+        }
+
+        return builder.build();
+    }
+
+    private void connectToApi() {
+
+    }
+
+
     @Override
-    protected Void doInBackground(Void... arg0) {
-        HttpHandler sh = new HttpHandler();
-        // Making a request to url and getting response
-        String url = SERVER_API_URL;
-        String jsonStr = sh.makeServiceCall(url);
+    protected Integer doInBackground(Void... arg0) {
+        Request request = new Request.Builder()
+                .url(SERVER_API_URL + additionalURL)
+                .headers(buildStandardHeaders(Stormpath.getAccessToken()))
+                .get()
+                .build();
 
-        Log.e("Inside doInBackGround", "Response from url: " + jsonStr);
-        if (jsonStr != null) {
-            try {
-                JSONArray users = new JSONArray(jsonStr);
-                // Getting JSON Array node
-                //JSONArray contacts = jsonObj.getJSONArray("");
-
-                System.out.println(users.length());
-                // looping through All Contacts
-                for (int i = 0; i < users.length(); i++) {
-
-                    JSONObject c = users.getJSONObject(i);
-                    //System.out.println(c.getString("_id"));
-                    String id = c.getString("_id");
-                    String name = c.getString("name");
-                    String age = c.getString("age");
-
-
-                    // Phone node is JSON Object
-                    JSONObject phone = c.getJSONObject("location");
-                    //System.out.println(c.getString("_id"));
-
-                    String coords = phone.getString("coordinates");
-                    //System.out.println(coords);
-                    // tmp hash map for single contact
-                    HashMap<String, String> user = new HashMap<>();
-
-                    // adding each child node to HashMap key => value
-                    user.put("id", id);
-                    user.put("name", name);
-                    user.put("email", age);
-                    user.put("cords", coords);
-
-                    // adding contact to contact list
-                    myMapActivity.usersAround.add(user);
-                }
-            } catch (final JSONException e) {
-                //Log.e(TAG, "Json parsing error: " + e.getMessage());
-                myMapActivity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(myMapActivity.getApplicationContext(),
-                                "Json parsing error: " + e.getMessage(),
-                                Toast.LENGTH_LONG).show();
-                    }
-                });
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(okhttp3.Call call, IOException e) {
 
             }
 
-        } else {
-            //Log.e(TAG, "Couldn't get json from server.");
-            myMapActivity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(myMapActivity.getApplicationContext(),
-                            "Couldn't get json from server. Check LogCat for possible errors!",
-                            Toast.LENGTH_LONG).show();
-                }
-            });
-        }
+            @Override
+            public void onResponse(okhttp3.Call call, Response response) throws IOException {
+                JSONObject myUser;
+                JSONArray users;
 
+                try {
+                    String jsonResponse = response.body().string();
+                    Log.e("Inside doInBackGround", "Response from url in Get2Body(): " + SERVER_API_URL + additionalURL );
+                    //Log.e("Inside doInBackGround", "Response from url in Get2Body(): " + jsonResponse );
+                    //Log.e("Inside doInBackGround", "Response from url in Get2Body(): " + myMapActivity.usersAround.size() );
+
+                    if(typeOfCall == 1 ){
+                        users = new JSONArray(jsonResponse);
+                        for (int i = 0; i < users.length(); i++) {
+                            UserObject user = new UserObject(users.getJSONObject(i));
+                            tempUsersList.put(user.id, user);
+                            Log.e("Inside doInBackGround", "Added tempUser: " + tempUsersList.size());
+                            if (!myMapActivity.usersAround.containsKey("watermelon")){
+                                myMapActivity.usersAround.put(user.id, user);
+                                Log.e("Inside doInBackGround", "Added tempUser: " + myMapActivity.usersAround.size());
+                            }
+
+                        }
+//                        if(myMapActivity.usersAround.size() == 0)
+//                            myMapActivity.usersAround.addAll(tempUsersList);
+                    }
+
+                    else{
+                        myUser = new JSONObject(jsonResponse);
+                        myTempUser = new UserObject(myUser);
+                        myMapActivity.myUserProfile = myTempUser;
+                    }
+                }
+                catch (final JSONException e) {
+                    Log.e("Inside doInBackGround", "Json parsing error: " + e.getMessage());
+                    myMapActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(myMapActivity.getApplicationContext(),
+                                    "Json parsing error: " + e.getMessage(),
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            }
+
+        });
         return null;
     }
 
     @Override
-    protected void onPostExecute(Void result) {
-
+    protected void onPostExecute(Integer result) {
+        super.onPostExecute(result);
+        if(typeOfCall == 1){
+            //myMapActivity.usersAround.clear();
+            Log.e("Inside onPostExecute", "the size of TempUsers before Add: " + tempUsersList.size());
+            //myMapActivity.usersAround.addAll(tempUsersList);
+            Log.e("Inside onPostExecute", "the size of UsersAround after add: " + myMapActivity.usersAround.size());
+            myMapActivity.handleFindTutor();
+        }
+        else{
+            if(typeOfCall == 2) {
+                myMapActivity.myUserProfile = myTempUser;
+            }
+        }
     }
 }

@@ -16,12 +16,12 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.stormpath.sdk.Stormpath;
 import com.stormpath.sdk.StormpathCallback;
 import com.stormpath.sdk.StormpathConfiguration;
 import com.stormpath.sdk.StormpathLogger;
 import com.stormpath.sdk.models.StormpathError;
-
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
@@ -52,46 +52,22 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                     startActivity(new Intent(MainActivity.this, SideMenuActivity.class));
                     finish();
                 }
+
                 @Override
                 public void onFailure(StormpathError error) {
                     startActivity(new Intent(MainActivity.this, LoginActivity.class));
                     finish();
                 }
             });
-        }
-        else {
+        } else {
             startActivity(new Intent(MainActivity.this, RegisterActivity.class));
             finish();
         }
 
-//        lat_t = (TextView)findViewById(R.id.lat_text);
-//        lon_t = (TextView)findViewById(R.id.lon_text);
-//        locate = (Button)findViewById(R.id.map_it);
-//        register = (Button)findViewById(R.id.register);
+        if (FirebaseInstanceId.getInstance() != null) {
+            Log.d("Refreshed Token", FirebaseInstanceId.getInstance().getToken());
 
-//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-//                != PackageManager.PERMISSION_GRANTED) {
-//            ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.ACCESS_FINE_LOCATION },
-//                    PERMISSION_ACCESS_FINE_LOCATION);
-//        }
-
-      //  googleApiClient = new GoogleApiClient.Builder(this, this, this).addApi(LocationServices.API).build();
-
-//        locate.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View view){
-//                startActivity(new Intent(MainActivity.this, MapActivity.class));
-//
-//            }
-//        });
-//
-//        register.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View view){
-//                startActivity(new Intent(MainActivity.this, RegisterActivity.class));
-//
-//            }
-// });
+        }
     }
 
     @Override
