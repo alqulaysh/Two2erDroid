@@ -35,6 +35,7 @@ public class GetUsers extends AsyncTask<Void, Void, Integer> {
     private int typeOfCall;
     private UserObject myTempUser;
     private OkHttpClient okHttpClient;
+    private int responseStatus;
 
     public GetUsers(SideMenuActivity myActivity) {
         additionalURL = "/me";
@@ -75,10 +76,6 @@ public class GetUsers extends AsyncTask<Void, Void, Integer> {
         return builder.build();
     }
 
-    private void connectToApi() {
-
-    }
-
 
     @Override
     protected Integer doInBackground(Void... arg0) {
@@ -91,7 +88,7 @@ public class GetUsers extends AsyncTask<Void, Void, Integer> {
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(okhttp3.Call call, IOException e) {
-
+                responseStatus = 1;
             }
 
             @Override
@@ -102,8 +99,6 @@ public class GetUsers extends AsyncTask<Void, Void, Integer> {
                 try {
                     String jsonResponse = response.body().string();
                     Log.e("Inside doInBackGround", "Response from url in Get2Body(): " + SERVER_API_URL + additionalURL );
-                    //Log.e("Inside doInBackGround", "Response from url in Get2Body(): " + jsonResponse );
-                    //Log.e("Inside doInBackGround", "Response from url in Get2Body(): " + myMapActivity.usersAround.size() );
 
                     if(typeOfCall == 1 ){
                         users = new JSONArray(jsonResponse);
@@ -111,20 +106,20 @@ public class GetUsers extends AsyncTask<Void, Void, Integer> {
                             UserObject user = new UserObject(users.getJSONObject(i));
                             tempUsersList.put(user.id, user);
                             Log.e("Inside doInBackGround", "Added tempUser: " + tempUsersList.size());
-                            if (!myMapActivity.usersAround.containsKey("watermelon")){
+                            if (!myMapActivity.usersAround.containsKey(user.id)){
                                 myMapActivity.usersAround.put(user.id, user);
-                                Log.e("Inside doInBackGround", "Added tempUser: " + myMapActivity.usersAround.size());
                             }
 
                         }
-//                        if(myMapActivity.usersAround.size() == 0)
-//                            myMapActivity.usersAround.addAll(tempUsersList);
                     }
 
                     else{
                         myUser = new JSONObject(jsonResponse);
                         myTempUser = new UserObject(myUser);
                         myMapActivity.myUserProfile = myTempUser;
+                        Log.e("Inside doInBackGround", "My user ID: " + myTempUser.id);
+
+
                     }
                 }
                 catch (final JSONException e) {
@@ -138,10 +133,14 @@ public class GetUsers extends AsyncTask<Void, Void, Integer> {
                         }
                     });
                 }
+                responseStatus = 2;
             }
 
         });
-        return null;
+
+        while(responseStatus < 1){}
+
+        return 1;
     }
 
     @Override

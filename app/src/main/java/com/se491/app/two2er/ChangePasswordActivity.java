@@ -22,7 +22,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-
+//Deprecated! This is now in the UserProfileFragment.
 public class ChangePasswordActivity extends AppCompatActivity implements View.OnClickListener {
     private Button changePassword;
     private EditText passwordInput;

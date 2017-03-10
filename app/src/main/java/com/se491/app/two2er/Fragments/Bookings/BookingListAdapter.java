@@ -1,4 +1,4 @@
-package com.se491.app.two2er.Fragments;
+package com.se491.app.two2er.Fragments.Bookings;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,27 +9,26 @@ import android.widget.TextView;
 import com.se491.app.two2er.R;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by eoliv on 3/3/2017.
  */
 
-class APListAdapter extends BaseAdapter {
+class BookingListAdapter extends BaseAdapter {
 
     private LayoutInflater inflater;
-    private ArrayList<String> apList = getDBObj();
+    private ArrayList<BookingObject> apList = getBookings();
 
-    public APListAdapter(LayoutInflater v) {
+    public BookingListAdapter(LayoutInflater v) throws ExecutionException, InterruptedException {
         inflater = v;
     }
 
     //Get the objects from the database:
-    public ArrayList getDBObj(){
-        ArrayList<String> taskList = new ArrayList<>();
-        taskList.add("Tom session...");
-        taskList.add("Jon session...");
-        taskList.add("Ted session...");
-        taskList.add("Dan session...");
+    public ArrayList<BookingObject> getBookings() throws ExecutionException, InterruptedException {
+        ArrayList<BookingObject> taskList = new ArrayList<BookingObject>();
+        taskList = new GetBookings().execute().get();
+
         return taskList;
     }
     @Override
@@ -53,20 +52,23 @@ class APListAdapter extends BaseAdapter {
         if (convertView == null) {
             if (inflater == null)
                 System.out.print("THIS IS MY +++++++++++++++++++++++++++++++++++++++++++++");
-                //inflater = (LayoutInflater) ((SideMenuActivity).getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            //inflater = (LayoutInflater) ((SideMenuActivity).getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             row = inflater.inflate(R.layout.notification_list, parent, false);
         }
 
         //Get our views for the main list view:
-        TextView movieDesc = (TextView) row.findViewById(R.id.ap_title);
+        TextView msgDesc = (TextView) row.findViewById(R.id.ap_title);
+        TextView mDate = (TextView) row.findViewById(R.id.MeetingDate);
 
         //Set our views for the List view:
-        String name = apList.get(position);
+        String name = apList.get(position).studentUserId;
+        String meetingDate = apList.get(position).MeetingDate;
 
         //Get the Drawable resource assoicated with the type:
 
         //Set our views:
-        movieDesc.setText(name);
+        msgDesc.setText(meetingDate + " - " + name);
+        mDate.setText("");
         return row;
     }
 }

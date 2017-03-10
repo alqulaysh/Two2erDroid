@@ -12,6 +12,7 @@ public class UserObject {
     String name;
     String age;
     String email;
+    String userImage;
     Double dLong;
     Double dLat;
     public UserObject(){}
@@ -19,7 +20,13 @@ public class UserObject {
         this.id = user.getString("_id");
         this.name = user.getString("name");
         this.age = user.getString("age");
-        this.age = user.getString("email");
+        this.email = user.getString("email");
+        this.userImage = "" + R.drawable.genuser;
+
+        if(user.getString("image_url") != ""){
+            this.userImage = user.getString("image_url");
+        }
+
 
         // GeoJSON node in JSON Object
         JSONObject location = user.getJSONObject("location");

@@ -12,16 +12,16 @@
         android:layout_alignStart="@+id/lastNameText" />
 
     <EditText
+        android:id="@+id/nameField"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="John"
-        android:ems="10"
-        android:id="@+id/nameField"
         android:layout_alignBaseline="@+id/nameText"
         android:layout_alignBottom="@+id/nameText"
+        android:layout_marginStart="24dp"
         android:layout_toEndOf="@+id/nameText"
-        android:layout_marginStart="24dp" />
+        android:ems="10"
+        android:inputType="textNoSuggestions|textPersonName"
+        android:text="John" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -47,13 +47,22 @@
 
 
     <Button
-        android:text="Update"
+        android:text="Update My Profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/majorField"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="37dp"
         android:id="@+id/update_btn" />
+
+    <Button
+        android:text="Change Password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/update_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="37dp"
+        android:id="@+id/changepwd_btn" />
 
     <EditText
         android:layout_width="wrap_content"

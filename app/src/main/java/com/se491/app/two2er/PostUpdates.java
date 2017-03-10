@@ -24,7 +24,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 public class PostUpdates  extends AsyncTask<Void, Void, Void> {
     private OkHttpClient okHttpClient;
     private static final String SERVER_API_URL = "http://lowcost-env.niuk5squp9.us-east-2.elasticbeanstalk.com/apiauth/users";
-
+    private int responseStatus;
     public PostUpdates(String name) {
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
@@ -41,13 +41,6 @@ public class PostUpdates  extends AsyncTask<Void, Void, Void> {
     }
 
     public void postToApi(String name) {
-
-
-//        RequestBody requestBody = new MultipartBody.Builder()
-//                .setType(MultipartBody.FORM)
-//                .addFormDataPart("Johnny", "Johnny")
-//                .build();
-
         RequestBody requestBody = new FormBody.Builder()
                 .add("name", name)
                 .build();
@@ -61,16 +54,17 @@ public class PostUpdates  extends AsyncTask<Void, Void, Void> {
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(okhttp3.Call call, IOException e) {
-
+                responseStatus = 2;
             }
 
             @Override
             public void onResponse(okhttp3.Call call, Response response) throws IOException {
                 Log.e("Inside PostUpdates", "Json parsing error: " + response.message());
-
+                responseStatus = 1;
             }
 
         });
+        while(responseStatus < 1){}
     }
 
     private Headers buildStandardHeaders(String accessToken) {

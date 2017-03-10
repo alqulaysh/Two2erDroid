@@ -61,19 +61,7 @@
                     android:gravity="center_vertical|center_horizontal" /> -->
             </LinearLayout>
 
-            <!--<Button
-                android:text="@string/filter_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/but_filter"
-                android:layout_weight="1"
-                android:layout_gravity="center_vertical|center_horizontal"
-                android:fontFamily="sans-serif-condensed"
-                android:textColorHint="#fff"
-                android:paddingLeft="10dp"
-                /> -->
-
-        </LinearLayout>
+       </LinearLayout>
     </LinearLayout>
 
 

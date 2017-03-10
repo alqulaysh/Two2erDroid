@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:padding="10dp"
+    android:orientation="vertical">
+
+
+    <EditText android:id="@+id/changeMY_passwordDialog"
+        android:layout_width="300dp"
+        android:layout_height="45dp"
+        android:singleLine="false"
+        android:password="true"
+        android:hint="New Password"
+        android:textSize="14dp"
+        android:fontFamily="sans-serif-condensed"
+        android:textColorHint="#fff"
+        android:background="@drawable/passwordbackground"
+        android:selectAllOnFocus="false"
+        android:layout_marginBottom="11dp"
+        android:layout_centerHorizontal="true"
+        android:paddingLeft="10dp" />
+
+    <Button
+        android:id="@+id/changeMyPwdDialog_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Change My Password" />
+</LinearLayout>

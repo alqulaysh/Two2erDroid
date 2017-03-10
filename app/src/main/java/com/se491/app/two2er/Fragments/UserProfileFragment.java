@@ -1,6 +1,7 @@
 package com.se491.app.two2er.Fragments;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import java.util.concurrent.ExecutionException;
 public class UserProfileFragment extends Fragment {
 
     EditText userName;
+    EditText userUni;
     private String myName;
     @Nullable
     @Override
@@ -26,15 +28,41 @@ public class UserProfileFragment extends Fragment {
         //R.nameField
         View v = inflater.inflate(R.layout.fragment_userprofile, container, false);
         userName = (EditText) v.findViewById(R.id.nameField);
+        userUni = (EditText) v.findViewById(R.id.univField);
         String userNameVal =  getArguments().getString("fname");
+        String userEmail =  getArguments().getString("email");
         userName.setText(userNameVal);
+        userUni.setText(userEmail);
 
-        Button button = (Button) v.findViewById(R.id.update_btn);
-        button.setOnClickListener(new View.OnClickListener()
+        try {
+            new GetUsers(((SideMenuActivity) getActivity())).execute().get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        Button updateButton = (Button) v.findViewById(R.id.update_btn);
+        Button changePWDbutton = (Button) v.findViewById(R.id.changepwd_btn);
+
+        changePWDbutton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
+                FragmentManager fm = getFragmentManager();
+                PWDDialogFragment dialogFragment = new PWDDialogFragment();
+                dialogFragment.show(fm, "Change User Password!");
+
+            }
+        });
+
+        updateButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                //Get my current username thats entered in.
                 myName = userName.getText().toString();
                 try {
                     upDateMyUser();
@@ -45,7 +73,9 @@ public class UserProfileFragment extends Fragment {
                 }
                 //Wait until we get our User Info before continuing:
                 try {
-                    new GetUsers(((SideMenuActivity) getActivity())).execute().get();
+                    Integer result = new GetUsers(((SideMenuActivity) getActivity())).execute().get();
+                    while(result != 1);
+
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {

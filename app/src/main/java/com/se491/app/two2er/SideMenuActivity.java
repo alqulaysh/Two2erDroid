@@ -20,6 +20,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -36,9 +38,9 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.se491.app.two2er.Fragments.NotificationFragment;
 import com.se491.app.two2er.Fragments.ScheduleFragment;
 import com.se491.app.two2er.Fragments.UserProfileFragment;
+import com.se491.app.two2er.Fragments.Bookings.BookingsFragment;
 import com.stormpath.sdk.Stormpath;
 
 import java.util.HashMap;
@@ -81,6 +83,10 @@ public class SideMenuActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         sMapFragment = SupportMapFragment.newInstance();
         setContentView(R.layout.activity_sidemenu);
@@ -172,6 +178,7 @@ public class SideMenuActivity extends AppCompatActivity
             if(myUserProfile != null ){
                 System.out.println(myUserProfile.name + " 3++++++++++++++++++++++++++");
                 bundle.putString("fname", myUserProfile.name);
+                bundle.putString("email", myUserProfile.email);
                 UserProfileFragment userProfileFragment = new UserProfileFragment();
                 userProfileFragment.setArguments(bundle);
 
@@ -187,8 +194,8 @@ public class SideMenuActivity extends AppCompatActivity
         } else if (id == R.id.nav_schedule) {
             fm.beginTransaction().replace(R.id.content_frame, new ScheduleFragment()).commit();
         } else if (id == R.id.nav_manage) {
-            fm.beginTransaction().replace(R.id.content_frame, new NotificationFragment()).commit();
-            //fm.beginTransaction().replace(R.id.content_framePad, new NotificationFragment()).commit();
+            fm.beginTransaction().replace(R.id.content_frame, new BookingsFragment()).commit();
+            //fm.beginTransaction().replace(R.id.content_framePad, new BookingsFragment()).commit();
         } else if (id == R.id.nav_logout) {
             Stormpath.logout();
             startActivity(new Intent(SideMenuActivity.this, LoginActivity.class));
