@@ -36,7 +36,7 @@ public class PWDDialogFragment extends DialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_sample_dialog, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_changewd_dialog, container, false);
         getDialog().setTitle("Change User Password");
 
 

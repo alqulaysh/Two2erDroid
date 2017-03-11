@@ -118,6 +118,7 @@ public class GetUsers extends AsyncTask<Void, Void, Integer> {
                         myTempUser = new UserObject(myUser);
                         myMapActivity.myUserProfile = myTempUser;
                         Log.e("Inside doInBackGround", "My user ID: " + myTempUser.id);
+                        Log.e("Inside doInBackGround", "My user img URL: " + myTempUser.userImage);
 
 
                     }

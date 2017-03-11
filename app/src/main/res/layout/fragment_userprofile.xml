@@ -35,34 +35,44 @@
         android:layout_alignStart="@+id/lNameField" />
 
     <EditText
+        android:id="@+id/lNameField"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Doe"
-        android:ems="10"
-        android:id="@+id/lNameField"
         android:layout_alignBaseline="@+id/lastNameText"
         android:layout_alignBottom="@+id/lastNameText"
-        android:layout_alignStart="@+id/nameField" />
+        android:layout_alignStart="@+id/nameField"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Doe" />
 
+    <EditText
+        android:id="@+id/emailField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/UserEmailText"
+        android:layout_alignBottom="@+id/UserEmailText"
+        android:layout_alignStart="@+id/lNameField"
+        android:ems="10"
+        android:inputType="textEmailAddress|textEmailSubject|textPersonName"
+        android:text="none@gmail.com" />
 
     <Button
-        android:text="Update My Profile"
+        android:id="@+id/update_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/majorField"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="37dp"
-        android:id="@+id/update_btn" />
+        android:layout_marginTop="25dp"
+        android:background="@drawable/buttonclick"
+        android:text="Update My Profile" />
 
     <Button
         android:text="Change Password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/changepwd_btn"
+        android:background="@drawable/buttonclick"
         android:layout_below="@+id/update_btn"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="37dp"
-        android:id="@+id/changepwd_btn" />
+        android:layout_alignStart="@+id/update_btn" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -80,6 +90,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/lastNameText"
+        android:layout_marginBottom="14dp"
+        android:layout_above="@+id/UserEmailText"
+        android:layout_alignStart="@+id/nameText" />
+    <TextView
+        android:text="Email:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/UserEmailText"
         android:layout_marginBottom="14dp"
         android:layout_above="@+id/univField"
         android:layout_alignStart="@+id/nameText" />
@@ -102,5 +120,13 @@
         android:id="@+id/majorText"
         android:layout_below="@+id/univField"
         android:layout_alignStart="@+id/schoolText" />
+
+    <ImageView
+        android:id="@+id/userProfileImgV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/nameField"
+        android:layout_centerHorizontal="true"
+        app:srcCompat="@drawable/genuser" />
 
 </RelativeLayout>

@@ -96,7 +96,7 @@ public class SideMenuActivity extends AppCompatActivity
 
         usersAround = new HashMap<String, UserObject>();
         myUserProfile = new UserObject();
-        System.out.println(myUserProfile.name + " 1++++++++++++++++++++++++++");
+        System.out.println(myUserProfile.fname + " 1++++++++++++++++++++++++++");
 
         //Wait until we get our User Info before continuing:
         try {
@@ -176,9 +176,11 @@ public class SideMenuActivity extends AppCompatActivity
         if (id == R.id.nav_userprofile) {
             Bundle bundle = new Bundle();
             if(myUserProfile != null ){
-                System.out.println(myUserProfile.name + " 3++++++++++++++++++++++++++");
-                bundle.putString("fname", myUserProfile.name);
+                System.out.println(myUserProfile.fname + " 3++++++++++++++++++++++++++");
+                bundle.putString("fname", myUserProfile.fname);
+                bundle.putString("lname", myUserProfile.lname);
                 bundle.putString("email", myUserProfile.email);
+                bundle.putString("userImage", myUserProfile.userImage);
                 UserProfileFragment userProfileFragment = new UserProfileFragment();
                 userProfileFragment.setArguments(bundle);
 
@@ -358,7 +360,8 @@ public class SideMenuActivity extends AppCompatActivity
                 UserObject user = (UserObject) pair.getValue();
                 LatLng lNewLocation = new LatLng(user.dLat, user.dLong);
                 //Get the users name:
-                String sTitle = user.name;
+                String sTitle = user.fname + " " + user.lname;
+
 
                 markerOptions.position(lNewLocation).title(sTitle);
                 markerOptions.icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("genuser", 100, 100))); //icon and size of tutors icons inside Google Map

@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:padding="10dp"
+    android:background="@color/colorPrimary"
     android:orientation="vertical">
 
 
@@ -26,5 +27,6 @@
         android:id="@+id/changeMyPwdDialog_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/buttonclick"
         android:text="Change My Password" />
 </LinearLayout>

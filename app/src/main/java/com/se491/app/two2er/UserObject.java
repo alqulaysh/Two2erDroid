@@ -9,7 +9,8 @@ import org.json.JSONObject;
 
 public class UserObject {
     String id;
-    String name;
+    String fname;
+    String lname;
     String age;
     String email;
     String userImage;
@@ -18,14 +19,13 @@ public class UserObject {
     public UserObject(){}
     public UserObject(JSONObject user) throws JSONException {
         this.id = user.getString("_id");
-        this.name = user.getString("name");
+        String[] fullName = user.getString("name").split(" ");
+        this.fname = fullName[0];
+        this.lname = fullName[1];
         this.age = user.getString("age");
         this.email = user.getString("email");
-        this.userImage = "" + R.drawable.genuser;
-
-        if(user.getString("image_url") != ""){
-            this.userImage = user.getString("image_url");
-        }
+        this.userImage = user.getString("image_url");
+        //this.userImage = "https://i.stack.imgur.com/cEdDG.png";
 
 
         // GeoJSON node in JSON Object
