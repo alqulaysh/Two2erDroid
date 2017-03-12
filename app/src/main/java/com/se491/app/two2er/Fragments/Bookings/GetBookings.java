@@ -15,7 +15,6 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import okhttp3.Callback;
 import okhttp3.Headers;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -76,38 +75,66 @@ public class GetBookings extends AsyncTask<Object, Object, ArrayList<BookingObje
                 .get()
                 .build();
 
+        //Sync Call:
+        Response response = null;
+        try {
+            response = okHttpClient.newCall(request).execute();
+            JSONArray bookings;
 
-        okHttpClient.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(okhttp3.Call call, IOException e) {
-                responseStatus = 2;
+            try {
+                String jsonResponse = response.body().string();
+                Log.e("Inside doInBackGround", "Response from url in GetBookings(): " + SERVER_API_URL + additionalURL );
+                Log.e("Inside doInBackGround", "Response from url in GetBookings(): " + jsonResponse );
+
+                bookings = new JSONArray(jsonResponse);
+                for (int i = 0; i < bookings.length(); i++) {
+                    BookingObject booking = new BookingObject(bookings.getJSONObject(i));
+                    bookingList.add(booking);
+                }
+                responseStatus = 1;
+            }
+            catch (final JSONException e) {
+                responseStatus = 1;
+                Log.e("Inside doInBackGround", "Json parsing error: " + e.getMessage());
             }
 
-            @Override
-            public void onResponse(okhttp3.Call call, Response response) throws IOException {
-                JSONArray bookings;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-                try {
-                    String jsonResponse = response.body().string();
-                    Log.e("Inside doInBackGround", "Response from url in GetBookings(): " + SERVER_API_URL + additionalURL );
-                    Log.e("Inside doInBackGround", "Response from url in GetBookings(): " + jsonResponse );
 
-                    bookings = new JSONArray(jsonResponse);
-                    for (int i = 0; i < bookings.length(); i++) {
-                        BookingObject booking = new BookingObject(bookings.getJSONObject(i));
-                        bookingList.add(booking);
-                    }
-                    responseStatus = 1;
-                }
-                catch (final JSONException e) {
-                    responseStatus = 1;
-                    Log.e("Inside doInBackGround", "Json parsing error: " + e.getMessage());
-                }
-            }
+//Async Call:
+//        okHttpClient.newCall(request).enqueue(new Callback() {
+//            @Override
+//            public void onFailure(okhttp3.Call call, IOException e) {
+//                responseStatus = 2;
+//            }
+//
+//            @Override
+//            public void onResponse(okhttp3.Call call, Response response) throws IOException {
+//                JSONArray bookings;
+//
+//                try {
+//                    String jsonResponse = response.body().string();
+//                    Log.e("Inside doInBackGround", "Response from url in GetBookings(): " + SERVER_API_URL + additionalURL );
+//                    Log.e("Inside doInBackGround", "Response from url in GetBookings(): " + jsonResponse );
+//
+//                    bookings = new JSONArray(jsonResponse);
+//                    for (int i = 0; i < bookings.length(); i++) {
+//                        BookingObject booking = new BookingObject(bookings.getJSONObject(i));
+//                        bookingList.add(booking);
+//                    }
+//                    responseStatus = 1;
+//                }
+//                catch (final JSONException e) {
+//                    responseStatus = 1;
+//                    Log.e("Inside doInBackGround", "Json parsing error: " + e.getMessage());
+//                }
+//            }
+//
+//        });
 
-        });
-
-        while(responseStatus < 1){}
+        //while(responseStatus < 1){}
 
         return bookingList;
     }

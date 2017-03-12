@@ -5,7 +5,6 @@ package com.se491.app.two2er;
 
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.stormpath.sdk.Stormpath;
 import com.stormpath.sdk.utils.StringUtils;
@@ -17,7 +16,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.HashMap;
 
-import okhttp3.Callback;
 import okhttp3.Headers;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -85,61 +83,97 @@ public class GetUsers extends AsyncTask<Void, Void, Integer> {
                 .get()
                 .build();
 
-        okHttpClient.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(okhttp3.Call call, IOException e) {
-                responseStatus = 1;
-            }
 
-            @Override
-            public void onResponse(okhttp3.Call call, Response response) throws IOException {
-                JSONObject myUser;
-                JSONArray users;
+        try {
+            Response response = okHttpClient.newCall(request).execute();
 
-                try {
-                    String jsonResponse = response.body().string();
-                    Log.e("Inside doInBackGround", "Response from url in Get2Body(): " + SERVER_API_URL + additionalURL );
+                String jsonResponse = response.body().string();
+                Log.e("Inside doInBackGround", "URL used in GetUsers(): " + SERVER_API_URL + additionalURL );
 
-                    if(typeOfCall == 1 ){
-                        users = new JSONArray(jsonResponse);
-                        for (int i = 0; i < users.length(); i++) {
-                            UserObject user = new UserObject(users.getJSONObject(i));
-                            tempUsersList.put(user.id, user);
-                            Log.e("Inside doInBackGround", "Added tempUser: " + tempUsersList.size());
-                            if (!myMapActivity.usersAround.containsKey(user.id)){
-                                myMapActivity.usersAround.put(user.id, user);
-                            }
-
+                if(typeOfCall == 1 ){
+                    JSONArray users = new JSONArray(jsonResponse);
+                    for (int i = 0; i < users.length(); i++) {
+                        UserObject user = new UserObject(users.getJSONObject(i));
+                        tempUsersList.put(user.id, user);
+                        if (!myMapActivity.usersAround.containsKey(user.id)){
+                            Log.e("Inside doInBackGround", "User to usersAround ID: " + user.id);
+                            Log.e("Inside doInBackGround", "User to usersAround First Name: " + user.fname);
+                            myMapActivity.usersAround.put(user.id, user);
                         }
-                    }
-
-                    else{
-                        myUser = new JSONObject(jsonResponse);
-                        myTempUser = new UserObject(myUser);
-                        myMapActivity.myUserProfile = myTempUser;
-                        Log.e("Inside doInBackGround", "My user ID: " + myTempUser.id);
-                        Log.e("Inside doInBackGround", "My user img URL: " + myTempUser.userImage);
-
 
                     }
                 }
-                catch (final JSONException e) {
-                    Log.e("Inside doInBackGround", "Json parsing error: " + e.getMessage());
-                    myMapActivity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(myMapActivity.getApplicationContext(),
-                                    "Json parsing error: " + e.getMessage(),
-                                    Toast.LENGTH_LONG).show();
-                        }
-                    });
+
+                else{
+                    JSONObject myUser = new JSONObject(jsonResponse);
+                    myTempUser = new UserObject(myUser);
+                    myMapActivity.myUserProfile = new UserObject(myUser);
+                    Log.e("Inside doInBackGround", "My user ID: " + myTempUser.id);
+                    Log.e("Inside doInBackGround", "My user name: " + myTempUser.fname);
+                    Log.e("Inside doInBackGround", "My user img URL: " + myTempUser.userImage);
                 }
-                responseStatus = 2;
-            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-        });
+//        okHttpClient.newCall(request).enqueue(new Callback() {
+//            @Override
+//            public void onFailure(okhttp3.Call call, IOException e) {
+//                responseStatus = 1;
+//            }
+//
+//            @Override
+//            public void onResponse(okhttp3.Call call, Response response) throws IOException {
+//                JSONObject myUser;
+//                JSONArray users;
+//
+//                try {
+//                    String jsonResponse = response.body().string();
+//                    Log.e("Inside doInBackGround", "Response from url in Get2Body(): " + SERVER_API_URL + additionalURL );
+//
+//                    if(typeOfCall == 1 ){
+//                        users = new JSONArray(jsonResponse);
+//                        for (int i = 0; i < users.length(); i++) {
+//                            UserObject user = new UserObject(users.getJSONObject(i));
+//                            tempUsersList.put(user.id, user);
+//                            Log.e("Inside doInBackGround", "Added tempUser: " + tempUsersList.size());
+//                            if (!myMapActivity.usersAround.containsKey(user.id)){
+//                                Log.e("Inside doInBackGround", "Added tempUser: " + user.id);
+//                                Log.e("Inside doInBackGround", "Added tempUser: " + user.fname);
+//                                myMapActivity.usersAround.put(user.id, user);
+//                            }
+//
+//                        }
+//                    }
+//
+//                    else{
+//                        myUser = new JSONObject(jsonResponse);
+//                        myTempUser = new UserObject(myUser);
+//                        //myMapActivity.myUserProfile = myTempUser;
+//                        Log.e("Inside doInBackGround", "My user ID: " + myTempUser.id);
+//                        Log.e("Inside doInBackGround", "My user img URL: " + myTempUser.userImage);
+//
+//
+//                    }
+//                }
+//                catch (final JSONException e) {
+//                    Log.e("Inside doInBackGround", "Json parsing error: " + e.getMessage());
+//                    myMapActivity.runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            Toast.makeText(myMapActivity.getApplicationContext(),
+//                                    "Json parsing error: " + e.getMessage(),
+//                                    Toast.LENGTH_LONG).show();
+//                        }
+//                    });
+//                }
+//                responseStatus = 2;
+//            }
+    //});
 
-        while(responseStatus < 1){}
+        //while(responseStatus < 1){}
 
         return 1;
     }
@@ -156,7 +190,7 @@ public class GetUsers extends AsyncTask<Void, Void, Integer> {
         }
         else{
             if(typeOfCall == 2) {
-                myMapActivity.myUserProfile = myTempUser;
+                //myMapActivity.myUserProfile = myTempUser;
             }
         }
     }

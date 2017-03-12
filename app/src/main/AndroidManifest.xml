@@ -22,9 +22,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".MapActivity"
-            android:label="@string/map_screen" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

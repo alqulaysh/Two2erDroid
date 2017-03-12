@@ -26,7 +26,7 @@ class BookingListAdapter extends BaseAdapter {
 
     //Get the objects from the database:
     public ArrayList<BookingObject> getBookings() throws ExecutionException, InterruptedException {
-        ArrayList<BookingObject> taskList = new ArrayList<BookingObject>();
+        ArrayList<BookingObject> taskList;
         taskList = new GetBookings().execute().get();
 
         return taskList;

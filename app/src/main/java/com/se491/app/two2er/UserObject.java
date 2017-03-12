@@ -1,5 +1,7 @@
 package com.se491.app.two2er;
 
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -20,8 +22,16 @@ public class UserObject {
     public UserObject(JSONObject user) throws JSONException {
         this.id = user.getString("_id");
         String[] fullName = user.getString("name").split(" ");
-        this.fname = fullName[0];
-        this.lname = fullName[1];
+        Log.e("Inside UserObject", "My user fullName: " + fullName.length);
+        Log.e("Inside UserObject", "My user fullName: " + user.getString("name"));
+
+        if(fullName.length >= 1) {
+            this.fname = fullName[0];
+        }
+        if(fullName.length == 2) {
+            this.lname = fullName[1];
+        }
+
         this.age = user.getString("age");
         this.email = user.getString("email");
         this.userImage = user.getString("image_url");

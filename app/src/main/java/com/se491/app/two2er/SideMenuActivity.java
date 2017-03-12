@@ -38,9 +38,9 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.se491.app.two2er.Fragments.Bookings.BookingsFragment;
 import com.se491.app.two2er.Fragments.ScheduleFragment;
 import com.se491.app.two2er.Fragments.UserProfileFragment;
-import com.se491.app.two2er.Fragments.Bookings.BookingsFragment;
 import com.stormpath.sdk.Stormpath;
 
 import java.util.HashMap;
@@ -68,7 +68,7 @@ public class SideMenuActivity extends AppCompatActivity
         View mapView;
 
 
-    //Location Variables:
+        //Location Variables:
         LocationRequest mLocationReq;
         Location mLastLocation;
         Marker mCurrLocationMarker;
@@ -77,7 +77,7 @@ public class SideMenuActivity extends AppCompatActivity
         HashMap<String, UserObject> usersAround;
         HashMap<String, UserObject> tempRecUsers = new HashMap<String, UserObject>();
 
-    //MyUser Profile:
+        //MyUser Profile:
         UserObject myUserProfile;
 
     @Override
@@ -124,7 +124,6 @@ public class SideMenuActivity extends AppCompatActivity
         //fm.beginTransaction().replace(R.id.content_frame, new ScheduleFragment()).commit();
         android.support.v4.app.FragmentManager sFm = getSupportFragmentManager();
         sFm.beginTransaction().replace(R.id.map, sMapFragment).commit();
-        //startActivity(new Intent(this, MapActivity.class));
 
         sMapFragment.getMapAsync(this);
     }
@@ -175,8 +174,7 @@ public class SideMenuActivity extends AppCompatActivity
 
         if (id == R.id.nav_userprofile) {
             Bundle bundle = new Bundle();
-            if(myUserProfile != null ){
-                System.out.println(myUserProfile.fname + " 3++++++++++++++++++++++++++");
+            if(myUserProfile.fname != null){
                 bundle.putString("fname", myUserProfile.fname);
                 bundle.putString("lname", myUserProfile.lname);
                 bundle.putString("email", myUserProfile.email);
@@ -369,7 +367,6 @@ public class SideMenuActivity extends AppCompatActivity
                 float nCameraZoom = mGoogleMap.getCameraPosition().zoom;
 
                 mGoogleMap.addMarker(markerOptions);
-                //it.remove(); // avoids a ConcurrentModificationException
             }
         }
     }
@@ -395,14 +392,6 @@ public class SideMenuActivity extends AppCompatActivity
         double myCameraLong = ltMyCameraCoords.longitude;
         double myCameraLat = ltMyCameraCoords.latitude;
         float fMyCameraZoom = fMyCameraPostion.zoom;
-        //Clear before we make a call for new Users Around Me:
-        try {
-            Integer result = new GetUsers(this, 5.0, myCameraLong, myCameraLat).execute().get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
+        new GetUsers(this, 5.0, myCameraLong, myCameraLat).execute();
     }
 }

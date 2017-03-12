@@ -47,13 +47,6 @@ public class UserProfileFragment extends Fragment {
         userlName.setText(userlNameVal);
         userEmail.setText(sUserEmail );
 
-        try {
-            new GetUsers(((SideMenuActivity) getActivity())).execute().get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
         Log.e("Inside UserFrag", "userEmail: " + userImgURL);
 
         if(!userImgURL.isEmpty() || userImgURL == "") {
@@ -75,6 +68,7 @@ public class UserProfileFragment extends Fragment {
             @Override
             public void onClick(View v)
             {
+
                 FragmentManager fm = getFragmentManager();
                 PWDDialogFragment dialogFragment = new PWDDialogFragment();
                 dialogFragment.show(fm, "Change User Password!");
@@ -87,6 +81,7 @@ public class UserProfileFragment extends Fragment {
             @Override
             public void onClick(View v)
             {
+                userfName = (EditText) v.findViewById(R.id.nameField);
                 try {
                     upDateMyUser();
                 } catch (ExecutionException e) {
