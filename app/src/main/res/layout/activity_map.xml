@@ -7,9 +7,6 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
-
-
-
         <fragment
             android:layout_width="2dp"
             android:layout_height="match_parent"

@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -22,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -40,9 +42,10 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.se491.app.two2er.Fragments.Bookings.BookingsFragment;
 import com.se491.app.two2er.Fragments.ScheduleFragment;
-import com.se491.app.two2er.Fragments.UserProfileFragment;
+import com.se491.app.two2er.Fragments.UserProfile.UserProfileFragment;
 import com.stormpath.sdk.Stormpath;
 
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -107,8 +110,6 @@ public class SideMenuActivity extends AppCompatActivity
             e.printStackTrace();
         }
 
-        //System.out.println(myUserProfile.name + " 2++++++++++++++++++++++++++");
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -117,11 +118,25 @@ public class SideMenuActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        //Set the sidemenu image to users profile picture:
+        View hView =  navigationView.getHeaderView(0);
+        ImageView nav_user = (ImageView)hView.findViewById(R.id.Nav_imageView);
+
+        if(!myUserProfile.userImage.isEmpty() || myUserProfile.userImage == "") {
+            try {
+                new DownloadImageTask(nav_user)
+                        .execute(myUserProfile.userImage).get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
+
         navigationView.setNavigationItemSelectedListener(this);
 
         FragmentManager fm = getFragmentManager();
 
-        //fm.beginTransaction().replace(R.id.content_frame, new ScheduleFragment()).commit();
         android.support.v4.app.FragmentManager sFm = getSupportFragmentManager();
         sFm.beginTransaction().replace(R.id.map, sMapFragment).commit();
 
@@ -142,6 +157,7 @@ public class SideMenuActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+
         return true;
     }
 
@@ -200,17 +216,18 @@ public class SideMenuActivity extends AppCompatActivity
             Stormpath.logout();
             startActivity(new Intent(SideMenuActivity.this, LoginActivity.class));
             finish();
-        } else if (id == R.id.nav_uploadimage) {
-            startActivity(new Intent(SideMenuActivity.this, UploadImageActivity.class));
-            finish();
-        } else if (id == R.id.nav_changepassword) {
-            startActivity(new Intent(SideMenuActivity.this, ChangePasswordActivity.class));
-            finish();
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
         }
+//        else if (id == R.id.nav_uploadimage) {
+//            startActivity(new Intent(SideMenuActivity.this, UploadImageActivity.class));
+//            finish();
+//        } else if (id == R.id.nav_changepassword) {
+//            startActivity(new Intent(SideMenuActivity.this, ChangePasswordActivity.class));
+//            finish();
+//        } else if (id == R.id.nav_share) {
+//
+//        } else if (id == R.id.nav_send) {
+//
+//        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -393,5 +410,30 @@ public class SideMenuActivity extends AppCompatActivity
         double myCameraLat = ltMyCameraCoords.latitude;
         float fMyCameraZoom = fMyCameraPostion.zoom;
         new GetUsers(this, 5.0, myCameraLong, myCameraLat).execute();
+    }
+
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
     }
 }

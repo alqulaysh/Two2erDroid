@@ -4,31 +4,29 @@ android:layout_width="fill_parent"
 android:layout_height="fill_parent"
 android:orientation="vertical" >
 
-<ImageView
-    android:id="@+id/imgView"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:layout_weight="1" >
-</ImageView>
+<!--<ImageView-->
+    <!--android:id="@+id/imgView"-->
+    <!--android:layout_width="fill_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1" >-->
+<!--</ImageView>-->
 
-<Button
-    android:id="@+id/buttonLoadPicture"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:layout_weight="0"
-    android:onClick="loadImagefromGallery"
-    android:text="Load Picture" >
-</Button>
+<!--<Button-->
+    <!--android:id="@+id/buttonLoadPicture"-->
+    <!--android:layout_width="fill_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:layout_weight="0"-->
+    <!--android:text="Load Picture" >-->
+<!--</Button>-->
 
-<Button
-    android:id="@+id/buttonImportPicture"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:layout_weight="0"
-    android:onClick="saveImage"
-    android:text="Save Picture" >
-</Button>
+<!--<Button-->
+    <!--android:id="@+id/buttonImportPicture"-->
+    <!--android:layout_width="fill_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:layout_weight="0"-->
+    <!--android:text="Save Picture" >-->
+<!--</Button>-->
 
 </LinearLayout>

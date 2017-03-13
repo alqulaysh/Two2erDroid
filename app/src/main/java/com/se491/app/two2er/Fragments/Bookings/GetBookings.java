@@ -142,6 +142,5 @@ public class GetBookings extends AsyncTask<Object, Object, ArrayList<BookingObje
     @Override
     protected void onPostExecute(ArrayList<BookingObject> result) {
         super.onPostExecute(result);
-
     }
 }

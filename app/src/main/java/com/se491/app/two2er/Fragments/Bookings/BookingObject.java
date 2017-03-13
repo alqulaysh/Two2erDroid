@@ -13,6 +13,7 @@ public class BookingObject {
     String MeetingDate;
     String CreationDate;
     String tutorUserId;
+    String tutor_name;
     String studentUserId;
 
     public BookingObject(){        this.status = "Test Status";
@@ -24,6 +25,7 @@ public class BookingObject {
         this.MeetingDate = user.getString("scheduledmeetingdate");
         this.CreationDate = user.getString("bookingcreationdate");
         this.tutorUserId = user.getString("student_user_id");
+        this.tutor_name = user.getString("tutor_name");
         this.studentUserId = user.getString("student_user_id");
     }
 }

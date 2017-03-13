@@ -19,31 +19,31 @@
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_menu_manage"
             android:title="Bookings" />
-        <item
-            android:id="@+id/nav_uploadimage"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Change Profile Image" />
-        <item
-            android:id="@+id/nav_changepassword"
-            android:icon="@drawable/changepassword"
-            android:title="Change Password" />
+        <!--<item-->
+            <!--android:id="@+id/nav_uploadimage"-->
+            <!--android:icon="@drawable/ic_menu_gallery"-->
+            <!--android:title="Change Profile Image" />-->
+        <!--<item-->
+            <!--android:id="@+id/nav_changepassword"-->
+            <!--android:icon="@drawable/changepassword"-->
+            <!--android:title="Change Password" />-->
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_menu_logout"
             android:title="Log Out" />
     </group>
 
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
-        </menu>
-    </item>
+    <!--<item android:title="Communicate">-->
+        <!--<menu>-->
+            <!--<item-->
+                <!--android:id="@+id/nav_share"-->
+                <!--android:icon="@drawable/ic_menu_share"-->
+                <!--android:title="Share" />-->
+            <!--<item-->
+                <!--android:id="@+id/nav_send"-->
+                <!--android:icon="@drawable/ic_menu_send"-->
+                <!--android:title="Send" />-->
+        <!--</menu>-->
+    <!--</item>-->
 
 </menu>
