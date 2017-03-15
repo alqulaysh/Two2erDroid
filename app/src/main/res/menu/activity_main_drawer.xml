@@ -5,20 +5,23 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_map"
-            android:icon="@drawable/ic_menu_mappin"
-            android:title="Map" />
+            android:icon="@drawable/findtutor"
+            android:title="Find Tutors" />
         <item
             android:id="@+id/nav_userprofile"
-            android:icon="@drawable/ic_menu_userprofile"
+            android:icon="@drawable/user"
             android:title="User Profile" />
         <item
-            android:id="@+id/nav_schedule"
-            android:icon="@drawable/ic_menu_schedule"
-            android:title="Schedule" />
-        <item
             android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/bookings"
             android:title="Bookings" />
+
+        <item android:title="Your Sessions"
+            android:icon="@drawable/yoursessions"/>
+        <item
+            android:id="@+id/nav_schedule"
+            android:icon="@drawable/schdule"
+            android:title="Schedule" ></item>
         <!--<item-->
             <!--android:id="@+id/nav_uploadimage"-->
             <!--android:icon="@drawable/ic_menu_gallery"-->
@@ -28,8 +31,16 @@
             <!--android:icon="@drawable/changepassword"-->
             <!--android:title="Change Password" />-->
         <item
+            android:icon="@drawable/wallet"
+            android:title="Payment" />
+        <item
+            android:icon="@drawable/settings"
+            android:title="Settings" />
+        <item android:title="Help"
+              android:icon="@drawable/help"/>
+        <item
             android:id="@+id/nav_logout"
-            android:icon="@drawable/ic_menu_logout"
+            android:icon="@drawable/logout"
             android:title="Log Out" />
     </group>
 
