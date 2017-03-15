@@ -13,7 +13,7 @@
     <!-- Strings related to Register -->
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
-    <string name="existing_account">Already have account? Login here.</string>
+    <string name="existing_account">Login here.</string>
     <string name="signup">Sign Up</string>
     <string name="create_pw">Create Password</string>
 

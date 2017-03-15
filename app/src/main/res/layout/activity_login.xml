@@ -59,48 +59,48 @@
             android:layout_marginBottom="15dp" />
 
 
-
-
-
-        <EditText  android:id="@+id/login_password"
+        <EditText
+            android:id="@+id/login_password"
             android:layout_width="300dp"
-            android:singleLine="true"
-            android:password="true"
-            android:hint="@string/password"
-            android:textSize="14dp"
-            android:fontFamily="sans-serif-condensed"
-            android:textColorHint="#fff"
-            android:background="@drawable/passwordbackground"
             android:layout_height="45dp"
-            android:layout_centerVertical="true"
             android:layout_alignStart="@+id/btnLogin"
-            android:paddingLeft="10dp" />
-
-        <EditText android:id="@+id/login_email"
-        android:layout_width="300dp"
-        android:layout_height="45dp"
-            android:singleLine="false"
-            android:hint="@string/prompt_email"
-            android:textSize="14dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/passwordbackground"
             android:fontFamily="sans-serif-condensed"
+            android:hint="@string/password"
+            android:paddingLeft="10dp"
+            android:password="true"
+            android:singleLine="true"
             android:textColorHint="#fff"
-            android:background="@drawable/emaaaaail"
-            android:selectAllOnFocus="false"
-            android:layout_marginBottom="11dp"
+            android:textSize="12sp" />
+
+        <EditText
+            android:id="@+id/login_email"
+            android:layout_width="300dp"
+            android:layout_height="45dp"
             android:layout_above="@+id/login_password"
             android:layout_alignStart="@+id/login_password"
-            android:paddingLeft="10dp" />
+            android:layout_marginBottom="11dp"
+            android:background="@drawable/emaaaaail"
+            android:fontFamily="sans-serif-condensed"
+            android:hint="@string/prompt_email"
+            android:paddingLeft="10dp"
+            android:selectAllOnFocus="false"
+            android:singleLine="false"
+            android:textColorHint="#fff"
+            android:textSize="12sp" />
 
         <TextView
-            android:text="@string/curr_version"
+            android:id="@+id/current_version"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/current_version"
-            android:layout_marginBottom="54dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
+            android:layout_marginBottom="54dp"
+            android:fontFamily="monospace"
+            android:text="@string/curr_version"
             android:textColor="@color/cast_expanded_controller_text_color"
-            android:fontFamily="monospace" />
+            android:textSize="10sp" />
 
     </RelativeLayout>
 
