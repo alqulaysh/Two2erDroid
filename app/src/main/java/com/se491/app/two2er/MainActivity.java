@@ -62,9 +62,92 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
         setContentView(R.layout.activity_main);
 
-        askForPermission(Manifest.permission.ACCESS_FINE_LOCATION,PERMISSION_ACCESS_FINE_LOCATION);
-        askForPermission(Manifest.permission.READ_EXTERNAL_STORAGE, READ_EXST);
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
 
+        googleApiClient.connect();
+
+        MyGoogleApiClient_Singleton.getInstance(googleApiClient);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(permissions.length > 0) {
+            if (ActivityCompat.checkSelfPermission(this, permissions[0]) == PackageManager.PERMISSION_GRANTED) {
+                switch (requestCode) {
+                    //Location
+                    case 1:
+                        //askForGPS();
+                        break;
+                    //Call
+                    case 2:
+                        Intent callIntent = new Intent(Intent.ACTION_CALL);
+                        callIntent.setData(Uri.parse("tel:" + "{This is a telephone number}"));
+                        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                            startActivity(callIntent);
+                        }
+                        break;
+                    //Write external Storage
+                    case 3:
+                        break;
+                    //Read External Storage
+                    case 4:
+                        Intent imageIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(imageIntent, 11);
+                        break;
+                    //Camera
+                    case 5:
+                        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                            startActivityForResult(takePictureIntent, 12);
+                        }
+                        break;
+                    //Accounts
+                    case 6:
+                        AccountManager manager = (AccountManager) getSystemService(ACCOUNT_SERVICE);
+
+                }
+
+                Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (googleApiClient != null) {
+            googleApiClient.connect();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        Log.e(MainActivity.class.getSimpleName(), "Connected to Google Play Services!");
+
+        askForPermission(new String []{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.ACCESS_COARSE_LOCATION},PERMISSION_ACCESS_FINE_LOCATION | READ_EXST);
+
+        while(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+        }
+
+//        askForPermission(Manifest.permission.READ_EXTERNAL_STORAGE, READ_EXST);
+//
+       while(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+        }
 
         if (!Stormpath.isInitialized()) {
             Stormpath.setLogLevel(StormpathLogger.VERBOSE);
@@ -97,78 +180,15 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             Log.d("Refreshed Token", "FB Token: " + FirebaseInstanceId.getInstance().getToken());
 
         }
-    }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(ActivityCompat.checkSelfPermission(this, permissions[0]) == PackageManager.PERMISSION_GRANTED){
-            switch (requestCode) {
-                //Location
-                case 1:
-                    askForGPS();
-                    break;
-                //Call
-                case 2:
-                    Intent callIntent = new Intent(Intent.ACTION_CALL);
-                    callIntent.setData(Uri.parse("tel:" + "{This is a telephone number}"));
-                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                        startActivity(callIntent);
-                    }
-                    break;
-                //Write external Storage
-                case 3:
-                    break;
-                //Read External Storage
-                case 4:
-                    Intent imageIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(imageIntent, 11);
-                    break;
-                //Camera
-                case 5:
-                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                        startActivityForResult(takePictureIntent, 12);
-                    }
-                    break;
-                //Accounts
-                case 6:
-                    AccountManager manager = (AccountManager) getSystemService(ACCOUNT_SERVICE);
-
-            }
-
-            Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show();
-        }else{
-            Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (googleApiClient != null) {
-            googleApiClient.connect();
-        }
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-
-    @Override
-    public void onConnected(Bundle bundle) {
-        Log.i(MainActivity.class.getSimpleName(), "Connected to Google Play Services!");
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-
-            double lat = lastLocation.getLatitude(), lon = lastLocation.getLongitude();
-            lat_t.setText(String.valueOf(lat));
-            lon_t.setText(String.valueOf(lon));
-        }
+//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+//                == PackageManager.PERMISSION_GRANTED) {
+//            Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+//
+//            double lat = lastLocation.getLatitude(), lon = lastLocation.getLongitude();
+//            lat_t.setText(String.valueOf(lat));
+//            lon_t.setText(String.valueOf(lon));
+//        }
 
     }
 
@@ -213,22 +233,22 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         });
     }
 
-    private void askForPermission(String permission, Integer requestCode) {
-        if (ContextCompat.checkSelfPermission(MainActivity.this, permission) != PackageManager.PERMISSION_GRANTED) {
+    private void askForPermission(String[] permissions, Integer requestCode) {
+        if (ContextCompat.checkSelfPermission(MainActivity.this, permissions[0]) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(MainActivity.this, permissions[1]) != PackageManager.PERMISSION_GRANTED) {
 
             // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, permission)) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, permissions[0]) || ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, permissions[1])) {
 
                 //This is called if user has denied the permission before
                 //In this case I am just asking the permission again
-                ActivityCompat.requestPermissions(MainActivity.this, new String[]{permission}, requestCode);
+                ActivityCompat.requestPermissions(MainActivity.this, permissions, requestCode);
 
             } else {
 
-                ActivityCompat.requestPermissions(MainActivity.this, new String[]{permission}, requestCode);
+                ActivityCompat.requestPermissions(MainActivity.this, permissions, requestCode);
             }
         } else {
-            Toast.makeText(this, "" + permission + " is already granted.", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "" + permission + " is already granted.", Toast.LENGTH_SHORT).show();
         }
     }
 }

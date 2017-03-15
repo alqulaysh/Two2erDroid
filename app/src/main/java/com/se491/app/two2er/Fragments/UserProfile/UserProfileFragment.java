@@ -82,6 +82,7 @@ public class UserProfileFragment extends Fragment implements
                 FragmentManager fm = getFragmentManager();
                 ChangeProfileImageDialog changeImgdialogFragment = new ChangeProfileImageDialog();
                 changeImgdialogFragment.setTargetFragment(myThis,1);
+
                 changeImgdialogFragment.show(fm, "UserProfileFragment");
 
             }
