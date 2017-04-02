@@ -23,7 +23,7 @@
             android:layout_alignBaseline="@+id/link_to_register"
             android:layout_alignBottom="@+id/link_to_register"
             android:layout_alignEnd="@+id/btnLogin"
-            android:textColor="@color/cast_expanded_controller_text_color" />
+            />
 
         <TextView android:id="@+id/link_to_register"
             android:layout_width="wrap_content"
@@ -32,7 +32,6 @@
             android:gravity="center"
             android:layout_marginBottom="139dp"
             android:fontFamily="sans-serif-smallcaps"
-            android:textColor="@color/cast_expanded_controller_text_color"
             android:textAlignment="center"
             android:layout_alignParentBottom="true"
             android:layout_alignStart="@+id/btnLogin" />
@@ -53,7 +52,6 @@
             android:textAlignment="center"
             android:background="@drawable/buttonclick"
             android:layout_height="38dp"
-            android:textColor="@color/cast_expanded_controller_text_color"
             android:layout_above="@+id/forgot_pw_link"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="15dp" />
@@ -99,7 +97,6 @@
             android:layout_marginBottom="54dp"
             android:fontFamily="monospace"
             android:text="@string/curr_version"
-            android:textColor="@color/cast_expanded_controller_text_color"
             android:textSize="10sp" />
 
     </RelativeLayout>
