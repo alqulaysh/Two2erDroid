@@ -17,10 +17,17 @@ import java.util.concurrent.ExecutionException;
 
 class BookingListAdapter extends BaseAdapter {
 
+    public interface ViewClickListener {
+
+        void onViewClick(View view);
+    }
+
+    private ViewClickListener listener;
+
     private LayoutInflater inflater;
     private ArrayList<BookingObject> apList = getBookings();
 
-    public BookingListAdapter(LayoutInflater v) throws ExecutionException, InterruptedException {
+    public BookingListAdapter(LayoutInflater v, ViewClickListener viewClickListener) throws ExecutionException, InterruptedException {
         inflater = v;
     }
 

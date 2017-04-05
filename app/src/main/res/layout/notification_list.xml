@@ -74,22 +74,22 @@
 
 
         <Button
+            android:id="@+id/button_accept"
             style="?android:attr/buttonStyleSmall"
-            android:id="@+id/button_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="10sp"
+            android:allowUndo="false"
             android:nestedScrollingEnabled="true"
             android:text="Accept"
-            android:allowUndo="false" />
+            android:textSize="10sp" />
 
         <Button
+            android:id="@+id/button_decline"
             style="?android:attr/buttonStyleSmall"
-            android:id="@+id/button_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="10sp"
-            android:text="Decline" />
+            android:text="Decline"
+            android:textSize="10sp" />
 
 
     </LinearLayout>

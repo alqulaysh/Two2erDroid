@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.se491.app.two2er.R;
@@ -23,12 +24,31 @@ public class BookingsFragment extends Fragment {
         mAPListView = (ListView) v.findViewById(R.id.list_ap);
 
         try {
-            mAPListView.setAdapter(new BookingListAdapter(inflater));
+            mAPListView.setAdapter(new BookingListAdapter(inflater, new BookingListAdapter.ViewClickListener() {
+                @Override
+                public void onViewClick(View view) {
+                    // do what you want with view
+
+                }
+            })
+            );
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+
+        Button acceptButton = (Button) v.findViewById(R.id.button_accept);
+        Button declineButton = (Button) v.findViewById(R.id.button_decline);
+
+        acceptButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+            }
+        });
 
         return v;
     }
