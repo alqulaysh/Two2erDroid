@@ -12,7 +12,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -24,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -42,6 +42,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.se491.app.two2er.Fragments.Bookings.BookingsFragment;
+import com.se491.app.two2er.Fragments.Bookings.CreateBooking;
 import com.se491.app.two2er.Fragments.ScheduleFragment;
 import com.se491.app.two2er.Fragments.UserProfile.UserProfileFragment;
 import com.stormpath.sdk.Stormpath;
@@ -59,7 +60,8 @@ public class SideMenuActivity extends AppCompatActivity
         com.google.android.gms.location.LocationListener,
         GoogleMap.OnCameraMoveListener,
         GoogleMap.OnCameraIdleListener,
-        NavigationView.OnNavigationItemSelectedListener{
+        NavigationView.OnNavigationItemSelectedListener,
+        GoogleMap.OnMarkerClickListener{
 
         SupportMapFragment sMapFragment;
         private static final int PERMISSION_ACCESS_FINE_LOCATION = 1;
@@ -71,6 +73,8 @@ public class SideMenuActivity extends AppCompatActivity
         GoogleMap mGoogleMap;
         View mapView;
 
+        //Booking fragment
+        android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
 
         //Location Variables:
         LocationRequest mLocationReq;
@@ -306,6 +310,8 @@ public class SideMenuActivity extends AppCompatActivity
                 }
             });
         }
+        // Create booking button
+        mGoogleMap.setOnMarkerClickListener(this);
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -415,6 +421,45 @@ public class SideMenuActivity extends AppCompatActivity
         double myCameraLat = ltMyCameraCoords.latitude;
         float fMyCameraZoom = fMyCameraPostion.zoom;
         new GetUsers(this, 5.0, myCameraLong, myCameraLat).execute();
+    }
+
+    @Override
+    public boolean onMarkerClick(final Marker marker) {
+
+        // Fake empty container layout
+        RelativeLayout lContainerLayout = new RelativeLayout(this);
+        lContainerLayout.setLayoutParams(new RelativeLayout.LayoutParams( RelativeLayout.LayoutParams.MATCH_PARENT , RelativeLayout.LayoutParams.MATCH_PARENT ));
+
+        // Custom view
+        Button bookingButton = new Button(this);
+        bookingButton.setText("Book Tutor");
+        RelativeLayout.LayoutParams lButtonParams = new RelativeLayout.LayoutParams( RelativeLayout.LayoutParams.MATCH_PARENT , RelativeLayout.LayoutParams.WRAP_CONTENT );
+        lButtonParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        bookingButton.setLayoutParams(lButtonParams);
+        lContainerLayout.addView(bookingButton);
+
+        // Adding full screen container
+        addContentView(lContainerLayout, new RelativeLayout.LayoutParams( RelativeLayout.LayoutParams.MATCH_PARENT , RelativeLayout.LayoutParams.MATCH_PARENT ) );
+
+
+        bookingButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(SideMenuActivity.this, marker.getSnippet(), Toast.LENGTH_LONG).show();
+
+                Bundle args = new Bundle();
+                args.putString("uID", marker.getSnippet());
+                CreateBooking bFragment = new CreateBooking();
+                // Show DialogFragment
+                bFragment.setArguments(args);
+                bFragment.show(fm, "Dialog Fragment");
+
+
+            }
+        });
+
+        return false;
     }
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
