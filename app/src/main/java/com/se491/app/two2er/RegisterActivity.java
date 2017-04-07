@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,19 +30,53 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
+public class RegisterActivity extends AppCompatActivity implements View.OnClickListener,AdapterView.OnItemSelectedListener  {
     private Button register;
     private EditText firstNameInput;
     private EditText lastNameInput;
     private EditText emailInput;
     private EditText passwordInput;
 
+    //////////////////////////////////////////////////////////
+    //////////////////// Spinner by Aziz /////////////////////
+    //////////////////////////////////////////////////////////
+    // Initializing a String Array for the Spinner
+    String[] plants = new String[]{
+            "Select Type of User",
+            "I want to be a student",
+            "I want to be a tutor",
+            //////////////////////////////////////////////////////////
+            ///////////////////////END//////////////////////////////
+            //////////////////////////////////////////////////////////
+
+
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //////////////////////////////////////////////////////////
+        //////////////////// Spinner by Aziz /////////////////////
+        //////////////////////////////////////////////////////////
 
         // Set View to register.xml
         setContentView(R.layout.activity_register);
+
+
+        // Get reference of widgets from XML layout
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+
+
+        // Initializing an ArrayAdapter
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
+                this, R.layout.spinner_item, plants
+        );
+        spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
+        spinner.setAdapter(spinnerArrayAdapter);
+        spinner.setOnItemSelectedListener(this);
+
+        //////////////////////////////////////////////////////////
+        ///////////////////////END//////////////////////////////
+        //////////////////////////////////////////////////////////
 
         register = (Button)findViewById(R.id.btnRegister);
         firstNameInput = (EditText) findViewById(R.id.reg_firstname);
@@ -132,4 +169,31 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         return builder.build();
     }
+    //////////////////////////////////////////////////////
+    /////////////////Spinner By Aziz/////////////////////
+    //////////////////////////////////////////////////////
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        TextView myText= (TextView) view;
+        if( myText.getText() == "Select Type of User" ){
+
+
+        }
+        else if( myText.getText() == "I want to be a student" )
+            Toast.makeText(this,"Student account selected" , Toast.LENGTH_SHORT).show();
+
+        else if( myText.getText() == "I want to be a tutor" )
+            Toast.makeText(this,"Tutor account selected" , Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+    //////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
+
+
 }

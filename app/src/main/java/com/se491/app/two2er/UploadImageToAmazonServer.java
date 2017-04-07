@@ -86,8 +86,8 @@ public class UploadImageToAmazonServer extends AsyncTask<String, Integer, String
     }
 
     public interface WebServiceInterface<E, R> {
-        public void success(E reslut);
+        void success(E reslut);
 
-        public void error(R Error);
+        void error(R Error);
     }
 }

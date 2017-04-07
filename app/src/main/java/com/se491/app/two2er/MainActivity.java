@@ -9,8 +9,10 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+
 import android.view.Window;
 import android.view.WindowManager;
+
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -26,11 +28,20 @@ import com.stormpath.sdk.StormpathConfiguration;
 import com.stormpath.sdk.StormpathLogger;
 import com.stormpath.sdk.models.StormpathError;
 
-public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+
+
+
+
+
+public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
+
+
 
     private static final int PERMISSION_ACCESS_FINE_LOCATION = 1;
     static final Integer GPS_SETTINGS = 0x7;
     static final Integer READ_EXST = 0x4;
+
+
 
     private GoogleApiClient mGoogleApiClient;
 
@@ -39,6 +50,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
+
         super.onCreate(savedInstanceState);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -54,7 +68,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 .build();
 
         mGoogleApiClient.connect();
+
+
+
     }
+
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -161,4 +180,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             //Toast.makeText(this, "" + permission + " is already granted.", Toast.LENGTH_SHORT).show();
         }
     }
+
+
 }

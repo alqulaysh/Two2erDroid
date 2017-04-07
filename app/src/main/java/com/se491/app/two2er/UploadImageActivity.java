@@ -78,7 +78,7 @@ public class UploadImageActivity extends AppCompatActivity {
                 // Get the cursor
                 Cursor cursor = getContentResolver().query(selectedImage,
                         filePathColumn, null, null, null);
-                // Move to first row
+                // Move to first spinner_item
                 cursor.moveToFirst();
 
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);

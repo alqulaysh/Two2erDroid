@@ -136,7 +136,7 @@ public class ChangeProfileImageDialog extends DialogFragment {
                 // Get the cursor
                 Cursor cursor = rootView.getContext().getContentResolver().query(selectedImage,
                         filePathColumn, null, null, null);
-                // Move to first row
+                // Move to first spinner_item
                 cursor.moveToFirst();
 
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
