@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center">
-
+        <!--
             <TextView
                 android:id="@+id/dText"
                 android:layout_width="match_parent"
@@ -50,13 +50,13 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:text="Selected time:" />
-
+            -->
             <Button
                 android:id="@+id/createBookingBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
-                android:text="Book session" />
+                android:text="Book Session" />
         </LinearLayout>
     </ScrollView>
 

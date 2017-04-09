@@ -8,7 +8,7 @@ import org.json.JSONObject;
  */
 
 public class BookingObject {
-    String id;
+    String bookingId;
     String status;
     String MeetingDate;
     String CreationDate;
@@ -20,7 +20,7 @@ public class BookingObject {
     }
 
     public BookingObject(JSONObject user) throws JSONException {
-        this.id = user.getString("_id");
+        this.bookingId = user.getString("_id");
         this.status = user.getString("status");
         this.MeetingDate = user.getString("scheduledmeetingdate");
         this.CreationDate = user.getString("bookingcreationdate");

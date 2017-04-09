@@ -3,9 +3,14 @@
  */
 package com.se491.app.two2er;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.stormpath.sdk.Stormpath;
 import com.stormpath.sdk.utils.StringUtils;
 
@@ -15,6 +20,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import okhttp3.Headers;
 import okhttp3.OkHttpClient;
@@ -186,12 +193,41 @@ public class GetUsers extends AsyncTask<Void, Void, Integer> {
             Log.e("Inside onPostExecute", "the size of TempUsers before Add: " + tempUsersList.size());
             //myMapActivity.usersAround.addAll(tempUsersList);
             Log.e("Inside onPostExecute", "the size of UsersAround after add: " + myMapActivity.usersAround.size());
-            myMapActivity.handleFindTutor();
+            //myMapActivity.handleFindTutor();
+            addUsersToMap();
+
         }
         else{
             if(typeOfCall == 2) {
                 //myMapActivity.myUserProfile = myTempUser;
             }
         }
+    }
+
+    private void addUsersToMap(){
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.tutormapicon));
+        Iterator it = tempUsersList.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry) it.next();
+            System.out.println(pair.getKey() + " = " + pair.getValue());
+            UserObject user = (UserObject) pair.getValue();
+            LatLng lNewLocation = new LatLng(user.dLat, user.dLong);
+            //Get the users name:
+            String sTitle = user.fname + " " + user.lname;
+
+
+            markerOptions.position(lNewLocation).title(sTitle);
+            //markerOptions.icon(BitmapDescriptorFactory.fromBitmap(myMapActivity.resizeMapIcons("genuser", 100, 100))); //icon and size of tutors icons inside Google Map
+
+            myMapActivity.mGoogleMap.addMarker(markerOptions);
+        }
+    }
+
+    // This method for changing the size of the tutors icons inside Google Map
+    private Bitmap resizeMapIcons(String iconName, int width, int height){
+        Bitmap imageBitmap = BitmapFactory.decodeResource(myMapActivity.getResources(),myMapActivity.getResources().getIdentifier(iconName, "drawable", myMapActivity.getPackageName()));
+        Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, width, height, false);
+        return resizedBitmap;
     }
 }

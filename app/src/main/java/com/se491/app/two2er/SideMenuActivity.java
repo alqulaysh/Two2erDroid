@@ -30,6 +30,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -57,11 +58,11 @@ public class SideMenuActivity extends AppCompatActivity
         implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        com.google.android.gms.location.LocationListener,
+        LocationListener,
         GoogleMap.OnCameraMoveListener,
         GoogleMap.OnCameraIdleListener,
         NavigationView.OnNavigationItemSelectedListener,
-        GoogleMap.OnMarkerClickListener{
+        GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowCloseListener {
 
         SupportMapFragment sMapFragment;
         private static final int PERMISSION_ACCESS_FINE_LOCATION = 1;
@@ -87,6 +88,11 @@ public class SideMenuActivity extends AppCompatActivity
 
         //MyUser Profile:
         UserObject myUserProfile;
+
+        //Book Tutor Button:
+        // Custom view
+        private Button bookingButton;
+        private RelativeLayout lContainerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -284,8 +290,6 @@ public class SideMenuActivity extends AppCompatActivity
     public void onMapReady(GoogleMap googleMap) {
         mGoogleMap = googleMap;
 
-
-
         if(mGoogleMap != null){
 
             //Set the listener for the Camera
@@ -312,6 +316,7 @@ public class SideMenuActivity extends AppCompatActivity
         }
         // Create booking button
         mGoogleMap.setOnMarkerClickListener(this);
+        mGoogleMap.setOnInfoWindowCloseListener(this);
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -400,7 +405,7 @@ public class SideMenuActivity extends AppCompatActivity
     }
 
     // This method for changing the size of the tutors icons inside Google Map
-    private Bitmap resizeMapIcons(String iconName, int width, int height){
+    public Bitmap resizeMapIcons(String iconName, int width, int height){
         Bitmap imageBitmap = BitmapFactory.decodeResource(getResources(),getResources().getIdentifier(iconName, "drawable", getPackageName()));
         Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, width, height, false);
         return resizedBitmap;
@@ -423,15 +428,15 @@ public class SideMenuActivity extends AppCompatActivity
         new GetUsers(this, 5.0, myCameraLong, myCameraLat).execute();
     }
 
+
     @Override
     public boolean onMarkerClick(final Marker marker) {
 
         // Fake empty container layout
-        RelativeLayout lContainerLayout = new RelativeLayout(this);
+        lContainerLayout = new RelativeLayout(this);
         lContainerLayout.setLayoutParams(new RelativeLayout.LayoutParams( RelativeLayout.LayoutParams.MATCH_PARENT , RelativeLayout.LayoutParams.MATCH_PARENT ));
-
         // Custom view
-        Button bookingButton = new Button(this);
+        bookingButton = new Button(this);
         bookingButton.setText("Book Tutor");
         RelativeLayout.LayoutParams lButtonParams = new RelativeLayout.LayoutParams( RelativeLayout.LayoutParams.MATCH_PARENT , RelativeLayout.LayoutParams.WRAP_CONTENT );
         lButtonParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
@@ -455,11 +460,18 @@ public class SideMenuActivity extends AppCompatActivity
                 bFragment.setArguments(args);
                 bFragment.show(fm, "Dialog Fragment");
 
-
             }
         });
 
         return false;
+    }
+
+    @Override
+    public void onInfoWindowClose(Marker marker) {
+        // Custom view
+        Log.e("InfoWindow", "Closed InfoWindow: " + usersAround.size());
+        //lContainerLayout.setVisibility(View.GONE);
+        bookingButton.setVisibility(View.GONE);
     }
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {

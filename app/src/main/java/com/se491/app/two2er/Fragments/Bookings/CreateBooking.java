@@ -12,9 +12,10 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.se491.app.two2er.R;
+
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Nithun on 4/5/2017.
@@ -31,6 +32,7 @@ public class CreateBooking  extends DialogFragment {
     public CreateBooking(){
         // Empty constructor
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -42,17 +44,17 @@ public class CreateBooking  extends DialogFragment {
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        dpResult = (DatePicker) view.findViewById(R.id.bookingDatePicker);
-        tpResult = (TimePicker) view.findViewById(R.id.boookingTimePicker);
+//        dpResult = (DatePicker) view.findViewById(R.bookingId.bookingDatePicker);
+//        tpResult = (TimePicker) view.findViewById(R.bookingId.boookingTimePicker);
         createBookingBtn = (Button) view.findViewById(R.id.createBookingBtn);
-        dateDisplay = (TextView) view.findViewById(R.id.dateText);
-        timeDisplay = (TextView) view.findViewById(R.id.timeText);
-
-        dateDisplay.setText(getCurrentDate());
-        //timeDisplay.setText(getCurrentTime());
-        Bundle mArgs = getArguments();
-        String myValue = mArgs.getString("uID");
-        timeDisplay.setText(myValue);
+//        dateDisplay = (TextView) view.findViewById(R.bookingId.dateText);
+//        timeDisplay = (TextView) view.findViewById(R.bookingId.timeText);
+//
+//        dateDisplay.setText(getCurrentDate());
+//        //timeDisplay.setText(getCurrentTime());
+//        Bundle mArgs = getArguments();
+//        String myValue = mArgs.getString("uID");
+//        timeDisplay.setText(myValue);
 
 
 
@@ -60,13 +62,24 @@ public class CreateBooking  extends DialogFragment {
 
             @Override
             public void onClick(View v) {
-                dateDisplay.setText(getCurrentDate());
-                timeDisplay.setText(getCurrentTime());
+//                dateDisplay.setText(getCurrentDate());
+//                timeDisplay.setText(getCurrentTime());
+                try {
+                    xCreateMyBookingRequest();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
             }
         });
 
 
+    }
+
+    public void xCreateMyBookingRequest() throws ExecutionException, InterruptedException {
+        new PostToBookings("58c4b437538533573d9a9aa1", "2017-06-04T16:30:00.000Z").execute().get();
     }
 
     private String getCurrentDate() {

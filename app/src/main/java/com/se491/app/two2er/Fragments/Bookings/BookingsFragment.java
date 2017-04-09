@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ListView;
 
 import com.se491.app.two2er.R;
@@ -37,18 +36,6 @@ public class BookingsFragment extends Fragment {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-
-        Button acceptButton = (Button) v.findViewById(R.id.button_accept);
-        Button declineButton = (Button) v.findViewById(R.id.button_decline);
-
-        acceptButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-            }
-        });
 
         return v;
     }
