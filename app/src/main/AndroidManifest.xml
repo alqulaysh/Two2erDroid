@@ -13,7 +13,8 @@
         android:icon="@mipmap/ic_launcher"
         android:label="2TR"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        >
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -68,6 +69,8 @@
         <service
             android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"
             android:enabled="true" />
+
+
 
     </application>
 

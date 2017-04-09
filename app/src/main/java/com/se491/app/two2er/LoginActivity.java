@@ -97,7 +97,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (password.contentEquals(""))
             password = "Password123";
 
-        final String finalEmail = email;
         Stormpath.login(email, password, new StormpathCallback<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
