@@ -21,22 +21,13 @@
         android:fitsSystemWindows="true"
         android:layout_gravity="start">
 
+
         <android.support.design.widget.NavigationView
             android:id="@+id/nav_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
             app:headerLayout="@layout/nav_header_main"
-            android:fitsSystemWindows="true"
-            >
-        </android.support.design.widget.NavigationView>
-
-        <android.support.design.widget.NavigationView
-            android:id="@+id/menu_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="50dp"
             app:menu="@menu/activity_main_drawer" />
 
         <android.support.design.widget.NavigationView

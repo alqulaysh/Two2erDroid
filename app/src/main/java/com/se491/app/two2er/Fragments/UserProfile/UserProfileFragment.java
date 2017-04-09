@@ -58,6 +58,7 @@ public class UserProfileFragment extends Fragment implements
         userlName.setText(userlNameVal);
         userEmail.setText(sUserEmail );
 
+
         Log.e("Inside UserFrag", "userEmail: " + userImgURL);
 
         if(!userImgURL.isEmpty() || userImgURL == "") {
