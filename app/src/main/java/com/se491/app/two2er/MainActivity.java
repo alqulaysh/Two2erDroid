@@ -31,8 +31,6 @@ import com.stormpath.sdk.models.StormpathError;
 
 
 
-
-
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
 
 

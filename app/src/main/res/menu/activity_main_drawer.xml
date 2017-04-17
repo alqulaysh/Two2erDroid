@@ -17,7 +17,9 @@
             android:title="Bookings" />
 
         <item android:title="Your Sessions"
-            android:icon="@drawable/yoursessions"/>
+            android:icon="@drawable/yoursessions"
+            android:id="@+id/nav_session"
+            />
         <item
             android:id="@+id/nav_schedule"
             android:icon="@drawable/schdule"

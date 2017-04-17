@@ -32,7 +32,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         login = (Button)findViewById(R.id.btnLogin);
         emailInput = (EditText) findViewById(R.id.login_email);
-        passwordInput = (EditText) findViewById(R.id.login_password);
+        passwordInput = (EditText) findViewById(R.id.editText2);
 
         login.setOnClickListener(this);
 
