@@ -70,6 +70,12 @@
             android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"
             android:enabled="true" />
 
+        <service
+            android:name=".LocationRefreshService"
+            android:exported="false"
+            android:description="@string/location_service_description">
+
+        </service>
 
 
     </application>

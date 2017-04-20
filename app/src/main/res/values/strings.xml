@@ -44,6 +44,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="location_service_description">Sends the users location to Two2er database</string>
 
     <string-array name="array_subjects">
         <item>Math</item>
