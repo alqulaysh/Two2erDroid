@@ -8,6 +8,7 @@
             android:id="@+id/switchprofile"
             android:icon="@drawable/swap"
             android:title="Switch Profile"
+            android:background="#000000"
             />
 
 
