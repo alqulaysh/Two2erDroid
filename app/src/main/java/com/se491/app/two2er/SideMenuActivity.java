@@ -180,6 +180,7 @@ public class SideMenuActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView botDrawerView = (NavigationView) findViewById(R.id.navigation_drawer_bottom);
         //Set the sidemenu image to users profile picture:
         View hView =  navigationView.getHeaderView(0);
         ImageView nav_user = (ImageView)hView.findViewById(R.id.Nav_imageView);
@@ -197,6 +198,7 @@ public class SideMenuActivity extends AppCompatActivity
 
         //Set our nav view Item Selected listener(its implemented by this activity):
         navigationView.setNavigationItemSelectedListener(this);
+        botDrawerView.setNavigationItemSelectedListener(this);
 
         //Get our search EditText:
         searchView = (FloatingSearchView) findViewById(R.id.searchView);

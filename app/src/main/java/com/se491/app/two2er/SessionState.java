@@ -12,7 +12,6 @@ public class SessionState {
     private static String Tag = "SessionState";
 
     private static eUserMode _userMode = eUserMode.STUDENT;
-
     public static synchronized eUserMode UserMode() {
         return _userMode;
     }
