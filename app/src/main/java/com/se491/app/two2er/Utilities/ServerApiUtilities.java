@@ -1,4 +1,4 @@
-package com.se491.app.two2er;
+package com.se491.app.two2er.Utilities;
 
 import com.stormpath.sdk.utils.StringUtils;
 

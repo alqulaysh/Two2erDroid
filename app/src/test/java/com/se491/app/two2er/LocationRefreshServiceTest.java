@@ -26,34 +26,10 @@ import static org.mockito.Mockito.verify;
  * Created by pazra on 4/23/2017.
  */
 
-public class NodeServerApiTest {
+public class LocationRefreshServiceTest {
 
-    private static OkHttpClient okHttpClient;
-    private int responseStatus;
-
-    @BeforeClass
-    public static void setupTestClass() {
-        okHttpClient = new OkHttpClient.Builder()
-                .build();
-    }
-
-    @Before
-    public void setup() {
-
-    }
-
-    // must mock everything...
     @Test
-    public void TestGetAllUsers() {
-        JSONObject obj = mock(JSONObject.class);
-        try {
-            obj.put("test","value");
-        }
-        catch (Exception ex) {
+    public void test() {
 
-        }
-
-
-        System.out.print("asdf");
     }
 }

@@ -1,4 +1,4 @@
-package com.se491.app.two2er;
+package com.se491.app.two2er.Enums;
 
 /**
  * Created by pazra on 4/23/2017.

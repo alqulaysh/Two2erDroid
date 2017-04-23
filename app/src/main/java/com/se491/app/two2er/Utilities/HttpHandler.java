@@ -1,7 +1,7 @@
 /**
  * Created by Nithun on 2/1/2017.
  */
-package com.se491.app.two2er;
+package com.se491.app.two2er.Utilities;
 
 import android.util.Log;
 

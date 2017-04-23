@@ -71,7 +71,7 @@
             android:enabled="true" />
 
         <service
-            android:name=".LocationRefreshService"
+            android:name=".Services.LocationRefreshService"
             android:exported="false"
             android:description="@string/location_service_description">
 

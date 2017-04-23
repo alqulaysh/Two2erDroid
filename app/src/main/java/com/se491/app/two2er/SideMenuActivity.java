@@ -48,6 +48,7 @@ import com.se491.app.two2er.Fragments.Bookings.CreateBooking;
 import com.se491.app.two2er.Fragments.ScheduleFragment;
 import com.se491.app.two2er.Fragments.UserProfile.UserProfileFragment;
 import com.se491.app.two2er.SearchView.MyFloatingSearchView;
+import com.se491.app.two2er.Services.LocationRefreshService;
 import com.stormpath.sdk.Stormpath;
 
 import java.io.InputStream;
@@ -287,6 +288,8 @@ public class SideMenuActivity extends AppCompatActivity
             Stormpath.logout();
             startActivity(new Intent(SideMenuActivity.this, LoginActivity.class));
             finish();
+        } else if (id == R.id.switchprofile) {
+            SessionState.toggleUserMode();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

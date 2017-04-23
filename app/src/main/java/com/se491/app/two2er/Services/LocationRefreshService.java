@@ -1,15 +1,12 @@
-package com.se491.app.two2er;
+package com.se491.app.two2er.Services;
 
 import android.app.IntentService;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
@@ -18,10 +15,11 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import com.se491.app.two2er.Enums.eUserMode;
+import com.se491.app.two2er.MyGoogleApiClient_Singleton;
+import com.se491.app.two2er.SessionState;
+import com.se491.app.two2er.Utilities.ServerApiUtilities;
 import com.stormpath.sdk.Stormpath;
-import com.stormpath.sdk.utils.StringUtils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -29,15 +27,12 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 import okhttp3.Callback;
-import okhttp3.FormBody;
-import okhttp3.Headers;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
-import okio.Buffer;
 
 /**
  * Created by pazra on 4/15/2017.
@@ -125,6 +120,10 @@ public class LocationRefreshService extends IntentService implements GoogleApiCl
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
+        if (intent == null) {
+            return;
+        }
+
         try {
             startLocationUpdate();
             while (isRunning) {
