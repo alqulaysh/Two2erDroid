@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -24,6 +26,59 @@ import com.se491.app.two2er.R;
 import com.se491.app.two2er.SideMenuActivity;
 
 import java.io.InputStream;
+import java.util.concurrent.ExecutionException;
+import android.app.FragmentManager;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.location.Location;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.se491.app.two2er.Fragments.Bookings.BookingsFragment;
+import com.se491.app.two2er.Fragments.Bookings.CreateBooking;
+import com.se491.app.two2er.Fragments.ScheduleFragment;
+import com.se491.app.two2er.Fragments.UserProfile.UserProfileFragment;
+import com.stormpath.sdk.Stormpath;
+
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 public class UserProfileFragment extends Fragment implements
@@ -43,7 +98,11 @@ public class UserProfileFragment extends Fragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //R.nameField
+
+
         myThis = this;
+
+
         v = inflater.inflate(R.layout.fragment_userprofile, container, false);
         userProfileImage = (ImageView) v.findViewById(R.id.userProfileImgV);
         userfName = (EditText) v.findViewById(R.id.nameField);
@@ -130,6 +189,8 @@ public class UserProfileFragment extends Fragment implements
 
         return v;
     }
+
+
 
     public void upDateMyUser() throws ExecutionException, InterruptedException {
         new PostUpdates(myName).execute().get();

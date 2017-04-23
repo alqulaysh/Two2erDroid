@@ -7,4 +7,5 @@
     android:padding="10dp"
     android:textSize="12dp"
     android:fontFamily="sans-serif"
+    android:textColorHint="#ffffff"
     />

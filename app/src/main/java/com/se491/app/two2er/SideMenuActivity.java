@@ -213,7 +213,10 @@ public class SideMenuActivity extends AppCompatActivity
                 UserProfileFragment userProfileFragment = new UserProfileFragment();
                 userProfileFragment.setArguments(bundle);
 
+
+
                 fm.beginTransaction().replace(R.id.content_frame,userProfileFragment).commit();
+
             }
         } else if (id == R.id.nav_map) {
 

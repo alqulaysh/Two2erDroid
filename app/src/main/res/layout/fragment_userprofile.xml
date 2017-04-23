@@ -7,148 +7,125 @@
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="0dp">
 
-    <ScrollView
-        android:layout_width="0dp"
-        android:layout_height="413dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="6dp"
-        android:scrollbarStyle="insideOverlay"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userProfileImgV"
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="136dp"
+        android:background="@drawable/headerprofile"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        tools:layout_constraintRight_creator="1"
-        android:layout_marginStart="6dp"
-        android:layout_marginEnd="6dp"
-        tools:layout_constraintLeft_creator="1"
-        android:layout_marginTop="-191dp"
-        app:layout_constraintLeft_toRightOf="parent"
-        tools:layout_editor_absoluteX="225dp">
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:weightSum="1">
+    <ImageView
+        android:id="@+id/userProfileImgV"
+        android:layout_width="63dp"
+        android:layout_height="52dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView4"
+        app:srcCompat="@drawable/genuser"
+        android:layout_marginTop="31dp"
+        tools:layout_editor_absoluteY="41dp"
+        tools:layout_editor_absoluteX="165dp" />
 
-            <ImageView
-                android:id="@+id/imageView4"
-                android:layout_width="wrap_content"
-                android:layout_height="136dp"
-                android:background="@drawable/headerprofile"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+    <EditText
+        android:id="@+id/nameField"
+        android:layout_width="280dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="62dp"
+        android:background="@drawable/profiledatabackground"
+        android:ems="10"
+        android:hint="First Name"
+        android:inputType="textNoSuggestions|textPersonName"
+        android:text="John"
+        android:textAlignment="textStart"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userProfileImgV" />
 
-            <ImageView
-                android:id="@+id/userProfileImgV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/imageView4"
-                app:srcCompat="@drawable/genuser" />
+    <EditText
+        android:id="@+id/lNameField"
+        android:layout_width="280dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/profiledatabackground"
+        android:ems="10"
+        android:hint="Last Name"
+        android:inputType="textPersonName"
+        android:text="Doe"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameField" />
 
-            <EditText
-                android:id="@+id/nameField"
-                android:layout_width="280dp"
-                android:layout_height="35dp"
-                android:background="@drawable/profiledatabackground"
-                android:ems="10"
-                android:hint="First Name"
-                android:inputType="textNoSuggestions|textPersonName"
-                android:text="John"
-                android:textAlignment="textStart"
-                app:layout_constraintHorizontal_bias="0.495"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/userProfileImgV" />
+    <EditText
+        android:id="@+id/emailField"
+        android:layout_width="280dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/profiledatabackground"
+        android:ems="10"
+        android:hint="Email"
+        android:inputType="textEmailAddress|textEmailSubject|textPersonName"
+        android:text="none@gmail.com"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lNameField" />
 
-            <EditText
-                android:id="@+id/lNameField"
-                android:layout_width="280dp"
-                android:layout_height="35dp"
-                android:background="@drawable/profiledatabackground"
-                android:ems="10"
-                android:hint="Last Name"
-                android:inputType="textPersonName"
-                android:text="Doe"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nameField"
-                android:layout_marginTop="8dp" />
+    <EditText
+        android:id="@+id/univField"
+        android:layout_width="280dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/profiledatabackground"
+        android:ems="10"
+        android:hint="School Name"
+        android:inputType="textPersonName"
+        android:text="DePaul University"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailField" />
 
-            <EditText
-                android:id="@+id/emailField"
-                android:layout_width="280dp"
-                android:layout_height="35dp"
-                android:background="@drawable/profiledatabackground"
-                android:ems="10"
-                android:hint="Email"
-                android:inputType="textEmailAddress|textEmailSubject|textPersonName"
-                android:text="none@gmail.com"
-                app:layout_constraintHorizontal_bias="0.495"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lNameField" />
+    <EditText
+        android:id="@+id/majorField"
+        android:layout_width="280dp"
+        android:layout_height="40dp"
+        android:background="@drawable/profiledatabackground"
+        android:ems="10"
+        android:hint="Subject"
+        android:inputType="textPersonName"
+        android:text="Math"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/univField"
+        android:layout_marginTop="10dp" />
 
-            <EditText
-                android:id="@+id/majorField"
-                android:layout_width="280dp"
-                android:layout_height="40dp"
-                android:background="@drawable/profiledatabackground"
-                android:ems="10"
-                android:hint="Subject"
-                android:inputType="textPersonName"
-                android:text="Math"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/univField" />
+    <Button
+        android:id="@+id/update_btn"
+        android:layout_width="280dp"
+        android:layout_height="50dp"
+        android:background="@drawable/bluebuttonbackground"
+        android:text="Update My Profile"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        app:layout_constraintBottom_toTopOf="@+id/changepwd_btn"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/majorField"
+        app:layout_constraintVertical_bias="1.0" />
 
-            <EditText
-                android:id="@+id/univField"
-                android:layout_width="280dp"
-                android:layout_height="35dp"
-                android:background="@drawable/profiledatabackground"
-                android:ems="10"
-                android:hint="School Name"
-                android:inputType="textPersonName"
-                android:text="DePaul University"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/emailField" />
-
-            <Button
-                android:id="@+id/update_btn"
-                android:layout_width="280dp"
-                android:layout_height="50dp"
-                android:background="@drawable/bluebuttonbackground"
-                android:text="Update My Profile"
-                android:textColor="@color/common_google_signin_btn_text_dark_default"
-                app:layout_constraintBottom_toTopOf="@+id/changepwd_btn"
-                app:layout_constraintHorizontal_bias="0.495"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/majorField"
-                app:layout_constraintVertical_bias="1.0" />
-
-            <Button
-                android:id="@+id/changepwd_btn"
-                android:layout_width="280dp"
-                android:layout_height="50dp"
-                android:background="@drawable/bluebuttonbackground"
-                android:text="Change Password"
-                android:textColor="@color/common_google_signin_btn_text_dark_default"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="0.495"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent" />
-
-        </android.support.constraint.ConstraintLayout>
-    </ScrollView>
+    <Button
+        android:id="@+id/changepwd_btn"
+        android:layout_width="280dp"
+        android:layout_height="50dp"
+        android:background="@drawable/bluebuttonbackground"
+        android:text="Change Password"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="16dp" />
 
 </android.support.constraint.ConstraintLayout>
