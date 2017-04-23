@@ -59,6 +59,8 @@ public class LocationRefreshService extends IntentService implements GoogleApiCl
     private double latitude = 0;
     private double longitude = 0;
 
+    private static boolean isRunning = true;
+
     public LocationRefreshService() {
         super(objectName);
     }
@@ -88,8 +90,9 @@ public class LocationRefreshService extends IntentService implements GoogleApiCl
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
+        isRunning = false;
         Log.i(serviceLogTag, "onDestroy");
+        super.onDestroy();
     }
 
     @Override
@@ -124,7 +127,7 @@ public class LocationRefreshService extends IntentService implements GoogleApiCl
     protected void onHandleIntent(@Nullable Intent intent) {
         try {
             startLocationUpdate();
-            while (true) {
+            while (isRunning) {
                 updateLocation();
                 Thread.sleep(10000);
             }
@@ -204,14 +207,14 @@ public class LocationRefreshService extends IntentService implements GoogleApiCl
                 .create(MediaType.parse("application/json"), obj.toString());
 
         Request request = new Request.Builder()
-                .url(ServerApiUtilities.GetServerApiUrl() + "studentlocations")
+                .url(getUrl())
                 .headers(ServerApiUtilities.buildStandardHeaders(Stormpath.getAccessToken()))
                 .post(requestBody)
                 .build();
 
-        Log.i(serviceLogTag, "Before Request url: " + ServerApiUtilities.GetServerApiUrl() + "studentlocations");
-        Log.i(serviceLogTag, "Request body :" + OkHttpUtilities.bodyToString(request));
-        Log.i(serviceLogTag, "Request url: " + request.url());
+//        Log.i(serviceLogTag, "Before Request url: " + ServerApiUtilities.GetServerApiUrl() + "studentlocations");
+//        Log.i(serviceLogTag, "Request body :" + OkHttpUtilities.bodyToString(request));
+//        Log.i(serviceLogTag, "Request url: " + request.url());
 
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
@@ -229,7 +232,6 @@ public class LocationRefreshService extends IntentService implements GoogleApiCl
         });
         while(responseStatus < 1){}
     }
-
 
     private JSONObject createLocationJsonObject() {
         JSONObject obj = new JSONObject();
@@ -252,5 +254,16 @@ public class LocationRefreshService extends IntentService implements GoogleApiCl
         }
 
         return obj;
+    }
+
+    private String getUrl() {
+        if (SessionState.UserMode() == eUserMode.STUDENT) {
+            return ServerApiUtilities.GetServerApiUrl() + "studentlocations";
+        }
+        else if (SessionState.UserMode() == eUserMode.TUTOR) {
+            return ServerApiUtilities.GetServerApiUrl() + "tutorlocations";
+        }
+
+        return "";
     }
 }

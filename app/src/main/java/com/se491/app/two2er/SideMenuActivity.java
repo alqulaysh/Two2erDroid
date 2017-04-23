@@ -155,7 +155,9 @@ public class SideMenuActivity extends AppCompatActivity
         sMapFragment.getMapAsync(this);
 
         Intent intent = new Intent(this, LocationRefreshService.class);
-        //startService(intent);
+        if (intent != null) {
+            startService(intent);
+        }
     }
 
     @Override
