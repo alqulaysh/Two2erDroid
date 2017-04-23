@@ -10,7 +10,8 @@ import okhttp3.Headers;
 
 public class ServerApiUtilities {
 
-    private static final String SERVER_API_URL = "http://lowcost-env.niuk5squp9.us-east-2.elasticbeanstalk.com/apiauth/";
+    private static final String SERVER_API_URL_AUTH = "http://lowcost-env.niuk5squp9.us-east-2.elasticbeanstalk.com/apiauth/";
+    private static final String SERVER_API_URL_NOAUTH = "http://lowcost-env.niuk5squp9.us-east-2.elasticbeanstalk.com/api/";
 
     public static Headers buildStandardHeaders(String accessToken) {
         Headers.Builder builder = new Headers.Builder();
@@ -24,6 +25,10 @@ public class ServerApiUtilities {
     }
 
     public static String GetServerApiUrl() {
-        return SERVER_API_URL;
+        return SERVER_API_URL_AUTH;
+    }
+
+    public static String GetServerApiUrl_NoAuth() {
+        return SERVER_API_URL_NOAUTH;
     }
 }

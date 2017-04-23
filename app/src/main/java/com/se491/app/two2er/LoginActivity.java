@@ -92,10 +92,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String password = passwordInput.getText().toString();
 
         if (email.contentEquals(""))
-            email = "max@test.com";
+            email = "AndroidDeviceTestUser@mail.com";
 
         if (password.contentEquals(""))
-            password = "Password123";
+            password = "Password1";
 
         Stormpath.login(email, password, new StormpathCallback<Void>() {
             @Override
