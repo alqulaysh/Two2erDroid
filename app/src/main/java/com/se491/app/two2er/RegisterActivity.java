@@ -32,6 +32,7 @@ import okhttp3.Response;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener,AdapterView.OnItemSelectedListener  {
     private Button register;
+    private String userMode;
     private EditText firstNameInput;
     private EditText lastNameInput;
     private EditText emailInput;
@@ -126,6 +127,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 RequestBody requestBody = new FormBody.Builder()
                         .add("name", firstNameInput.getText().toString() + " " + lastNameInput.getText().toString())
                         .add("email", emailInput.getText().toString())
+                        .add("userMode", userMode)
                         .build();
 
                 Request request = new Request.Builder()
@@ -179,12 +181,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
 
         }
-        else if( myText.getText() == "I want to be a student" )
+        else if( myText.getText() == "I want to be a student" ){
             Toast.makeText(this,"Student account selected" , Toast.LENGTH_SHORT).show();
-
-        else if( myText.getText() == "I want to be a tutor" )
-            Toast.makeText(this,"Tutor account selected" , Toast.LENGTH_SHORT).show();
-
+            userMode = "Student";}
+        else if( myText.getText() == "I want to be a tutor" ) {
+            Toast.makeText(this, "Tutor account selected", Toast.LENGTH_SHORT).show();
+            userMode = "Tutor";
+        }
     }
 
     @Override

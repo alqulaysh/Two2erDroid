@@ -32,7 +32,6 @@ import okhttp3.logging.HttpLoggingInterceptor;
 
 public class GetUsers extends AsyncTask<Void, Void, Integer> {
     private static final String SERVER_API_URL = "http://lowcost-env.niuk5squp9.us-east-2.elasticbeanstalk.com/apiauth/users";
-    //http://server.scilingo.net:8080/api/users/findWithin/milesLonLat/1000/-83/53
 
     private SideMenuActivity myMapActivity;
     private HashMap<String, UserObject> tempUsersList = new HashMap<String, UserObject>();
@@ -50,6 +49,12 @@ public class GetUsers extends AsyncTask<Void, Void, Integer> {
 
     public GetUsers(SideMenuActivity myActivity, Double distance, Double lon, Double lat) {
         additionalURL = String.format("/findWithin/milesLonLat/%1$.4f/%2$.4f/%3$.4f", distance, lon, lat);
+        myMapActivity = myActivity;
+        typeOfCall = 1;
+    }
+
+    public GetUsers(SideMenuActivity myActivity, String filter) {
+        additionalURL = String.format("/findWithin/milesLonLat/%1$.4f/%2$.4f/%3$.4f", filter);
         myMapActivity = myActivity;
         typeOfCall = 1;
     }
@@ -204,27 +209,28 @@ public class GetUsers extends AsyncTask<Void, Void, Integer> {
         }
     }
 
+    //This function adds our users to the map after they are obtained from our API.
     private void addUsersToMap(){
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.tutormapicon));
         Iterator it = tempUsersList.entrySet().iterator();
+        myMapActivity.mGoogleMap.clear();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry) it.next();
-            System.out.println(pair.getKey() + " = " + pair.getValue());
             UserObject user = (UserObject) pair.getValue();
             LatLng lNewLocation = new LatLng(user.dLat, user.dLong);
             //Get the users name:
             String sTitle = user.fname + " " + user.lname;
 
-
-            markerOptions.position(lNewLocation).title(sTitle);
+            //We store the users id on the marker snippet.
+            markerOptions.position(lNewLocation).title(sTitle).snippet(user.id);
             //markerOptions.icon(BitmapDescriptorFactory.fromBitmap(myMapActivity.resizeMapIcons("genuser", 100, 100))); //icon and size of tutors icons inside Google Map
-
+            //Add the markers on the map:
             myMapActivity.mGoogleMap.addMarker(markerOptions);
         }
     }
 
-    // This method for changing the size of the tutors icons inside Google Map
+    // This method for changing the size of the tutors icons inside Google Map _ DEPRECATED due to performance issues.
     private Bitmap resizeMapIcons(String iconName, int width, int height){
         Bitmap imageBitmap = BitmapFactory.decodeResource(myMapActivity.getResources(),myMapActivity.getResources().getIdentifier(iconName, "drawable", myMapActivity.getPackageName()));
         Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, width, height, false);

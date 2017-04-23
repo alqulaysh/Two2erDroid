@@ -52,8 +52,8 @@ public class CreateBooking  extends DialogFragment {
 //
 //        dateDisplay.setText(getCurrentDate());
 //        //timeDisplay.setText(getCurrentTime());
-//        Bundle mArgs = getArguments();
-//        String myValue = mArgs.getString("uID");
+        Bundle mArgs = getArguments();
+        final String selectedUserId = mArgs.getString("uID");
 //        timeDisplay.setText(myValue);
 
 
@@ -65,7 +65,7 @@ public class CreateBooking  extends DialogFragment {
 //                dateDisplay.setText(getCurrentDate());
 //                timeDisplay.setText(getCurrentTime());
                 try {
-                    xCreateMyBookingRequest();
+                    xCreateMyBookingRequest(selectedUserId);
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
@@ -78,8 +78,9 @@ public class CreateBooking  extends DialogFragment {
 
     }
 
-    public void xCreateMyBookingRequest() throws ExecutionException, InterruptedException {
-        new PostToBookings("58c4b437538533573d9a9aa1", "2017-06-04T16:30:00.000Z").execute().get();
+    public void xCreateMyBookingRequest(String selectedUserId) throws ExecutionException, InterruptedException {
+        int randomNum = 1 + (int)(Math.random() * ((50 - 1) + 1));
+        new PostToBookings(selectedUserId, "2017-06-04T16:" + randomNum +":00.000Z").execute().get();
     }
 
     private String getCurrentDate() {
