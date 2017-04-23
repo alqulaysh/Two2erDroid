@@ -94,7 +94,7 @@ public class PostToBookings extends AsyncTask<Void, Void, Void> {
 
             @Override
             public void onResponse(okhttp3.Call call, Response response) throws IOException {
-                Log.e("PostToBookings", "Json parsing error: " + response.message());
+                Log.e("PostToBookings", "My Response: " + response.toString());
                 responseStatus = 1;
             }
         });

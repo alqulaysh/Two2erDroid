@@ -214,7 +214,7 @@ public class GetUsers extends AsyncTask<Void, Void, Integer> {
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.tutormapicon));
         Iterator it = tempUsersList.entrySet().iterator();
-        myMapActivity.mGoogleMap.clear();
+        //myMapActivity.mGoogleMap.clear();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry) it.next();
             UserObject user = (UserObject) pair.getValue();
