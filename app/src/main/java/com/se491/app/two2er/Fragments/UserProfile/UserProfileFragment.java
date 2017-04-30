@@ -175,15 +175,15 @@ public class UserProfileFragment extends Fragment implements
                     e.printStackTrace();
                 }
                 //Wait until we get our User Info before continuing:
-                try {
-                    Integer result = new GetUsers(((SideMenuActivity) getActivity())).execute().get();
-                    while(result != 1);
-
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    //Integer result = new GetUsers(((SideMenuActivity) getActivity())).execute().get();
+//                    //while(result != 1);
+//
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                } catch (ExecutionException e) {
+//                    e.printStackTrace();
+//                }
             }
         });
 
