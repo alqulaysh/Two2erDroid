@@ -1,5 +1,6 @@
 package com.se491.app.two2er;
 
+import android.os.AsyncTask;
 import android.util.Log;
 
 import com.se491.app.two2er.Utilities.ServerApiUtilities;
@@ -10,6 +11,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -22,7 +25,8 @@ public class CurrentUser {
     private static UserObject currentUser;
     private static String TAG = "CurrentUser";
 
-    private CurrentUser() { }
+    private CurrentUser() {
+    }
 
     public static synchronized UserObject getCurrentUser() {
         if (currentUser == null)
@@ -44,30 +48,40 @@ public class CurrentUser {
 
     public static void Refresh() {
         Request request = new Request.Builder()
-                .url(ServerApiUtilities.GetServerApiUrl() + "/me")
+                .url(ServerApiUtilities.GetServerApiUrl() + "users/me")
                 .headers(ServerApiUtilities.buildStandardHeaders(Stormpath.getAccessToken()))
                 .get()
                 .build();
-        try {
-            OkHttpClient okHttpClient = OkHttpClientFactory.Create();
-            Response response = okHttpClient.newCall(request).execute();
 
-            String jsonResponse = response.body().string();
+        OkHttpClient okHttpClient = OkHttpClientFactory.Create();
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, e.toString());
+            }
 
-            Log.e(TAG, "URL used in CurrentUser: " + ServerApiUtilities.GetServerApiUrl() + "/me");
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                try {
+                    String jsonResponse = response.body().string();
 
-            JSONObject myUser = new JSONObject(jsonResponse);
-            UserObject myTempUser = new UserObject(myUser);
-            setCurrentUser(myTempUser);
+                    Log.i(TAG, "URL used in CurrentUser: " + ServerApiUtilities.GetServerApiUrl() + "/me");
 
-            Log.e(TAG, "My user ID: " + myTempUser.id);
-            Log.e(TAG, "My user name: " + myTempUser.fname);
-            Log.e(TAG, "My user img URL: " + myTempUser.userImage);
+                    JSONObject myUser = new JSONObject(jsonResponse);
+                    UserObject myTempUser = new UserObject(myUser);
+                    setCurrentUser(myTempUser);
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+                    Log.i(TAG, "My user ID: " + myTempUser.id);
+                    Log.i(TAG, "My user name: " + myTempUser.fname);
+                    Log.i(TAG, "My user img URL: " + myTempUser.userImage);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 }
+
