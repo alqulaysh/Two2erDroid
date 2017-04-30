@@ -39,9 +39,7 @@ public class CurrentUser {
     }
 
     public static void Init() {
-        if (currentUser != null)
-            return;
-
+        getCurrentUser();
         Refresh();
     }
 
