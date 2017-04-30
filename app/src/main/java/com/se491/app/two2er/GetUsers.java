@@ -33,7 +33,7 @@ import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 
 
-public class GetUsers extends AsyncTask<Void, Void, Integer> {
+public class GetUsers extends Thread {
     private static final String SERVER_API_URL = "http://lowcost-env.niuk5squp9.us-east-2.elasticbeanstalk.com/apiauth/users";
 
     private SideMenuActivity myMapActivity;
@@ -57,67 +57,9 @@ public class GetUsers extends AsyncTask<Void, Void, Integer> {
     public HashMap<String, UserObject> getUsersList() { return tempUsersList; }
 
     @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-    }
-
-    private Headers buildStandardHeaders(String accessToken) {
-        Headers.Builder builder = new Headers.Builder();
-        builder.add("Accept", "application/json");
-
-        if (StringUtils.isNotBlank(accessToken)) {
-            builder.add("Authorization", "Bearer " + accessToken);
-        }
-
-        return builder.build();
-    }
-
-    @Override
-    protected Integer doInBackground(Void... arg0) {
+    public void run() {
         refreshStrategy.run();
-        return 1;
     }
-
-    @Override
-    protected void onPostExecute(Integer result) {
-        //myMapActivity.usersAround.clear();
-        Log.e("Inside onPostExecute", "the size of TempUsers before Add: " + tempUsersList.size());
-        //myMapActivity.usersAround.addAll(tempUsersList);
-        Log.e("Inside onPostExecute", "the size of UsersAround after add: " + myMapActivity.usersAround.size());
-        //myMapActivity.handleFindTutor();
-        //addUsersToMap();
-        super.onPostExecute(result);
-    }
-
-    //This function adds our users to the map after they are obtained from our API.
-    private void addUsersToMap() {
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.tutormapicon));
-        Iterator it = tempUsersList.entrySet().iterator();
-        //myMapActivity.mGoogleMap.clear();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry) it.next();
-            UserObject user = (UserObject) pair.getValue();
-            LatLng lNewLocation = new LatLng(user.dLat, user.dLong);
-            //Get the users name:
-            String sTitle = user.fname + " " + user.lname;
-
-            //We store the users id on the marker snippet.
-            markerOptions.position(lNewLocation).title(sTitle).snippet(user.id);
-            //markerOptions.icon(BitmapDescriptorFactory.fromBitmap(myMapActivity.resizeMapIcons("genuser", 100, 100))); //icon and size of tutors icons inside Google Map
-            //Add the markers on the map:
-            myMapActivity.mGoogleMap.addMarker(markerOptions);
-        }
-    }
-
-    // This method for changing the size of the tutors icons inside Google Map _ DEPRECATED due to performance issues.
-    private Bitmap resizeMapIcons(String iconName, int width, int height) {
-        Bitmap imageBitmap = BitmapFactory.decodeResource(myMapActivity.getResources(), myMapActivity.getResources().getIdentifier(iconName, "drawable", myMapActivity.getPackageName()));
-        Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, width, height, false);
-        return resizedBitmap;
-    }
-
-
 
     public class DefaultRefreshStrategy implements Runnable {
         private double distance = 100;
@@ -132,7 +74,7 @@ public class GetUsers extends AsyncTask<Void, Void, Integer> {
         public void run() {
             Request request = new Request.Builder()
                     .url(getURL())
-                    .headers(buildStandardHeaders(Stormpath.getAccessToken()))
+                    .headers(ServerApiUtilities.buildStandardHeaders(Stormpath.getAccessToken()))
                     .get()
                     .build();
             try {
@@ -175,7 +117,7 @@ public class GetUsers extends AsyncTask<Void, Void, Integer> {
         public void run() {
             Request request = new Request.Builder()
                     .url(getURL())
-                    .headers(buildStandardHeaders(Stormpath.getAccessToken()))
+                    .headers(ServerApiUtilities.buildStandardHeaders(Stormpath.getAccessToken()))
                     .get()
                     .build();
             try {

@@ -106,6 +106,8 @@ public class SideMenuActivity extends AppCompatActivity
 
     private GetUsers getUsers;
 
+    private String TAG = "GetUsers";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,19 +131,7 @@ public class SideMenuActivity extends AppCompatActivity
 
         CurrentUser.Init();
         myUserProfile = CurrentUser.getCurrentUser();
-
         getUsers = new GetUsers(this);
-
-        //Wait until we get our User Info before continuing:
-        try {
-            getUsers.execute().get();
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -194,14 +184,14 @@ public class SideMenuActivity extends AppCompatActivity
         View hView = navigationView.getHeaderView(0);
         ImageView nav_user = (ImageView) hView.findViewById(R.id.Nav_imageView);
 
-//        if (!myUserProfile.userImage.isEmpty() || myUserProfile.userImage == "") {
-//            try {
-//                new DownloadImageTask(nav_user)
-//                        .execute(myUserProfile.userImage).get();
-//            } catch (InterruptedException | ExecutionException e) {
-//                e.printStackTrace();
-//            }
-//        }
+        if (!myUserProfile.userImage.isEmpty() || myUserProfile.userImage == "") {
+            try {
+                new DownloadImageTask(nav_user)
+                        .execute(myUserProfile.userImage).get();
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
 
         //Set our nav view Item Selected listener(its implemented by this activity):
         navigationView.setNavigationItemSelectedListener(this);
@@ -212,10 +202,18 @@ public class SideMenuActivity extends AppCompatActivity
 
         new MyFloatingSearchView(this, searchView);
 
+        findViewById(R.id.refreshBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                refreshMap();
+            }
+        });
+
         //Set our map fragment to our content view and tag it as "ContentFrag":
         sFm.beginTransaction().replace(R.id.map, sMapFragment, "ContentFrag").commit();
 
         sMapFragment.getMapAsync(this);
+
 
 //        Intent intent = new Intent(this, LocationRefreshService.class);
 //        if (intent != null) {
@@ -351,7 +349,7 @@ public class SideMenuActivity extends AppCompatActivity
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mGoogleMap = googleMap;
-        addUsersToMap(getUsers.getUsersList());
+
 
         if (mGoogleMap != null) {
 
@@ -445,9 +443,10 @@ public class SideMenuActivity extends AppCompatActivity
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        Log.e("MyGoogleApiClient", "Second isConnected: " + mGoogleApiClient.isConnected());
+        Log.i(TAG, "Second isConnected: " + mGoogleApiClient.isConnected());
         LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationReq, this);
 
+        refreshMap();
     }
 
     @Override
@@ -490,6 +489,7 @@ public class SideMenuActivity extends AppCompatActivity
         bookingButton.setLayoutParams(lButtonParams);
         lContainerLayout.addView(bookingButton);
 
+
         // Adding full screen container
         addContentView(lContainerLayout, new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
 
@@ -510,6 +510,8 @@ public class SideMenuActivity extends AppCompatActivity
 
             }
         });
+
+
 
         return false;
     }
@@ -553,12 +555,33 @@ public class SideMenuActivity extends AppCompatActivity
         lrs.startService(intent);
     }
 
+    private void refreshMap() {
+        Thread asyncRefresh = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                getUsers.start();
+
+                try {
+                    getUsers.join();
+                }
+                catch (Exception ex) {
+                    Log.e(TAG, ex.toString());
+                }
+
+                tempRecUsers = getUsers.getUsersList();
+            }
+        });
+
+        asyncRefresh.start();
+        addUsersToMap(tempRecUsers);
+    }
+
     private void addUsersToMap(HashMap<String, UserObject> users) {
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.tutormapicon));
         Iterator it = users.entrySet().iterator();
 
-        //myMapActivity.mGoogleMap.clear();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry) it.next();
             UserObject user = (UserObject) pair.getValue();
@@ -568,7 +591,7 @@ public class SideMenuActivity extends AppCompatActivity
 
             //We store the users id on the marker snippet.
             markerOptions.position(lNewLocation).title(sTitle).snippet(user.id);
-            //markerOptions.icon(BitmapDescriptorFactory.fromBitmap(myMapActivity.resizeMapIcons("genuser", 100, 100))); //icon and size of tutors icons inside Google Map
+
             //Add the markers on the map:
             mGoogleMap.addMarker(markerOptions);
         }

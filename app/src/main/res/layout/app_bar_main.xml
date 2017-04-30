@@ -79,20 +79,37 @@
 
        </LinearLayout>
 
-        <com.arlib.floatingsearchview.FloatingSearchView
-            android:id="@+id/searchView"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/searchbackgorund"
-            android:paddingTop="50dp"
-            app:floatingSearch_close_search_on_keyboard_dismiss="true"
-            app:floatingSearch_searchHint="What subject?"
-            app:floatingSearch_showSearchKey="true"
-            app:floatingSearch_dimBackground="false"
-            app:floatingSearch_suggestionsListAnimDuration="250"
-            />
+            android:orientation="vertical">
+
+            <com.arlib.floatingsearchview.FloatingSearchView
+                android:id="@+id/searchView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/searchbackgorund"
+                android:paddingTop="50dp"
+                app:floatingSearch_close_search_on_keyboard_dismiss="true"
+                app:floatingSearch_dimBackground="false"
+                app:floatingSearch_searchHint="What subject?"
+                app:floatingSearch_showSearchKey="true"
+                app:floatingSearch_suggestionsListAnimDuration="250">
+
+            </com.arlib.floatingsearchview.FloatingSearchView>
+
+            <Button
+                android:id="@+id/refreshBtn"
+                android:layout_width="129dp"
+                android:layout_height="52dp"
+                android:layout_gravity="center_horizontal"
+                android:text="Refresh" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
 
