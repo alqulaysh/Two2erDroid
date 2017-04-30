@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.se491.app.two2er.Services.LocationRefreshService;
 import com.stormpath.sdk.Stormpath;
 import com.stormpath.sdk.StormpathCallback;
 import com.stormpath.sdk.models.StormpathError;
@@ -103,6 +104,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Intent loginIntent = new Intent(LoginActivity.this, SideMenuActivity.class);
                 loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(loginIntent);
+                startServices(loginIntent);
             }
 
             @Override
@@ -110,5 +112,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Toast.makeText(LoginActivity.this, error.message(), Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private void startServices(Intent intent) {
+        LocationRefreshService lrs = new LocationRefreshService();
+        lrs.startService(intent);
     }
 }

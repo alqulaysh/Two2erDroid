@@ -51,43 +51,16 @@ public class LocationRefreshService extends IntentService implements GoogleApiCl
 
     private int responseStatus = 0;
 
-    private double latitude = 0;
-    private double longitude = 0;
+    private volatile static double latitude = 0;
+    private volatile static double longitude = 0;
+
+    public static double getLatitude() { return latitude; }
+    public static double getLongitude() { return longitude; }
 
     private static boolean isRunning = true;
 
     public LocationRefreshService() {
         super(objectName);
-    }
-
-    @Override
-    public void onConnected(Bundle bundle) {
-        Log.i(serviceLogTag, "Connected to GoogleApiClient " + bundle);
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-        Log.i(serviceLogTag, "Connection suspended to GoogleApiClient");
-    }
-
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-        Log.i(serviceLogTag, "Connected to GoogleApiClient");
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        Log.i(serviceLogTag, "lat " + location.getLatitude());
-        Log.i(serviceLogTag, "lng " + location.getLongitude());
-        LatLng mLocation = (new LatLng(location.getLatitude(), location.getLongitude()));
-
-    }
-
-    @Override
-    public void onDestroy() {
-        isRunning = false;
-        Log.i(serviceLogTag, "onDestroy");
-        super.onDestroy();
     }
 
     @Override
@@ -120,10 +93,6 @@ public class LocationRefreshService extends IntentService implements GoogleApiCl
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-        if (intent == null) {
-            return;
-        }
-
         try {
             startLocationUpdate();
             while (isRunning) {
@@ -134,6 +103,36 @@ public class LocationRefreshService extends IntentService implements GoogleApiCl
         catch (Exception ex) {
             Thread.currentThread().interrupt();
         }
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        Log.i(serviceLogTag, "Connected to GoogleApiClient " + bundle);
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        Log.i(serviceLogTag, "Connection suspended to GoogleApiClient");
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.i(serviceLogTag, "Connected to GoogleApiClient");
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        Log.i(serviceLogTag, "lat " + location.getLatitude());
+        Log.i(serviceLogTag, "lng " + location.getLongitude());
+        LatLng mLocation = (new LatLng(location.getLatitude(), location.getLongitude()));
+
+    }
+
+    @Override
+    public void onDestroy() {
+        isRunning = false;
+        Log.i(serviceLogTag, "onDestroy");
+        super.onDestroy();
     }
 
     private void setupOkHttpClient() {
@@ -200,37 +199,38 @@ public class LocationRefreshService extends IntentService implements GoogleApiCl
     }
 
     private void sendLocationData(double latitude, double longitude) {
-        JSONObject obj = createLocationJsonObject();
+            JSONObject obj = createLocationJsonObject();
 
-        RequestBody requestBody = RequestBody
-                .create(MediaType.parse("application/json"), obj.toString());
+            RequestBody requestBody = RequestBody
+                    .create(MediaType.parse("application/json"), obj.toString());
 
-        Request request = new Request.Builder()
-                .url(getUrl())
-                .headers(ServerApiUtilities.buildStandardHeaders(Stormpath.getAccessToken()))
-                .post(requestBody)
-                .build();
+            Request request = new Request.Builder()
+                    .url(getUrl())
+                    .headers(ServerApiUtilities.buildStandardHeaders(Stormpath.getAccessToken()))
+                    .post(requestBody)
+                    .build();
 
 //        Log.i(serviceLogTag, "Before Request url: " + ServerApiUtilities.GetServerApiUrl() + "studentlocations");
 //        Log.i(serviceLogTag, "Request body :" + OkHttpUtilities.bodyToString(request));
 //        Log.i(serviceLogTag, "Request url: " + request.url());
 
-        okHttpClient.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(okhttp3.Call call, IOException e) {
-                Log.e(serviceLogTag, "Error on post to studentlocations: " + e.toString());
-                responseStatus = 2;
-            }
+            okHttpClient.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(okhttp3.Call call, IOException e) {
+                    Log.e(serviceLogTag, "Error on post to studentlocations: " + e.toString());
+                    responseStatus = 2;
+                }
 
-            @Override
-            public void onResponse(okhttp3.Call call, Response response) throws IOException {
-                Log.i(serviceLogTag, response.code() + " " + response.message());
-                responseStatus = 1;
-            }
+                @Override
+                public void onResponse(okhttp3.Call call, Response response) throws IOException {
+                    Log.i(serviceLogTag, response.code() + " " + response.message());
+                    responseStatus = 1;
+                }
 
-        });
-        while(responseStatus < 1){}
-    }
+            });
+            while (responseStatus < 1) { }
+
+            }
 
     private JSONObject createLocationJsonObject() {
         JSONObject obj = new JSONObject();
@@ -264,5 +264,24 @@ public class LocationRefreshService extends IntentService implements GoogleApiCl
         }
 
         return "";
+    }
+
+    private void runLocationRefreshThread() {
+        Thread t = new Thread(new Runnable() {
+           public void run() {
+               try {
+                   startLocationUpdate();
+                   while (isRunning) {
+                       updateLocation();
+                       Thread.sleep(10000);
+                   }
+               }
+               catch (Exception ex) {
+                   Thread.currentThread().interrupt();
+               }
+           }
+        });
+
+        t.start();
     }
 }

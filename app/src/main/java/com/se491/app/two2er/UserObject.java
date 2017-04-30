@@ -10,14 +10,15 @@ import org.json.JSONObject;
  */
 
 public class UserObject {
-    String id;
-    String fname;
-    String lname;
-    String age;
-    String email;
-    String userImage;
-    Double dLong;
-    Double dLat;
+    public String id = "";
+    public String fname = "";
+    public String lname = "";
+    public String age = "";
+    public String email = "";
+    public String userImage = "";
+    public double dLong = 0.0;
+    public double dLat = 0.0;
+
     public UserObject(){}
     public UserObject(JSONObject user) throws JSONException {
         this.id = user.getString("_id");

@@ -65,41 +65,42 @@ public class SideMenuActivity extends AppCompatActivity
         NavigationView.OnNavigationItemSelectedListener,
         GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowCloseListener {
 
-        SupportMapFragment sMapFragment;
-        private static final int PERMISSION_ACCESS_FINE_LOCATION = 1;
+    private static final int PERMISSION_ACCESS_FINE_LOCATION = 1;
+    SupportMapFragment sMapFragment;
+    //GoogleApi Client Services:
+    GoogleApiClient mGoogleApiClient;
 
-        //GoogleApi Client Services:
-        GoogleApiClient mGoogleApiClient;
+    //Google Map Variable:
+    GoogleMap mGoogleMap;
+    View mapView;
 
-        //Google Map Variable:
-        GoogleMap mGoogleMap;
-        View mapView;
+    //Booking fragment
+    android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
 
-        //Booking fragment
-        android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+    //Main Fragments
+    android.support.v4.app.FragmentManager sFm = getSupportFragmentManager();
 
-        //Main Fragments
-        android.support.v4.app.FragmentManager sFm = getSupportFragmentManager();
+    //Location Variables:
+    LocationRequest mLocationReq;
+    Location mLastLocation;
+    Marker mCurrLocationMarker;
 
-        //Location Variables:
-        LocationRequest mLocationReq;
-        Location mLastLocation;
-        Marker mCurrLocationMarker;
+    //Get list of users around me:
+    HashMap<String, UserObject> usersAround;
+    HashMap<String, UserObject> tempRecUsers = new HashMap<String, UserObject>();
 
-        //Get list of users around me:
-        HashMap<String, UserObject> usersAround;
-        HashMap<String, UserObject> tempRecUsers = new HashMap<String, UserObject>();
+    //MyUser Profile:
+    UserObject myUserProfile;
 
-        //MyUser Profile:
-        UserObject myUserProfile;
+    //Book Tutor Button:
+    // Custom view
+    private Button bookingButton;
+    private RelativeLayout lContainerLayout;
 
-        //Book Tutor Button:
-        // Custom view
-        private Button bookingButton;
-        private RelativeLayout lContainerLayout;
+    //Search EditText
+    private FloatingSearchView searchView;
 
-        //Search EditText
-        private FloatingSearchView searchView;
+    private GetUsers getUsers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,17 +122,26 @@ public class SideMenuActivity extends AppCompatActivity
 
 
         usersAround = new HashMap<String, UserObject>();
-        myUserProfile = new UserObject();
-        System.out.println(myUserProfile.fname + " 1++++++++++++++++++++++++++");
+
+        CurrentUser.Init();
+        myUserProfile = CurrentUser.getCurrentUser();
+
+
+        //myUserProfile = new UserObject();
+        //System.out.println(myUserProfile.fname + " 1++++++++++++++++++++++++++");
+
+        //getUsers = new GetUsers(this);
 
         //Wait until we get our User Info before continuing:
-        try {
-            new GetUsers(this).execute().get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            //new GetUsers(this).execute().get();
+//            //getUsers.RefreshCurrentUserLocation();
+//            //getUsers.execute().get();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//        }
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -145,7 +155,7 @@ public class SideMenuActivity extends AppCompatActivity
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
                 //Called when a drawer's position changes.
-                if(bookingButton != null)
+                if (bookingButton != null)
                     bookingButton.setVisibility(View.GONE);
             }
 
@@ -156,7 +166,7 @@ public class SideMenuActivity extends AppCompatActivity
                 // If you have 2 drawers (left and right) you can distinguish
                 // them by using id of the drawerView. int id = drawerView.getId();
                 // id will be your layout's id: for example R.id.left_drawer
-                if(bookingButton != null)
+                if (bookingButton != null)
                     bookingButton.setVisibility(View.GONE);
             }
 
@@ -166,7 +176,7 @@ public class SideMenuActivity extends AppCompatActivity
 
                 Fragment myFragment = sFm.findFragmentByTag("ContentFrag");
                 if (myFragment != null && myFragment.isVisible()) {
-                    if(bookingButton != null)
+                    if (bookingButton != null)
                         bookingButton.setVisibility(View.VISIBLE);
                 }
             }
@@ -180,25 +190,23 @@ public class SideMenuActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        NavigationView botDrawerView = (NavigationView) findViewById(R.id.navigation_drawer_bottom);
+        //NavigationView botDrawerView = (NavigationView) findViewById(R.id.navigation_drawer_bottom);
         //Set the sidemenu image to users profile picture:
-        View hView =  navigationView.getHeaderView(0);
-        ImageView nav_user = (ImageView)hView.findViewById(R.id.Nav_imageView);
+        View hView = navigationView.getHeaderView(0);
+        ImageView nav_user = (ImageView) hView.findViewById(R.id.Nav_imageView);
 
-        if(!myUserProfile.userImage.isEmpty() || myUserProfile.userImage == "") {
-            try {
-                new DownloadImageTask(nav_user)
-                        .execute(myUserProfile.userImage).get();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
-        }
+//        if (!myUserProfile.userImage.isEmpty() || myUserProfile.userImage == "") {
+//            try {
+//                new DownloadImageTask(nav_user)
+//                        .execute(myUserProfile.userImage).get();
+//            } catch (InterruptedException | ExecutionException e) {
+//                e.printStackTrace();
+//            }
+//        }
 
         //Set our nav view Item Selected listener(its implemented by this activity):
         navigationView.setNavigationItemSelectedListener(this);
-        botDrawerView.setNavigationItemSelectedListener(this);
+        //botDrawerView.setNavigationItemSelectedListener(this);
 
         //Get our search EditText:
         searchView = (FloatingSearchView) findViewById(R.id.searchView);
@@ -210,19 +218,19 @@ public class SideMenuActivity extends AppCompatActivity
 
         sMapFragment.getMapAsync(this);
 
-        Intent intent = new Intent(this, LocationRefreshService.class);
-        if (intent != null) {
-            startService(intent);
-        }
+//        Intent intent = new Intent(this, LocationRefreshService.class);
+//        if (intent != null) {
+//            startService(intent);
+//        }
     }
 
-    
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-            if(bookingButton != null)
+            if (bookingButton != null)
                 bookingButton.setVisibility(View.VISIBLE);
 
         } else {
@@ -255,14 +263,13 @@ public class SideMenuActivity extends AppCompatActivity
 
         int id = item.getItemId();
 
-
         if (sMapFragment.isAdded())
             sFm.beginTransaction().hide(sMapFragment).commit();
 
         if (id == R.id.nav_userprofile) {
             Bundle bundle = new Bundle();
             searchView.setVisibility(View.GONE);
-            if(myUserProfile.fname != null){
+            if (myUserProfile.fname != null) {
                 bundle.putString("fname", myUserProfile.fname);
                 bundle.putString("lname", myUserProfile.lname);
                 bundle.putString("email", myUserProfile.email);
@@ -270,7 +277,7 @@ public class SideMenuActivity extends AppCompatActivity
                 UserProfileFragment userProfileFragment = new UserProfileFragment();
                 userProfileFragment.setArguments(bundle);
 
-                fm.beginTransaction().replace(R.id.content_frame,userProfileFragment).commit();
+                fm.beginTransaction().replace(R.id.content_frame, userProfileFragment).commit();
             }
         } else if (id == R.id.nav_map) {
             searchView.setVisibility(View.VISIBLE);
@@ -292,17 +299,18 @@ public class SideMenuActivity extends AppCompatActivity
             finish();
         } else if (id == R.id.switchprofile) {
             SessionState.toggleUserMode();
+            // TODO fix to go back to previous view
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        if(bookingButton != null)
+        if (bookingButton != null)
             bookingButton.setVisibility(View.VISIBLE);
         return true;
     }
 
     @Override
-    public void onLocationChanged(Location location){
+    public void onLocationChanged(Location location) {
         mLastLocation = location;
         if (mCurrLocationMarker != null) {
             mCurrLocationMarker.remove();
@@ -342,12 +350,12 @@ public class SideMenuActivity extends AppCompatActivity
     public void onMapReady(GoogleMap googleMap) {
         mGoogleMap = googleMap;
 
-        if(mGoogleMap != null){
+        if (mGoogleMap != null) {
 
             //Set the listener for the Camera
             mGoogleMap.setOnCameraIdleListener(this);
 
-            mGoogleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter(){
+            mGoogleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
 
                 @Override
                 public View getInfoWindow(Marker marker) {
@@ -372,20 +380,19 @@ public class SideMenuActivity extends AppCompatActivity
             public boolean onKey(View v, int actionId, KeyEvent event) {
                 //This is the filter
 
-                if (event.getAction()!=KeyEvent.ACTION_DOWN)
+                if (event.getAction() != KeyEvent.ACTION_DOWN)
                     return true;
 
 
                 switch (event.getKeyCode()) {
-                    case KeyEvent.KEYCODE_ENTER :
-                        if(searchView.getQuery() != null){
-                            //new GetUsers();
+                    case KeyEvent.KEYCODE_ENTER:
+                        if (searchView.getQuery() != null) {
                             Log.d("TEST RESPONSE2", "searchView.getQuery() = " + searchView.getQuery());
-
+                            //getUsers.setFilterSearchStrategy(searchView.getQuery());
                         }
-                    case KeyEvent.KEYCODE_2 :
+                    case KeyEvent.KEYCODE_2:
                         break;
-                    case KeyEvent.KEYCODE_3 :
+                    case KeyEvent.KEYCODE_3:
                         break;
 
                 }
@@ -436,7 +443,7 @@ public class SideMenuActivity extends AppCompatActivity
             return;
         }
         Log.e("MyGoogleApiClient", "Second isConnected: " + mGoogleApiClient.isConnected());
-        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationReq,this);
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationReq, this);
 
     }
 
@@ -452,15 +459,17 @@ public class SideMenuActivity extends AppCompatActivity
         double myCameraLong = ltMyCameraCoords.longitude;
         double myCameraLat = ltMyCameraCoords.latitude;
         float fMyCameraZoom = fMyCameraPostion.zoom;
-        new GetUsers(this, 5.0, myCameraLong, myCameraLat).execute();
+        //new GetUsers(this, 5.0, myCameraLong, myCameraLat).execute();
+        //getUsers.execute();
     }
 
-    public void myGetNewUsers(){
+    public void myGetNewUsers() {
         CameraPosition fMyCameraPostion = mGoogleMap.getCameraPosition();
         LatLng ltMyCameraCoords = fMyCameraPostion.target;
         double myCameraLong = ltMyCameraCoords.longitude;
         double myCameraLat = ltMyCameraCoords.latitude;
-        new GetUsers(this, 5.0, myCameraLong, myCameraLat).execute();
+        //new GetUsers(this, 5.0, myCameraLong, myCameraLat).execute();
+        //getUsers.execute();
     }
 
 
@@ -469,17 +478,17 @@ public class SideMenuActivity extends AppCompatActivity
 
         // Fake empty container layout
         lContainerLayout = new RelativeLayout(this);
-        lContainerLayout.setLayoutParams(new RelativeLayout.LayoutParams( RelativeLayout.LayoutParams.MATCH_PARENT , RelativeLayout.LayoutParams.MATCH_PARENT ));
+        lContainerLayout.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
         // Custom view
         bookingButton = new Button(this);
         bookingButton.setText("Book Tutor");
-        RelativeLayout.LayoutParams lButtonParams = new RelativeLayout.LayoutParams( RelativeLayout.LayoutParams.MATCH_PARENT , RelativeLayout.LayoutParams.WRAP_CONTENT );
+        RelativeLayout.LayoutParams lButtonParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         lButtonParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         bookingButton.setLayoutParams(lButtonParams);
         lContainerLayout.addView(bookingButton);
 
         // Adding full screen container
-        addContentView(lContainerLayout, new RelativeLayout.LayoutParams( RelativeLayout.LayoutParams.MATCH_PARENT , RelativeLayout.LayoutParams.MATCH_PARENT ) );
+        addContentView(lContainerLayout, new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
 
 
         bookingButton.setOnClickListener(new View.OnClickListener() {
