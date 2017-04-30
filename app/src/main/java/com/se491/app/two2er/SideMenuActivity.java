@@ -560,6 +560,9 @@ public class SideMenuActivity extends AppCompatActivity
 
             @Override
             public void run() {
+                if (getUsers.isAlive())
+                    return;
+
                 getUsers.start();
 
                 try {
