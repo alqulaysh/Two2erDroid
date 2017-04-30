@@ -40,9 +40,11 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.se491.app.two2er.Fragments.Bookings.BookingsFragment;
 import com.se491.app.two2er.Fragments.Bookings.CreateBooking;
 import com.se491.app.two2er.Fragments.ScheduleFragment;
@@ -53,6 +55,8 @@ import com.stormpath.sdk.Stormpath;
 
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 public class SideMenuActivity extends AppCompatActivity
@@ -112,16 +116,16 @@ public class SideMenuActivity extends AppCompatActivity
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-
         sMapFragment = SupportMapFragment.newInstance();
         setContentView(R.layout.activity_sidemenu);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         final FragmentManager fm = getFragmentManager();
-
-
         usersAround = new HashMap<String, UserObject>();
+
+        //Intent intent = new Intent(SideMenuActivity.this, SideMenuActivity.class);
+        //startServices(intent);
 
         CurrentUser.Init();
         myUserProfile = CurrentUser.getCurrentUser();
@@ -131,6 +135,7 @@ public class SideMenuActivity extends AppCompatActivity
         //Wait until we get our User Info before continuing:
         try {
             getUsers.execute().get();
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -343,6 +348,7 @@ public class SideMenuActivity extends AppCompatActivity
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mGoogleMap = googleMap;
+        addUsersToMap(getUsers.getUsersList());
 
         if (mGoogleMap != null) {
 
@@ -535,6 +541,33 @@ public class SideMenuActivity extends AppCompatActivity
 
         protected void onPostExecute(Bitmap result) {
             bmImage.setImageBitmap(result);
+        }
+    }
+
+
+    private void startServices(Intent intent) {
+        LocationRefreshService lrs = new LocationRefreshService();
+        lrs.startService(intent);
+    }
+
+    private void addUsersToMap(HashMap<String, UserObject> users) {
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.tutormapicon));
+        Iterator it = users.entrySet().iterator();
+
+        //myMapActivity.mGoogleMap.clear();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry) it.next();
+            UserObject user = (UserObject) pair.getValue();
+            LatLng lNewLocation = new LatLng(user.dLat, user.dLong);
+            //Get the users name:
+            String sTitle = user.fname + " " + user.lname;
+
+            //We store the users id on the marker snippet.
+            markerOptions.position(lNewLocation).title(sTitle).snippet(user.id);
+            //markerOptions.icon(BitmapDescriptorFactory.fromBitmap(myMapActivity.resizeMapIcons("genuser", 100, 100))); //icon and size of tutors icons inside Google Map
+            //Add the markers on the map:
+            mGoogleMap.addMarker(markerOptions);
         }
     }
 }

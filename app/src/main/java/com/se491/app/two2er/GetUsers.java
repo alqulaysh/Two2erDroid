@@ -54,6 +54,8 @@ public class GetUsers extends AsyncTask<Void, Void, Integer> {
         refreshStrategy = new RefreshUsersBySubjectFilter(filter);
     }
 
+    public HashMap<String, UserObject> getUsersList() { return tempUsersList; }
+
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
@@ -78,13 +80,13 @@ public class GetUsers extends AsyncTask<Void, Void, Integer> {
 
     @Override
     protected void onPostExecute(Integer result) {
-        super.onPostExecute(result);
         //myMapActivity.usersAround.clear();
         Log.e("Inside onPostExecute", "the size of TempUsers before Add: " + tempUsersList.size());
         //myMapActivity.usersAround.addAll(tempUsersList);
         Log.e("Inside onPostExecute", "the size of UsersAround after add: " + myMapActivity.usersAround.size());
         //myMapActivity.handleFindTutor();
-        addUsersToMap();
+        //addUsersToMap();
+        super.onPostExecute(result);
     }
 
     //This function adds our users to the map after they are obtained from our API.
@@ -120,10 +122,10 @@ public class GetUsers extends AsyncTask<Void, Void, Integer> {
     public class DefaultRefreshStrategy implements Runnable {
         private double distance = 100;
         private String getURL() {
-            return ServerApiUtilities.GetServerApiUrl() + String.format("/findWithin/milesLonLat/%1$.4f/%2$.4f/%3$.4f"
+            return ServerApiUtilities.GetServerApiUrl() + String.format("users/findWithin/milesLonLat/%1$.4f/%2$.4f/%3$.4f"
                     , distance
-                    , LocationRefreshService.getLongitude()
-                    , LocationRefreshService.getLongitude());
+                    , -87.6254
+                    , 41.8782);
         }
 
         @Override
@@ -143,14 +145,13 @@ public class GetUsers extends AsyncTask<Void, Void, Integer> {
 
                 for (int i = 0; i < users.length(); i++) {
                     UserObject user = new UserObject(users.getJSONObject(i));
-
-                    if (!myMapActivity.usersAround.containsKey(user.id)) {
-                        Log.e("Inside doInBackGround", "User to usersAround ID: " + user.id);
-                        Log.e("Inside doInBackGround", "User to usersAround First Name: " + user.fname);
-                        myMapActivity.usersAround.put(user.id, user);
-                    }
+                    tempUsersList.put(user.id, user);
+//                    if (!myMapActivity.usersAround.containsKey(user.id)) {
+//                        Log.e("Inside doInBackGround", "User to usersAround ID: " + user.id);
+//                        Log.e("Inside doInBackGround", "User to usersAround First Name: " + user.fname);
+//                        myMapActivity.usersAround.put(user.id, user);
+//                    }
                 }
-
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (JSONException e) {
@@ -167,7 +168,7 @@ public class GetUsers extends AsyncTask<Void, Void, Integer> {
 
         // TODO get the correct URL
         private String getURL() {
-            return ServerApiUtilities.GetServerApiUrl() + String.format("/findWithin/milesLonLat/%1$.4f/%2$.4f/%3$.4f", filterValue);
+            return ServerApiUtilities.GetServerApiUrl() + String.format("users/findWithin/milesLonLat/%1$.4f/%2$.4f/%3$.4f", filterValue);
         }
 
         @Override
@@ -187,11 +188,11 @@ public class GetUsers extends AsyncTask<Void, Void, Integer> {
                 for (int i = 0; i < users.length(); i++) {
                     UserObject user = new UserObject(users.getJSONObject(i));
                     tempUsersList.put(user.id, user);
-                    if (!myMapActivity.usersAround.containsKey(user.id)) {
-                        Log.e("Inside doInBackGround", "User to usersAround ID: " + user.id);
-                        Log.e("Inside doInBackGround", "User to usersAround First Name: " + user.fname);
-                        myMapActivity.usersAround.put(user.id, user);
-                    }
+//                    if (!myMapActivity.usersAround.containsKey(user.id)) {
+//                        Log.e("Inside doInBackGround", "User to usersAround ID: " + user.id);
+//                        Log.e("Inside doInBackGround", "User to usersAround First Name: " + user.fname);
+//                        myMapActivity.usersAround.put(user.id, user);
+//                    }
                 }
 
             } catch (IOException e) {
