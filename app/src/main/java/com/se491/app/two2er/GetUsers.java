@@ -38,18 +38,11 @@ public class GetUsers extends AsyncTask<Void, Void, Integer> {
 
     private SideMenuActivity myMapActivity;
     private HashMap<String, UserObject> tempUsersList = new HashMap<String, UserObject>();
-    private String additionalURL = "";
-    private int typeOfCall;
-    private UserObject myTempUser;
-    private OkHttpClient okHttpClient;
-    private int responseStatus;
 
     private Runnable refreshStrategy;
 
     public GetUsers(SideMenuActivity myActivity) {
-        additionalURL = "/me";
         myMapActivity = myActivity;
-        typeOfCall = 2;
         refreshStrategy = new DefaultRefreshStrategy();
     }
 
@@ -64,17 +57,6 @@ public class GetUsers extends AsyncTask<Void, Void, Integer> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
-            @Override
-            public void log(String message) {
-                Stormpath.logger().d(message);
-            }
-        });
-
-        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        this.okHttpClient = new OkHttpClient.Builder()
-                .addNetworkInterceptor(httpLoggingInterceptor)
-                .build();
     }
 
     private Headers buildStandardHeaders(String accessToken) {
@@ -97,19 +79,12 @@ public class GetUsers extends AsyncTask<Void, Void, Integer> {
     @Override
     protected void onPostExecute(Integer result) {
         super.onPostExecute(result);
-        if (typeOfCall == 1) {
-            //myMapActivity.usersAround.clear();
-            Log.e("Inside onPostExecute", "the size of TempUsers before Add: " + tempUsersList.size());
-            //myMapActivity.usersAround.addAll(tempUsersList);
-            Log.e("Inside onPostExecute", "the size of UsersAround after add: " + myMapActivity.usersAround.size());
-            //myMapActivity.handleFindTutor();
-            addUsersToMap();
-
-        } else {
-            if (typeOfCall == 2) {
-                //myMapActivity.myUserProfile = myTempUser;
-            }
-        }
+        //myMapActivity.usersAround.clear();
+        Log.e("Inside onPostExecute", "the size of TempUsers before Add: " + tempUsersList.size());
+        //myMapActivity.usersAround.addAll(tempUsersList);
+        Log.e("Inside onPostExecute", "the size of UsersAround after add: " + myMapActivity.usersAround.size());
+        //myMapActivity.handleFindTutor();
+        addUsersToMap();
     }
 
     //This function adds our users to the map after they are obtained from our API.
@@ -159,30 +134,23 @@ public class GetUsers extends AsyncTask<Void, Void, Integer> {
                     .get()
                     .build();
             try {
-                Response response = okHttpClient.newCall(request).execute();
+                Response response = OkHttpClientFactory.Create().newCall(request).execute();
 
                 String jsonResponse = response.body().string();
-                Log.e("Inside doInBackGround", "URL used in GetUsers(): " + SERVER_API_URL + additionalURL);
+                Log.e("Inside doInBackGround", "URL used in GetUsers(): " + getURL());
 
-                if (typeOfCall == 1) {
-                    JSONArray users = new JSONArray(jsonResponse);
-                    for (int i = 0; i < users.length(); i++) {
-                        UserObject user = new UserObject(users.getJSONObject(i));
-                        tempUsersList.put(user.id, user);
-                        if (!myMapActivity.usersAround.containsKey(user.id)) {
-                            Log.e("Inside doInBackGround", "User to usersAround ID: " + user.id);
-                            Log.e("Inside doInBackGround", "User to usersAround First Name: " + user.fname);
-                            myMapActivity.usersAround.put(user.id, user);
-                        }
+                JSONArray users = new JSONArray(jsonResponse);
+
+                for (int i = 0; i < users.length(); i++) {
+                    UserObject user = new UserObject(users.getJSONObject(i));
+
+                    if (!myMapActivity.usersAround.containsKey(user.id)) {
+                        Log.e("Inside doInBackGround", "User to usersAround ID: " + user.id);
+                        Log.e("Inside doInBackGround", "User to usersAround First Name: " + user.fname);
+                        myMapActivity.usersAround.put(user.id, user);
                     }
-                } else {
-                    JSONObject myUser = new JSONObject(jsonResponse);
-                    myTempUser = new UserObject(myUser);
-                    myMapActivity.myUserProfile = new UserObject(myUser);
-                    Log.e("Inside doInBackGround", "My user ID: " + myTempUser.id);
-                    Log.e("Inside doInBackGround", "My user name: " + myTempUser.fname);
-                    Log.e("Inside doInBackGround", "My user img URL: " + myTempUser.userImage);
                 }
+
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (JSONException e) {
@@ -210,30 +178,22 @@ public class GetUsers extends AsyncTask<Void, Void, Integer> {
                     .get()
                     .build();
             try {
-                Response response = okHttpClient.newCall(request).execute();
+                Response response = OkHttpClientFactory.Create().newCall(request).execute();
 
                 String jsonResponse = response.body().string();
-                Log.e("Inside doInBackGround", "URL used in GetUsers(): " + SERVER_API_URL + additionalURL);
+                Log.e("Inside doInBackGround", "URL used in GetUsers(): " + getURL());
 
-                if (typeOfCall == 1) {
-                    JSONArray users = new JSONArray(jsonResponse);
-                    for (int i = 0; i < users.length(); i++) {
-                        UserObject user = new UserObject(users.getJSONObject(i));
-                        tempUsersList.put(user.id, user);
-                        if (!myMapActivity.usersAround.containsKey(user.id)) {
-                            Log.e("Inside doInBackGround", "User to usersAround ID: " + user.id);
-                            Log.e("Inside doInBackGround", "User to usersAround First Name: " + user.fname);
-                            myMapActivity.usersAround.put(user.id, user);
-                        }
+                JSONArray users = new JSONArray(jsonResponse);
+                for (int i = 0; i < users.length(); i++) {
+                    UserObject user = new UserObject(users.getJSONObject(i));
+                    tempUsersList.put(user.id, user);
+                    if (!myMapActivity.usersAround.containsKey(user.id)) {
+                        Log.e("Inside doInBackGround", "User to usersAround ID: " + user.id);
+                        Log.e("Inside doInBackGround", "User to usersAround First Name: " + user.fname);
+                        myMapActivity.usersAround.put(user.id, user);
                     }
-                } else {
-                    JSONObject myUser = new JSONObject(jsonResponse);
-                    myTempUser = new UserObject(myUser);
-                    myMapActivity.myUserProfile = new UserObject(myUser);
-                    Log.e("Inside doInBackGround", "My user ID: " + myTempUser.id);
-                    Log.e("Inside doInBackGround", "My user name: " + myTempUser.fname);
-                    Log.e("Inside doInBackGround", "My user img URL: " + myTempUser.userImage);
                 }
+
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (JSONException e) {

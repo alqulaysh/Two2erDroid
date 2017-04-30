@@ -126,22 +126,16 @@ public class SideMenuActivity extends AppCompatActivity
         CurrentUser.Init();
         myUserProfile = CurrentUser.getCurrentUser();
 
-
-        //myUserProfile = new UserObject();
-        //System.out.println(myUserProfile.fname + " 1++++++++++++++++++++++++++");
-
-        //getUsers = new GetUsers(this);
+        getUsers = new GetUsers(this);
 
         //Wait until we get our User Info before continuing:
-//        try {
-//            //new GetUsers(this).execute().get();
-//            //getUsers.RefreshCurrentUserLocation();
-//            //getUsers.execute().get();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        } catch (ExecutionException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            getUsers.execute().get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
