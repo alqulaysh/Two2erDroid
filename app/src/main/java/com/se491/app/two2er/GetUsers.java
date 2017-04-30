@@ -3,34 +3,19 @@
  */
 package com.se491.app.two2er;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.location.Location;
-import android.os.AsyncTask;
 import android.util.Log;
 
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.se491.app.two2er.Services.LocationRefreshService;
 import com.se491.app.two2er.Utilities.ServerApiUtilities;
 import com.stormpath.sdk.Stormpath;
-import com.stormpath.sdk.utils.StringUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
-import okhttp3.Headers;
-import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import okhttp3.logging.HttpLoggingInterceptor;
 
 
 public class GetUsers extends Thread {
@@ -43,11 +28,11 @@ public class GetUsers extends Thread {
 
     public GetUsers(SideMenuActivity myActivity) {
         myMapActivity = myActivity;
-        refreshStrategy = new DefaultRefreshStrategy();
+        refreshStrategy = new DistanceRefreshStrategy();
     }
 
     public void setDefaultSearchStrategy() {
-        refreshStrategy = new DefaultRefreshStrategy();
+        refreshStrategy = new DistanceRefreshStrategy();
     }
 
     public void setFilterSearchStrategy(String filter) {
@@ -61,13 +46,29 @@ public class GetUsers extends Thread {
         refreshStrategy.run();
     }
 
-    public class DefaultRefreshStrategy implements Runnable {
+    public class DistanceRefreshStrategy implements Runnable {
         private double distance = 100;
+        private double dLong = -87.6254;
+        private double dLat = 41.8782;
+
         private String getURL() {
             return ServerApiUtilities.GetServerApiUrl() + String.format("users/findWithin/milesLonLat/%1$.4f/%2$.4f/%3$.4f"
                     , distance
-                    , -87.6254
-                    , 41.8782);
+                    , dLong
+                    , dLat);
+        }
+
+        public void setDistance(double val) { distance = val;}
+        public double getDistance() { return distance; }
+        public void setLongitude(double val) { dLong = val; }
+        public void setLatitude(double val) { dLat = val; }
+
+        public DistanceRefreshStrategy() { }
+
+        public DistanceRefreshStrategy(double dist, double longitude, double latitude) {
+            distance = dist;
+            dLong = longitude;
+            dLat = latitude;
         }
 
         @Override

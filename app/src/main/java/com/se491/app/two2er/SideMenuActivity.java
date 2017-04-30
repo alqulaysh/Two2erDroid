@@ -126,9 +126,6 @@ public class SideMenuActivity extends AppCompatActivity
         final FragmentManager fm = getFragmentManager();
         usersAround = new HashMap<String, UserObject>();
 
-        //Intent intent = new Intent(SideMenuActivity.this, SideMenuActivity.class);
-        //startServices(intent);
-
         CurrentUser.Init();
         myUserProfile = CurrentUser.getCurrentUser();
         getUsers = new GetUsers(this);
@@ -215,10 +212,9 @@ public class SideMenuActivity extends AppCompatActivity
         sMapFragment.getMapAsync(this);
 
 
-//        Intent intent = new Intent(this, LocationRefreshService.class);
-//        if (intent != null) {
-//            startService(intent);
-//        }
+        Intent intent = new Intent(this, LocationRefreshService.class);
+        if (intent != null)
+            this.startService(intent);
     }
 
 
@@ -544,11 +540,6 @@ public class SideMenuActivity extends AppCompatActivity
         }
     }
 
-
-    private void startServices(Intent intent) {
-        LocationRefreshService lrs = new LocationRefreshService();
-        lrs.startService(intent);
-    }
 
     private void refreshMap() {
         Thread asyncRefresh = new Thread(new Runnable() {

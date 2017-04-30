@@ -15,6 +15,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
+import com.se491.app.two2er.CurrentUser;
 import com.se491.app.two2er.Enums.eUserMode;
 import com.se491.app.two2er.MyGoogleApiClient_Singleton;
 import com.se491.app.two2er.SessionState;
@@ -187,6 +188,11 @@ public class LocationRefreshService extends IntentService implements GoogleApiCl
             if (latitude != loc.getLatitude() || longitude != loc.getLongitude()) {
                 latitude = loc.getLatitude();
                 longitude = loc.getLongitude();
+
+                if (CurrentUser.getCurrentUser() != null) {
+                    CurrentUser.getCurrentUser().dLong = longitude;
+                    CurrentUser.getCurrentUser().dLat = latitude;
+                }
 
                 try {
                     sendLocationData(latitude, longitude);
