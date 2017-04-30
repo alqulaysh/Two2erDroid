@@ -70,7 +70,7 @@ public class UserProfileActivity extends AppCompatActivity implements
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e(TAG, "Pressed back button: " );
+                //Log.e(TAG, "Pressed back button: " );
                 finish();
             }
         });
