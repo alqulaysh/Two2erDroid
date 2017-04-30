@@ -19,20 +19,20 @@ import okhttp3.Response;
 
 
 public class GetUsers extends Thread {
-    private static final String SERVER_API_URL = "http://lowcost-env.niuk5squp9.us-east-2.elasticbeanstalk.com/apiauth/users";
-
-    private SideMenuActivity myMapActivity;
     private HashMap<String, UserObject> tempUsersList = new HashMap<String, UserObject>();
 
     private Runnable refreshStrategy;
 
-    public GetUsers(SideMenuActivity myActivity) {
-        myMapActivity = myActivity;
+    public GetUsers() {
         refreshStrategy = new DistanceRefreshStrategy();
     }
 
     public void setDefaultSearchStrategy() {
         refreshStrategy = new DistanceRefreshStrategy();
+    }
+
+    public void setDistanceSearchStrategy(double dist) {
+        refreshStrategy = new DistanceRefreshStrategy(dist, CurrentUser.getCurrentUser().dLong, CurrentUser.getCurrentUser().dLat);
     }
 
     public void setFilterSearchStrategy(String filter) {

@@ -128,7 +128,7 @@ public class SideMenuActivity extends AppCompatActivity
 
         CurrentUser.Init();
         myUserProfile = CurrentUser.getCurrentUser();
-        getUsers = new GetUsers(this);
+        getUsers = new GetUsers();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -380,7 +380,7 @@ public class SideMenuActivity extends AppCompatActivity
                     case KeyEvent.KEYCODE_ENTER:
                         if (searchView.getQuery() != null) {
                             Log.d("TEST RESPONSE2", "searchView.getQuery() = " + searchView.getQuery());
-                            //getUsers.setFilterSearchStrategy(searchView.getQuery());
+                            getUsers.setFilterSearchStrategy(searchView.getQuery());
                         }
                     case KeyEvent.KEYCODE_2:
                         break;
@@ -397,13 +397,6 @@ public class SideMenuActivity extends AppCompatActivity
         mGoogleMap.setOnInfoWindowCloseListener(this);
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return;
         }
         mGoogleMap.setMyLocationEnabled(true);
@@ -417,7 +410,6 @@ public class SideMenuActivity extends AppCompatActivity
         rlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
         rlp.setMargins(0, 0, 30, 30);
 
-
         mGoogleApiClient = MyGoogleApiClient_Singleton.getInstance(null).get_GoogleApiClient();
 
         mLocationReq = LocationRequest.create();
@@ -425,13 +417,6 @@ public class SideMenuActivity extends AppCompatActivity
         mLocationReq.setInterval(2000);
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return;
         }
         Log.i(TAG, "Second isConnected: " + mGoogleApiClient.isConnected());
@@ -452,8 +437,6 @@ public class SideMenuActivity extends AppCompatActivity
         double myCameraLong = ltMyCameraCoords.longitude;
         double myCameraLat = ltMyCameraCoords.latitude;
         float fMyCameraZoom = fMyCameraPostion.zoom;
-        //new GetUsers(this, 5.0, myCameraLong, myCameraLat).execute();
-        //getUsers.execute();
     }
 
     public void myGetNewUsers() {
@@ -461,8 +444,6 @@ public class SideMenuActivity extends AppCompatActivity
         LatLng ltMyCameraCoords = fMyCameraPostion.target;
         double myCameraLong = ltMyCameraCoords.longitude;
         double myCameraLat = ltMyCameraCoords.latitude;
-        //new GetUsers(this, 5.0, myCameraLong, myCameraLat).execute();
-        //getUsers.execute();
     }
 
 
@@ -501,8 +482,6 @@ public class SideMenuActivity extends AppCompatActivity
 
             }
         });
-
-
 
         return false;
     }
