@@ -3,6 +3,7 @@ package com.se491.app.two2er.MenuActivities.UserProfile;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -17,8 +18,10 @@ import android.widget.ImageView;
 import com.se491.app.two2er.CurrentUser;
 import com.se491.app.two2er.Fragments.PWDDialogFragment;
 import com.se491.app.two2er.Fragments.UserProfile.ChangeProfileImageDialog;
+import com.se491.app.two2er.Fragments.UserProfile.UserProfileFragment;
 import com.se491.app.two2er.PostUpdates;
 import com.se491.app.two2er.R;
+import com.se491.app.two2er.SideMenuActivity;
 import com.se491.app.two2er.UserObject;
 
 import java.io.InputStream;
@@ -123,6 +126,14 @@ public class UserProfileActivity extends AppCompatActivity implements
 
     }
 
+    // Switch to map fragment
+    public void BacktoMap(View v){
+
+
+
+        onBackPressed();
+
+    }
 
 
 
