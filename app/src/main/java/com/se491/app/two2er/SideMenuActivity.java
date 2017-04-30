@@ -260,12 +260,10 @@ public class SideMenuActivity extends AppCompatActivity
 
         int id = item.getItemId();
 
-        if (sMapFragment.isAdded())
-            sFm.beginTransaction().hide(sMapFragment).commit();
+
 
         if (id == R.id.nav_userprofile) {
             Bundle bundle = new Bundle();
-            searchView.setVisibility(View.GONE);
             if (myUserProfile.fname != null) {
 
                 startActivity(new Intent(SideMenuActivity.this, UserProfileActivity.class));
@@ -280,17 +278,14 @@ public class SideMenuActivity extends AppCompatActivity
 //                fm.beginTransaction().replace(R.id.content_frame, userProfileFragment).commit();
             }
         } else if (id == R.id.nav_map) {
-            searchView.setVisibility(View.VISIBLE);
             if (!sMapFragment.isAdded())
                 sFm.beginTransaction().add(R.id.map, sMapFragment).commit();
             else
                 sFm.beginTransaction().show(sMapFragment).commit();
 
         } else if (id == R.id.nav_schedule) {
-            searchView.setVisibility(View.GONE);
             fm.beginTransaction().replace(R.id.content_frame, new ScheduleFragment()).commit();
         } else if (id == R.id.nav_manage) {
-            searchView.setVisibility(View.GONE);
             fm.beginTransaction().replace(R.id.content_frame, new BookingsFragment()).commit();
             //fm.beginTransaction().replace(R.id.content_framePad, new BookingsFragment()).commit();
         } else if (id == R.id.nav_logout) {
