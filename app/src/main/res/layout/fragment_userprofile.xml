@@ -14,7 +14,6 @@
         android:layout_marginTop="0dp"
         android:background="?attr/colorPrimaryDark"
         android:minHeight="?attr/actionBarSize"
-        android:onClick="BacktoMap"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintBottom_toTopOf="@+id/imageView4"
         app:layout_constraintHorizontal_bias="0.526"

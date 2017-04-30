@@ -9,7 +9,9 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -60,6 +62,18 @@ public class UserProfileActivity extends AppCompatActivity implements
         userfName.setText(userfNameVal);
         userlName.setText(userlNameVal);
         userEmail.setText(sUserEmail);
+
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar8);
+        setSupportActionBar(toolbar);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e(TAG, "Pressed back button: " );
+                finish();
+            }
+        });
 
 
         Log.e(TAG, "userEmail: " + userImgURL);
@@ -126,14 +140,12 @@ public class UserProfileActivity extends AppCompatActivity implements
 
     }
 
-    // Switch to map fragment
-    public void BacktoMap(View v){
-
-
-
-        onBackPressed();
-
-    }
+//    // Switch to map fragment
+//    public void BacktoMap(View v){
+//
+//        this.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK));
+//
+//    }
 
 
 
