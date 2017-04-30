@@ -1,4 +1,4 @@
-package com.se491.app.two2er.Fragments.UserProfile;
+package com.se491.app.two2er.MenuActivities.UserProfile;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -7,28 +7,27 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.se491.app.two2er.CurrentUser;
 import com.se491.app.two2er.Fragments.PWDDialogFragment;
-import com.se491.app.two2er.GetUsers;
+import com.se491.app.two2er.Fragments.UserProfile.ChangeProfileImageDialog;
 import com.se491.app.two2er.PostUpdates;
 import com.se491.app.two2er.R;
-import com.se491.app.two2er.SideMenuActivity;
+import com.se491.app.two2er.UserObject;
 
 import java.io.InputStream;
 import java.util.concurrent.ExecutionException;
 
-public class UserProfileFragment extends Fragment implements
+public class UserProfileActivity extends AppCompatActivity implements
         DialogInterface.OnDismissListener,
         ChangeProfileImageDialog.onDialogDismissListener {
-
+    private static String TAG = "UserProfileActivity";
     Fragment myThis;
     ImageView userProfileImage;
     EditText userfName;
@@ -38,35 +37,33 @@ public class UserProfileFragment extends Fragment implements
     String userImgURL;
     View v;
     private String myName;
-    @Nullable
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //R.nameField
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_userprofile);
 
+        UserObject myCurrentUser = CurrentUser.getCurrentUser();
+        userProfileImage = (ImageView) findViewById(R.id.userProfileImgV);
+        userfName = (EditText) findViewById(R.id.nameField);
+        userlName = (EditText) findViewById(R.id.lNameField);
+        userEmail = (EditText) findViewById(R.id.emailField);
+        userUni = (EditText) findViewById(R.id.univField);
+        String userfNameVal =  myCurrentUser.fname;
+        String userlNameVal =  myCurrentUser.lname;
+        String sUserEmail =  myCurrentUser.email;
+        userImgURL = myCurrentUser.userImage;
 
-        myThis = this;
-
-
-        v = inflater.inflate(R.layout.fragment_userprofile, container, false);
-        userProfileImage = (ImageView) v.findViewById(R.id.userProfileImgV);
-        userfName = (EditText) v.findViewById(R.id.nameField);
-        userlName = (EditText) v.findViewById(R.id.lNameField);
-        userEmail = (EditText) v.findViewById(R.id.emailField);
-        userUni = (EditText) v.findViewById(R.id.univField);
-        String userfNameVal =  getArguments().getString("fname");
-        String userlNameVal =  getArguments().getString("lname");
-        String sUserEmail =  getArguments().getString("email");
-        userImgURL =  getArguments().getString("userImage");
         userfName.setText(userfNameVal);
         userlName.setText(userlNameVal);
-        userEmail.setText(sUserEmail );
+        userEmail.setText(sUserEmail);
 
 
-        Log.e("Inside UserFrag", "userEmail: " + userImgURL);
+        Log.e(TAG, "userEmail: " + userImgURL);
 
         if(!userImgURL.isEmpty() || userImgURL == "") {
             try {
-                new DownloadImageTask((ImageView) v.findViewById(R.id.userProfileImgV))
+                new DownloadImageTask((ImageView) findViewById(R.id.userProfileImgV))
                         .execute(userImgURL).get();
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -75,8 +72,8 @@ public class UserProfileFragment extends Fragment implements
             }
         }
 
-        Button updateButton = (Button) v.findViewById(R.id.update_btn);
-        Button changePWDbutton = (Button) v.findViewById(R.id.changepwd_btn);
+        Button updateButton = (Button) findViewById(R.id.update_btn);
+        Button changePWDbutton = (Button) findViewById(R.id.changepwd_btn);
 
         userProfileImage.setOnClickListener(new View.OnClickListener()
         {
@@ -110,7 +107,6 @@ public class UserProfileFragment extends Fragment implements
             @Override
             public void onClick(View v)
             {
-                userfName = (EditText) v.findViewById(R.id.nameField);
                 try {
                     upDateMyUser();
                 } catch (ExecutionException e) {
@@ -119,24 +115,19 @@ public class UserProfileFragment extends Fragment implements
                     e.printStackTrace();
                 }
                 //Wait until we get our User Info before continuing:
-                try {
-                    Integer result = new GetUsers(((SideMenuActivity) getActivity())).execute().get();
-                    while(result != 1);
-
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                }
+                CurrentUser.Refresh();
             }
         });
 
-        return v;
+
+
     }
 
 
 
+
     public void upDateMyUser() throws ExecutionException, InterruptedException {
+        myName = userfName.getText().toString() + " " + userlName.getText().toString();
         new PostUpdates(myName).execute().get();
     }
 
@@ -145,7 +136,7 @@ public class UserProfileFragment extends Fragment implements
         Log.e("Android : ", "This is at onDismissDialogUserProfile");
 
         try {
-            new DownloadImageTask((ImageView) v.findViewById(R.id.userProfileImgV))
+            new DownloadImageTask((ImageView) findViewById(R.id.userProfileImgV))
                     .execute(userImgURL).get();
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -153,21 +144,6 @@ public class UserProfileFragment extends Fragment implements
             e.printStackTrace();
         }
 
-//        NavigationView navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
-//        //Set the sidemenu image to users profile picture:
-//        View hView =  navigationView.getHeaderView(0);
-//        ImageView nav_user = (ImageView)hView.findViewById(R.id.Nav_imageView);
-//
-//        if(!userImgURL.isEmpty() || userImgURL == "") {
-//            try {
-//                new DownloadImageTask(nav_user)
-//                        .execute(userImgURL).get();
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            } catch (ExecutionException e) {
-//                e.printStackTrace();
-//            }
-//        }
     }
 
     @Override

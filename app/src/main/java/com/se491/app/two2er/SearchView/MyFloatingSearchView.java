@@ -103,7 +103,7 @@ public class MyFloatingSearchView {
 //                            }
 //
 //                        });
-                myActivity.myGetNewUsers();
+                //myActivity.myGetNewUsers();
                 Log.d(TAG, "onSuggestionClicked()");
 
                 mLastQuery = searchSuggestion.getBody();

@@ -76,11 +76,11 @@ class BookingListAdapter extends BaseAdapter {
 
         row.setBackgroundColor(Color.YELLOW);
 
-        if(currStatus.equals("accepted")){
+        if(currStatus.equals("confirmed")){
             row.setBackgroundColor(Color.GREEN);
         }
 
-        if(currStatus.equals("rejected")){
+        if(currStatus.equals("declined")){
             row.setBackgroundColor(Color.RED);
         }
 

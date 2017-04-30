@@ -44,6 +44,10 @@
             android:name=".SideMenuActivity"
             android:label=""
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity android:name=".MenuActivities.UserProfile.UserProfileActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
         <activity android:name=".ChangePasswordActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".ForgotPasswordActivity"

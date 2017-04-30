@@ -48,7 +48,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.se491.app.two2er.Fragments.Bookings.BookingsFragment;
 import com.se491.app.two2er.Fragments.Bookings.CreateBooking;
 import com.se491.app.two2er.Fragments.ScheduleFragment;
-import com.se491.app.two2er.Fragments.UserProfile.UserProfileFragment;
+import com.se491.app.two2er.MenuActivities.UserProfile.UserProfileActivity;
 import com.se491.app.two2er.SearchView.MyFloatingSearchView;
 import com.se491.app.two2er.Services.LocationRefreshService;
 import com.stormpath.sdk.Stormpath;
@@ -269,14 +269,17 @@ public class SideMenuActivity extends AppCompatActivity
             Bundle bundle = new Bundle();
             searchView.setVisibility(View.GONE);
             if (myUserProfile.fname != null) {
-                bundle.putString("fname", myUserProfile.fname);
-                bundle.putString("lname", myUserProfile.lname);
-                bundle.putString("email", myUserProfile.email);
-                bundle.putString("userImage", myUserProfile.userImage);
-                UserProfileFragment userProfileFragment = new UserProfileFragment();
-                userProfileFragment.setArguments(bundle);
 
-                fm.beginTransaction().replace(R.id.content_frame, userProfileFragment).commit();
+                startActivity(new Intent(SideMenuActivity.this, UserProfileActivity.class));
+
+//                bundle.putString("fname", myUserProfile.fname);
+//                bundle.putString("lname", myUserProfile.lname);
+//                bundle.putString("email", myUserProfile.email);
+//                bundle.putString("userImage", myUserProfile.userImage);
+//                UserProfileFragment userProfileFragment = new UserProfileFragment();
+//                userProfileFragment.setArguments(bundle);
+//
+//                fm.beginTransaction().replace(R.id.content_frame, userProfileFragment).commit();
             }
         } else if (id == R.id.nav_map) {
             searchView.setVisibility(View.VISIBLE);

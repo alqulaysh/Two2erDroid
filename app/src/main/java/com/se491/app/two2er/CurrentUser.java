@@ -1,6 +1,5 @@
 package com.se491.app.two2er;
 
-import android.os.AsyncTask;
 import android.util.Log;
 
 import com.se491.app.two2er.Utilities.ServerApiUtilities;
