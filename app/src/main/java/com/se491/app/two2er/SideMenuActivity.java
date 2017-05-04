@@ -211,7 +211,6 @@ public class SideMenuActivity extends AppCompatActivity
 
         sMapFragment.getMapAsync(this);
 
-
         Intent intent = new Intent(this, LocationRefreshService.class);
         if (intent != null)
             this.startService(intent);
@@ -439,14 +438,6 @@ public class SideMenuActivity extends AppCompatActivity
         float fMyCameraZoom = fMyCameraPostion.zoom;
     }
 
-    public void myGetNewUsers() {
-        CameraPosition fMyCameraPostion = mGoogleMap.getCameraPosition();
-        LatLng ltMyCameraCoords = fMyCameraPostion.target;
-        double myCameraLong = ltMyCameraCoords.longitude;
-        double myCameraLat = ltMyCameraCoords.latitude;
-    }
-
-
     @Override
     public boolean onMarkerClick(final Marker marker) {
 
@@ -543,6 +534,7 @@ public class SideMenuActivity extends AppCompatActivity
 
         asyncRefresh.start();
         addUsersToMap(tempRecUsers);
+        getUsers = new GetUsers(getUsers.getRefreshStrategy());
     }
 
     private void addUsersToMap(HashMap<String, UserObject> users) {

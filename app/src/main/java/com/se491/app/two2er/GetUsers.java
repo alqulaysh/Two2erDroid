@@ -27,6 +27,12 @@ public class GetUsers extends Thread {
         refreshStrategy = new DistanceRefreshStrategy();
     }
 
+    public GetUsers(Runnable refreshStrategy) {
+        this.refreshStrategy = refreshStrategy;
+    }
+
+    public Runnable getRefreshStrategy() { return refreshStrategy; }
+
     public void setDefaultSearchStrategy() {
         refreshStrategy = new DistanceRefreshStrategy();
     }
