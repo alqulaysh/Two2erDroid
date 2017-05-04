@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            app:layout_scrollFlags="scroll|enterAlways"
+
+
+            >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="290dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/newbackground" />
+
+            <!--<android.support.v7.widget.Toolbar-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content" />-->
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="280dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/circleImageView"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/james"
+                    app:civ_border_color="@android:color/white"
+                    app:civ_border_width="4dp"
+                    android:layout_marginTop="70dp"/>
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="James Riely"
+                    android:textColor="@android:color/white"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="DePaul University"
+                    android:textColor="@android:color/white"
+                    />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_place_black_24dp"
+                        android:layout_gravity="center"
+                        android:tint="@android:color/white"/>
+
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Chicago, Illinois, USA"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginLeft="2dp"
+                    android:layout_gravity="center"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                   />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@color/black"
+            app:layout_scrollFlags="scroll|enterAlways">
+
+
+
+            <GridLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:columnCount="3"
+                android:rowCount="3"
+                android:padding="16dp">
+
+
+                <TextView
+                    android:text="182"
+                    android:textColor="@android:color/white"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:textSize="15dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"/>
+
+
+
+                <TextView
+                    android:text="4.8"
+                    android:textSize="15dp"
+                    android:textColor="@android:color/white"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"/>
+
+
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/ic_fiber_manual_record_black_24dp"
+                    android:layout_gravity="center"
+                    android:tint="#6BD400"/>
+
+
+
+                <TextView
+                    android:text="Experience"
+                    android:textColor="@android:color/white"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"/>
+
+
+
+                <TextView
+                    android:text="Rate"
+                    android:textColor="@android:color/white"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"/>
+
+
+
+
+                <TextView
+                    android:text="Availability"
+                    android:textColor="@android:color/white"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"/>
+
+
+
+            </GridLayout>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="#EEEEEE">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Bio and Background Information"
+                android:textColor="@android:color/black"
+                android:layout_gravity="center"
+                android:textStyle="bold"
+                android:textSize="20dp"
+              />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Programming Languages, Security"
+                android:textColor="@android:color/black"
+                android:layout_gravity="center"
+                android:textSize="20dp"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="James Riely studies programming language semantics, with applications to type systems and software security. He received a NSF CAREER award in 2004, and has since been PI or co-PI on several NSF grants. "
+                android:textColor="@android:color/black"
+                android:layout_gravity="center"
+
+                />
+
+
+
+        </LinearLayout>
+
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar8"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_marginTop="0dp"
+        android:layout_weight="0.10"
+        android:background="?attr/colorPrimaryDark"
+        android:elevation="10dp"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:navigationIcon="?android:attr/homeAsUpIndicator"
+        app:title="User Profile" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+        <ListView
+            android:id="@+id/ListViewProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+
+
+             />
+    </android.support.v4.widget.NestedScrollView>
+
+
+
+</android.support.design.widget.CoordinatorLayout>
