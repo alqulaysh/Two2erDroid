@@ -76,6 +76,7 @@ public class UserProfileActivity extends AppCompatActivity implements
         });
 
 
+
         Log.e(TAG, "userEmail: " + userImgURL);
 
         if(!userImgURL.isEmpty() || userImgURL == "") {

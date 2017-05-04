@@ -38,8 +38,11 @@
         <item
             android:icon="@drawable/settings"
             android:title="Settings" />
-        <!--<item android:title="Help"-->
-              <!--android:icon="@drawable/help"/>-->
+
+        <item android:id="@+id/nav_help"
+                 android:title="Help"
+              android:icon="@drawable/help"/>
+
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/logout"

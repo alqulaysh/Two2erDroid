@@ -51,6 +51,7 @@ import com.se491.app.two2er.Fragments.ScheduleFragment;
 import com.se491.app.two2er.MenuActivities.UserProfile.UserProfileActivity;
 import com.se491.app.two2er.SearchView.MyFloatingSearchView;
 import com.se491.app.two2er.Services.LocationRefreshService;
+import com.se491.app.two2er.Utilities.HelpActivity;
 import com.stormpath.sdk.Stormpath;
 
 import java.io.InputStream;
@@ -287,7 +288,12 @@ public class SideMenuActivity extends AppCompatActivity
             Stormpath.logout();
             startActivity(new Intent(SideMenuActivity.this, LoginActivity.class));
             finish();
-        } else if (id == R.id.switchprofile) {
+        } else if (id == R.id.nav_help) {
+            startActivity(new Intent(SideMenuActivity.this, HelpActivity.class));
+        }
+
+
+        else if (id == R.id.switchprofile) {
             SessionState.toggleUserMode();
             // TODO fix to go back to previous view
         }
