@@ -1,14 +1,13 @@
 package com.se491.app.two2er;
 
+import com.se491.app.two2er.GetUsers.GetUsers;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito.*;
-import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 /**
  * Created by pazra on 4/2/17.

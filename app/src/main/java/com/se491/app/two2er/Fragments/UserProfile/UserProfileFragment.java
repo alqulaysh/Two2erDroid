@@ -17,10 +17,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.se491.app.two2er.Fragments.PWDDialogFragment;
-import com.se491.app.two2er.GetUsers;
 import com.se491.app.two2er.PostUpdates;
 import com.se491.app.two2er.R;
-import com.se491.app.two2er.SideMenuActivity;
 
 import java.io.InputStream;
 import java.util.concurrent.ExecutionException;
