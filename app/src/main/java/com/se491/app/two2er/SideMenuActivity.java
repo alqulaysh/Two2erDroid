@@ -48,6 +48,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.se491.app.two2er.Fragments.Bookings.BookingsFragment;
 import com.se491.app.two2er.Fragments.Bookings.CreateBooking;
 import com.se491.app.two2er.Fragments.ScheduleFragment;
+import com.se491.app.two2er.GetUsers.DistanceRefreshStrategy;
+import com.se491.app.two2er.GetUsers.GetUsers;
 import com.se491.app.two2er.MenuActivities.UserProfile.UserProfileActivity;
 import com.se491.app.two2er.SearchView.MyFloatingSearchView;
 import com.se491.app.two2er.Services.LocationRefreshService;
@@ -105,9 +107,8 @@ public class SideMenuActivity extends AppCompatActivity
     //Search EditText
     private FloatingSearchView searchView;
 
-    private GetUsers getUsers;
-
     private String TAG = "GetUsers";
+    private static volatile int lock = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,7 +130,6 @@ public class SideMenuActivity extends AppCompatActivity
 
         CurrentUser.Init();
         myUserProfile = CurrentUser.getCurrentUser();
-        getUsers = new GetUsers();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -385,7 +385,6 @@ public class SideMenuActivity extends AppCompatActivity
                     case KeyEvent.KEYCODE_ENTER:
                         if (searchView.getQuery() != null) {
                             Log.d("TEST RESPONSE2", "searchView.getQuery() = " + searchView.getQuery());
-                            getUsers.setFilterSearchStrategy(searchView.getQuery());
                         }
                     case KeyEvent.KEYCODE_2:
                         break;
@@ -518,29 +517,46 @@ public class SideMenuActivity extends AppCompatActivity
 
 
     private void refreshMap() {
-        Thread asyncRefresh = new Thread(new Runnable() {
+//        Thread asyncRefresh = new Thread(new Runnable() {
+//
+//            @Override
+//            public void run() {
+//                GetUsers test = new DistanceRefreshStrategy();
+//                if (test.isAlive())
+//                    return;
+//
+//                test.start();
+//
+//                try {
+//                    test.join();
+//                }
+//                catch (Exception ex) {
+//                    Log.e(TAG, ex.toString());
+//                }
+//
+//                tempRecUsers = test.getUsersList();
+//            }
+//        });
 
-            @Override
-            public void run() {
-                if (getUsers.isAlive())
-                    return;
+        GetUsers test = new DistanceRefreshStrategy();
+        test.start();
 
-                getUsers.start();
+        try {
+            test.join();
+        }
+        catch (Exception ex) {
+            Log.e(TAG, ex.toString());
+        }
 
-                try {
-                    getUsers.join();
-                }
-                catch (Exception ex) {
-                    Log.e(TAG, ex.toString());
-                }
+        tempRecUsers = test.getUsersList();
 
-                tempRecUsers = getUsers.getUsersList();
-            }
-        });
+//        asyncRefresh.start();
+//        try {
+//            asyncRefresh.join();
+//        }
+//        catch (Exception ex) {Log.e(TAG, ex.toString()); }
 
-        asyncRefresh.start();
         addUsersToMap(tempRecUsers);
-        getUsers = new GetUsers(getUsers.getRefreshStrategy());
     }
 
     private void addUsersToMap(HashMap<String, UserObject> users) {
