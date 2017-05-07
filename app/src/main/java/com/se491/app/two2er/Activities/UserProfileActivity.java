@@ -1,9 +1,8 @@
-package com.se491.app.two2er.MenuActivities.UserProfile;
+package com.se491.app.two2er.Activities;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -11,7 +10,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,11 +18,9 @@ import android.widget.ImageView;
 import com.se491.app.two2er.CurrentUser;
 import com.se491.app.two2er.Fragments.PWDDialogFragment;
 import com.se491.app.two2er.Fragments.UserProfile.ChangeProfileImageDialog;
-import com.se491.app.two2er.Fragments.UserProfile.UserProfileFragment;
 import com.se491.app.two2er.PostUpdates;
 import com.se491.app.two2er.R;
-import com.se491.app.two2er.SideMenuActivity;
-import com.se491.app.two2er.UserObject;
+import com.se491.app.two2er.HelperObjects.UserObject;
 
 import java.io.InputStream;
 import java.util.concurrent.ExecutionException;
@@ -49,11 +45,15 @@ public class UserProfileActivity extends AppCompatActivity implements
         setContentView(R.layout.fragment_userprofile);
 
         UserObject myCurrentUser = CurrentUser.getCurrentUser();
+
+        //Get references to the fields:
         userProfileImage = (ImageView) findViewById(R.id.userProfileImgV);
         userfName = (EditText) findViewById(R.id.nameField);
         userlName = (EditText) findViewById(R.id.lNameField);
         userEmail = (EditText) findViewById(R.id.emailField);
         userUni = (EditText) findViewById(R.id.univField);
+
+        //Initialize variables:
         String userfNameVal =  myCurrentUser.fname;
         String userlNameVal =  myCurrentUser.lname;
         String sUserEmail =  myCurrentUser.email;
@@ -150,8 +150,15 @@ public class UserProfileActivity extends AppCompatActivity implements
 
 
     public void upDateMyUser() throws ExecutionException, InterruptedException {
-        myName = userfName.getText().toString() + " " + userlName.getText().toString();
-        new PostUpdates(myName).execute().get();
+        UserObject myUserToUpdate = new UserObject(
+                CurrentUser.getCurrentUser().id,
+                userfName.getText().toString(),
+                userlName.getText().toString(),
+                "",
+                "",
+                ""
+        );
+        new PostUpdates(myUserToUpdate).execute().get();
     }
 
     @Override

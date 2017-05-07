@@ -1,4 +1,4 @@
-package com.se491.app.two2er.Fragments.Bookings;
+package com.se491.app.two2er.HelperObjects;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -8,13 +8,13 @@ import org.json.JSONObject;
  */
 
 public class BookingObject {
-    String bookingId;
-    String status;
-    String MeetingDate;
-    String CreationDate;
-    String tutorUserId;
-    String tutor_name;
-    String studentUserId;
+    public String bookingId;
+    public String status;
+    public String MeetingDate;
+    public String CreationDate;
+    public String tutorUserId;
+    public String tutor_name;
+    public String studentUserId;
 
     public BookingObject(){        this.status = "Test Status";
     }

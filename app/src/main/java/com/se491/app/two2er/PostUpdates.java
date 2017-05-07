@@ -3,6 +3,7 @@ package com.se491.app.two2er;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.se491.app.two2er.HelperObjects.UserObject;
 import com.stormpath.sdk.Stormpath;
 import com.stormpath.sdk.utils.StringUtils;
 
@@ -19,13 +20,14 @@ import okhttp3.logging.HttpLoggingInterceptor;
 
 /**
  * Created by eoliv on 3/1/2017.
+ * //Used to Update our UserProfile:
  */
 
 public class PostUpdates  extends AsyncTask<Void, Void, Void> {
     private OkHttpClient okHttpClient;
     private static final String SERVER_API_URL = "http://lowcost-env.niuk5squp9.us-east-2.elasticbeanstalk.com/apiauth/users";
     private int responseStatus;
-    public PostUpdates(String name) {
+    public PostUpdates(UserObject user) {
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
             public void log(String message) {
@@ -37,12 +39,16 @@ public class PostUpdates  extends AsyncTask<Void, Void, Void> {
         this.okHttpClient = new OkHttpClient.Builder()
                 .addNetworkInterceptor(httpLoggingInterceptor)
                 .build();
-        postToApi(name);
+        postToApi(user);
     }
 
-    public void postToApi(String name) {
+    //{user_id, name, age, location, education, usergroups, image_url, about, defaultlocation, userMode}
+    public void postToApi(UserObject user) {
         RequestBody requestBody = new FormBody.Builder()
-                .add("name", name)
+                .add("name", user.fname + " " + user.lname)
+                //.add("age", user.age)
+                //.add("education", user.)
+                //.add("usergroups", name)
                 .build();
 
         Request request = new Request.Builder()

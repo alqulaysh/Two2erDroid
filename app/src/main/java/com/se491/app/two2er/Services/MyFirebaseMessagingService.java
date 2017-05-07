@@ -1,4 +1,4 @@
-package com.se491.app.two2er;
+package com.se491.app.two2er.Services;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -11,6 +11,8 @@ import android.support.v4.app.NotificationCompat;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.se491.app.two2er.MainActivity;
+import com.se491.app.two2er.R;
 
 /**
  * Created by ajscilingo on 3/4/17.

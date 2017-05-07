@@ -1,4 +1,4 @@
-package com.se491.app.two2er;
+package com.se491.app.two2er.HelperObjects;
 
 import android.util.Log;
 
@@ -20,6 +20,16 @@ public class UserObject {
     public double dLat = 0.0;
 
     public UserObject(){}
+
+    public UserObject(String id, String fname, String lname, String age, String email, String userImage){
+        this.id = id;
+        this.fname = fname;
+        this.lname = lname;
+        this.age = age;
+        this.email = email;
+        this.userImage = userImage;
+    }
+
     public UserObject(JSONObject user) throws JSONException {
         this.id = user.getString("_id");
         String[] fullName = user.getString("name").split(" ");

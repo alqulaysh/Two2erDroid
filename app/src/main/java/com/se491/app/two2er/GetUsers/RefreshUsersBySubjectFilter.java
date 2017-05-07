@@ -3,7 +3,7 @@ package com.se491.app.two2er.GetUsers;
 import android.util.Log;
 
 import com.se491.app.two2er.OkHttpClientFactory;
-import com.se491.app.two2er.UserObject;
+import com.se491.app.two2er.HelperObjects.UserObject;
 import com.se491.app.two2er.Utilities.ServerApiUtilities;
 import com.stormpath.sdk.Stormpath;
 

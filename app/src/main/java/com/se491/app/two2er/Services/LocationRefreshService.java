@@ -17,7 +17,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 import com.se491.app.two2er.CurrentUser;
 import com.se491.app.two2er.Enums.eUserMode;
-import com.se491.app.two2er.MyGoogleApiClient_Singleton;
+import com.se491.app.two2er.HelperObjects.MyGoogleApiClient_Singleton;
 import com.se491.app.two2er.SessionState;
 import com.se491.app.two2er.Utilities.ServerApiUtilities;
 import com.stormpath.sdk.Stormpath;

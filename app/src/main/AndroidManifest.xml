@@ -33,11 +33,11 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".RegisterActivity"
+            android:name=".Activities.RegisterActivity"
             android:label="New Account"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".Activities.LoginActivity"
             android:label="Sign in"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -45,24 +45,27 @@
             android:label=""
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".MenuActivities.UserProfile.UserProfileActivity"
+        <activity android:name=".Activities.UserProfileActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
 
-        <activity android:name=".ChangePasswordActivity"
+        <activity android:name=".Activities.BookingsActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".ForgotPasswordActivity"
+
+        <activity android:name=".Activities.ChangePasswordActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".UploadImageActivity"></activity>
+        <activity android:name=".Activities.ForgotPasswordActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".Activities.UploadImageActivity"></activity>
 
         <service
-            android:name=".MyFirebaseInstanceIDService">
+            android:name=".Services.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
         </service>
 
         <service
-            android:name=".MyFirebaseMessagingService"
+            android:name=".Services.MyFirebaseMessagingService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>

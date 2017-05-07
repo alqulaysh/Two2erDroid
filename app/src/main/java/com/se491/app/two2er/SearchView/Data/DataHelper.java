@@ -21,35 +21,29 @@ package com.se491.app.two2er.SearchView.Data;
  */
 
         import android.content.Context;
-        import android.widget.Filter;
+import android.util.Log;
+import android.widget.Filter;
 
-        import com.google.gson.Gson;
-        import com.google.gson.reflect.TypeToken;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.se491.app.two2er.SearchView.GetSubjects;
 
-        import java.io.IOException;
-        import java.io.InputStream;
-        import java.lang.reflect.Type;
-        import java.util.ArrayList;
-        import java.util.Arrays;
-        import java.util.Collections;
-        import java.util.Comparator;
-        import java.util.List;
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class DataHelper {
 
+    private static final String TAG = "DataHelper";
     private static final String COLORS_FILE_NAME = "colors.json";
 
     private static List<SubjectWrapper> sSubjectWrappers = new ArrayList<>();
 
-    private static List<SubjectSuggestion> sSubjectSuggestions =
-            new ArrayList<>(Arrays.asList(
-                    new SubjectSuggestion("Science"),
-                    new SubjectSuggestion("Math"),
-                    new SubjectSuggestion("Music"),
-                    new SubjectSuggestion("Biology"),
-                    new SubjectSuggestion("Physics"),
-                    new SubjectSuggestion("Chemistry"),
-                    new SubjectSuggestion("Computer Science")));
+    private static List<SubjectSuggestion> sSubjectSuggestions = initializeList();
 
     public interface OnFindColorsListener {
         void onResults(List<SubjectWrapper> results);
@@ -57,6 +51,22 @@ public class DataHelper {
 
     public interface OnFindSuggestionsListener {
         void onResults(List<SubjectSuggestion> results);
+    }
+
+    private static List<SubjectSuggestion> initializeList(){
+        final GetSubjects getSubjects = new GetSubjects();
+
+        Log.i(TAG, "Starting thread to GetBookings");
+        getSubjects.start();
+
+        try {
+            getSubjects.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        Log.i(TAG, "Returning a list of size: " + getSubjects.getSubjectList().size());
+        return getSubjects.getSubjectList();
     }
 
     public static List<SubjectSuggestion> getHistory(Context context, int count) {
