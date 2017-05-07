@@ -185,7 +185,8 @@ public class SideMenuActivity extends AppCompatActivity
         View hView = navigationView.getHeaderView(0);
         ImageView nav_userImage = (ImageView) hView.findViewById(R.id.circleImageView);
         TextView nav_username = (TextView) hView.findViewById(R.id.UserName_nav);
-        nav_username.setText(myUserProfile.fname + " " + myUserProfile.lname);
+        Log.i("UserNameTest", "This is my user name: " + myUserProfile.getUserFullName());
+        nav_username.setText(myUserProfile.id);
 
         if (!myUserProfile.userImage.isEmpty() || myUserProfile.userImage == "") {
             try {

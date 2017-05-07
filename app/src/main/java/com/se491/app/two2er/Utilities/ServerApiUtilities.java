@@ -14,6 +14,8 @@ public class ServerApiUtilities {
     //API Endpoint Routes:
     public static final String SERVER_API_URL_ROUTE_BOOKING = "booking/";
     public static final String SERVER_API_URL_ROUTE_USERS = "users/";
+    public static final String SERVER_API_URL_ROUTE_USERS_ME = "me/";
+    public static final String SERVER_API_URL_ROUTE_USERS_UPDATE = "update/";
     public static final String SERVER_API_URL_ROUTE_SUBJECTS = "subjects/";
 
     private static final String SERVER_API_URL_AUTH = "http://lowcost-env.niuk5squp9.us-east-2.elasticbeanstalk.com/apiauth/";

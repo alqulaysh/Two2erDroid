@@ -46,7 +46,9 @@ public class CurrentUser {
 
     public static void Refresh() {
         Request request = new Request.Builder()
-                .url(ServerApiUtilities.GetServerApiUrl() + "users/me")
+                .url(ServerApiUtilities.GetServerApiUrl() +
+                        ServerApiUtilities.SERVER_API_URL_ROUTE_USERS +
+                        ServerApiUtilities.SERVER_API_URL_ROUTE_USERS_ME)
                 .headers(ServerApiUtilities.buildStandardHeaders(Stormpath.getAccessToken()))
                 .get()
                 .build();

@@ -56,7 +56,7 @@ public class DataHelper {
     private static List<SubjectSuggestion> initializeList(){
         final GetSubjects getSubjects = new GetSubjects();
 
-        Log.i(TAG, "Starting thread to GetBookings");
+        Log.i(TAG, "Starting thread.");
         getSubjects.start();
 
         try {
