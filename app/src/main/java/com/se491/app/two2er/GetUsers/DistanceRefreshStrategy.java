@@ -2,8 +2,9 @@ package com.se491.app.two2er.GetUsers;
 
 import android.util.Log;
 
-import com.se491.app.two2er.OkHttpClientFactory;
 import com.se491.app.two2er.HelperObjects.UserObject;
+import com.se491.app.two2er.OkHttpClientFactory;
+import com.se491.app.two2er.Services.LocationRefreshService;
 import com.se491.app.two2er.SessionState;
 import com.se491.app.two2er.Utilities.ServerApiUtilities;
 import com.stormpath.sdk.Stormpath;
@@ -22,8 +23,8 @@ import okhttp3.Response;
 
 public class DistanceRefreshStrategy extends GetUsers {
     private double distance = 100;
-    private double dLong = -87.6254;
-    private double dLat = 41.8782;
+    private double dLong = LocationRefreshService.getLongitude();
+    private double dLat = LocationRefreshService.getLatitude();
 
     private String getURL() {
         if (!SessionState.getIsUsingLocationTables()) {
