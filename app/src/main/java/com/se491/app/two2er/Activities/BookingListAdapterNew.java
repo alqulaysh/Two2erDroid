@@ -153,7 +153,9 @@ public class BookingListAdapterNew extends BaseAdapter {
         String[] date = meetingDate.split("T");
         //Set our views:
         //Show a student the tutors name and show the tutor the students name:
-        if(CurrentUser.getCurrentUser().userMode == "Student"){
+        System.out.println("CurrentUser.getCurrentUser().userMode: " + CurrentUser.getCurrentUser().userMode);
+
+        if(CurrentUser.getCurrentUser().userMode.equals("Student")){
             msgDesc.setText("Session with: " + tutor_name);
         }
         else{

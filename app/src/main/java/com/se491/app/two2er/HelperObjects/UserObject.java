@@ -36,7 +36,7 @@ public class UserObject {
 
     public boolean userGroupsContains(String mode){
         for(int i = 0; i < userGroups.length; i++){
-            if(userGroups[i] == mode){
+            if(userGroups[i].equals(mode)){
                 return true;
             }
         }
