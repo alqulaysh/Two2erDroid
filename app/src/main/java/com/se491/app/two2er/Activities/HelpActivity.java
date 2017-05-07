@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
 import com.se491.app.two2er.R;
 
@@ -33,9 +35,10 @@ public class HelpActivity extends AppCompatActivity {
         });
 
 
-//        String [] UserProfileInfo={ "First Name", "Last Name", "Email", "University", "Subject"};
-//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getListView().getContext(), android.R.layout.activity_list_item, UserProfileInfo);
-//        getListView().setAdapter(adapter);
+        String [] UserProfileInfo={ "First Name", "Last Name", "Email", "University", "Subject"};
+        ListAdapter LA = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,UserProfileInfo);
+        ListView LAA = (ListView) findViewById(R.id.listviewProfile);
+        LAA.setAdapter(LA);
 
 
 
