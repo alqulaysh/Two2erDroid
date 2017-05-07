@@ -44,6 +44,12 @@
             android:name=".Activities.HelpActivity"
             android:label="Help"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".Activities.AdditionalProfileActivity"
+            android:label="Register as Tutor"
+            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
 
             android:name=".SideMenuActivity"

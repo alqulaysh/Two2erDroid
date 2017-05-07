@@ -33,13 +33,7 @@ public class PostToBookings extends AsyncTask<Void, Void, Void> {
     public PostToBookings(View finalRow, String bookingId, String type) {
 
         this.okHttpClient = OkHttpClientFactory.Create();
-
-        if(type.equals("accept")) {
-            postToStatus(bookingId, type);
-        }
-        if(type.equals("reject")){
-            postToStatus(bookingId, type);
-        }
+        postToStatus(bookingId, type);
 
     }
 

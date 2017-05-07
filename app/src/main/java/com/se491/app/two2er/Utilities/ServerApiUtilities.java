@@ -13,6 +13,9 @@ public class ServerApiUtilities {
 
     //API Endpoint Routes:
     public static final String SERVER_API_URL_ROUTE_BOOKING = "booking/";
+    public static final String SERVER_API_URL_ROUTE_BOOKING_CONFIRM = "confirm/";
+    public static final String SERVER_API_URL_ROUTE_BOOKING_DELCINE = "decline/";
+    public static final String SERVER_API_URL_ROUTE_BOOKING_CANCLE = "cancel/";
     public static final String SERVER_API_URL_ROUTE_USERS = "users/";
     public static final String SERVER_API_URL_ROUTE_USERS_ME = "me/";
     public static final String SERVER_API_URL_ROUTE_USERS_UPDATE = "update/";

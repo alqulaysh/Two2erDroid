@@ -17,6 +17,7 @@ import com.se491.app.two2er.Fragments.Bookings.PostToBookings;
 import com.se491.app.two2er.GetBookingsNew;
 import com.se491.app.two2er.HelperObjects.BookingObject;
 import com.se491.app.two2er.R;
+import com.se491.app.two2er.Utilities.ServerApiUtilities;
 
 import java.util.ArrayList;
 
@@ -85,12 +86,13 @@ public class BookingListAdapterNew extends BaseAdapter {
         String currStatus = apList.get(position).status;
         final String bookingId = apList.get(position).bookingId;
         Button acceptButton = (Button) row.findViewById(R.id.button_accept);
-        Button declineButton = (Button) row.findViewById(R.id.button_decline);
+        final Button declineButton = (Button) row.findViewById(R.id.button_decline);
 
         row.setBackgroundColor(Color.YELLOW);
 
         if(currStatus.equals("confirmed")){
             row.setBackgroundColor(Color.GREEN);
+            declineButton.setText("Cancel");
         }
 
         if(currStatus.equals("declined")){
@@ -112,7 +114,7 @@ public class BookingListAdapterNew extends BaseAdapter {
                 // you may want to set as the tag for the TextView the position paremeter of the `getView` method and then retrieve it here
                 Integer realPosition = (Integer) v.getTag();
                 System.out.println("This is my booking ID for this row: " + bookingId);
-                new PostToBookings(finalRow, bookingId, "accept");
+                new PostToBookings(finalRow, bookingId, ServerApiUtilities.SERVER_API_URL_ROUTE_BOOKING_CONFIRM);
                 finalRow.setBackgroundColor(Color.GREEN);
                 // using realPosition , now you know the row where this TextView was clicked
             }
@@ -125,8 +127,14 @@ public class BookingListAdapterNew extends BaseAdapter {
                 // Do the stuff you want for the case when the row TextView is clicked
                 // you may want to set as the tag for the TextView the position paremeter of the `getView` method and then retrieve it here
                 Integer realPosition = (Integer) v.getTag();
-                new PostToBookings(finalRow, bookingId, "reject");
-                finalRow.setBackgroundColor(Color.RED);
+                if(declineButton.getText().toString() == "Decline"){
+                    new PostToBookings(finalRow, bookingId, ServerApiUtilities.SERVER_API_URL_ROUTE_BOOKING_DELCINE);
+                    finalRow.setBackgroundColor(Color.RED);
+                }
+                else {
+                        new PostToBookings(finalRow, bookingId, ServerApiUtilities.SERVER_API_URL_ROUTE_BOOKING_CANCLE);
+                        finalRow.setBackgroundColor(Color.RED);
+                }
                 // using realPosition , now you know the row where this TextView was clicked
             }
         });

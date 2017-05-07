@@ -48,10 +48,9 @@
 
 
     <TextView
-        android:id="@+id/Nav_Title_textView"
+        android:id="@+id/nav_title_tutor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:layout_marginBottom="0dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
@@ -60,7 +59,7 @@
         android:textAlignment="textStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="#ffffff"
-        app:layout_constraintBottom_toTopOf="@+id/Nav_textView"
+        app:layout_constraintBottom_toTopOf="@+id/nav_title_tutor_sub"
         app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -72,7 +71,7 @@
         app:layout_constraintVertical_bias="0.666" />
 
     <TextView
-        android:id="@+id/Nav_textView"
+        android:id="@+id/nav_title_tutor_sub"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="14dp"

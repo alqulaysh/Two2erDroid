@@ -45,6 +45,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.se491.app.two2er.Activities.AdditionalProfileActivity;
 import com.se491.app.two2er.Activities.BookingsActivity;
 import com.se491.app.two2er.Activities.LoginActivity;
 import com.se491.app.two2er.Activities.UserProfileActivity;
@@ -182,14 +183,17 @@ public class SideMenuActivity extends AppCompatActivity
 
         toggle.syncState();
 
+        //NAVIGATION HEADER VIEW:
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         NavigationView botDrawerView = (NavigationView) findViewById(R.id.navigation_drawer_bottom);
         //Set the sidemenu image to users profile picture:
         View hView = navigationView.getHeaderView(0);
         ImageView nav_userImage = (ImageView) hView.findViewById(R.id.circleImageView);
         TextView nav_username = (TextView) hView.findViewById(R.id.UserName_nav);
-        Log.i("UserNameTest", "This is my user name: " + myUserProfile.getUserFullName());
-        nav_username.setText(myUserProfile.id);
+        TextView nav_title_tutor = (TextView) hView.findViewById(R.id.nav_title_tutor);
+        TextView nav_title_tutor_sub = (TextView) hView.findViewById(R.id.nav_title_tutor_sub);
+
+        nav_username.setText(myUserProfile.getUserFullName());
 
         if (!myUserProfile.userImage.isEmpty() || myUserProfile.userImage == "") {
             try {
@@ -199,6 +203,29 @@ public class SideMenuActivity extends AppCompatActivity
                 e.printStackTrace();
             }
         }
+
+        //Set the onclick listener for the UserProfile Image on the SideMenuActivity
+        nav_userImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SideMenuActivity.this, UserProfileActivity.class));
+            }
+        });
+
+        //Set the onClick listener for "Do you want to be a tutor?":
+        nav_title_tutor_sub.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SideMenuActivity.this, AdditionalProfileActivity.class));
+            }
+        });
+
+        nav_title_tutor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SideMenuActivity.this, AdditionalProfileActivity.class));
+            }
+        });
 
         //Set our nav view Item Selected listener(its implemented by this activity):
         navigationView.setNavigationItemSelectedListener(this);
