@@ -2,6 +2,7 @@ package com.se491.app.two2er;
 
 import android.util.Log;
 
+import com.se491.app.two2er.HelperObjects.UserObject;
 import com.se491.app.two2er.Utilities.ServerApiUtilities;
 import com.stormpath.sdk.Stormpath;
 

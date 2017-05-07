@@ -1,4 +1,4 @@
-package com.se491.app.two2er;
+package com.se491.app.two2er.Activities;
 
 import android.content.Intent;
 import android.os.StrictMode;
@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.se491.app.two2er.R;
+import com.se491.app.two2er.SideMenuActivity;
 import com.stormpath.sdk.Stormpath;
 import com.stormpath.sdk.utils.StringUtils;
 

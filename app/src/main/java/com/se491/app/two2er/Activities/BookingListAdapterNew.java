@@ -1,6 +1,11 @@
-package com.se491.app.two2er.Fragments.Bookings;
+package com.se491.app.two2er.Activities;
+
+/**
+ * Created by eoliv on 5/3/2017.
+ */
 
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,38 +13,44 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.se491.app.two2er.Fragments.Bookings.PostToBookings;
+import com.se491.app.two2er.GetBookingsNew;
 import com.se491.app.two2er.HelperObjects.BookingObject;
 import com.se491.app.two2er.R;
 
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
+
 
 /**
  * Created by eoliv on 3/3/2017.
  */
 
-public class BookingListAdapter extends BaseAdapter {
+public class BookingListAdapterNew extends BaseAdapter {
 
-    public interface ViewClickListener {
-
-        void onViewClick(View view);
-    }
-
-    private ViewClickListener listener;
 
     private LayoutInflater inflater;
     private ArrayList<BookingObject> apList = getBookings();
+    public static String TAG = "BookingListAdapterNew";
 
-    public BookingListAdapter(LayoutInflater v, ViewClickListener viewClickListener) throws ExecutionException, InterruptedException {
-        inflater = v;
-    }
+    //Constructor:
+    public BookingListAdapterNew(LayoutInflater inflater){this.inflater = inflater;}
 
     //Get the objects from the database:
-    public ArrayList<BookingObject> getBookings() throws ExecutionException, InterruptedException {
-        ArrayList<BookingObject> taskList;
-        taskList = new GetBookings().execute().get();
+    public ArrayList<BookingObject> getBookings() {
 
-        return taskList;
+        final GetBookingsNew getBookings = new GetBookingsNew();
+
+        Log.i(TAG, "Starting thread to GetBookings");
+        getBookings.start();
+
+        try {
+            getBookings.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        Log.i(TAG, "Returning a list of size: " + getBookings.getBookingList().size());
+        return getBookings.getBookingList();
     }
     @Override
     public int getCount() {
@@ -59,6 +70,7 @@ public class BookingListAdapter extends BaseAdapter {
     @Override
     public View getView (int position, View convertView, ViewGroup parent) {
         View row = convertView;
+
         if (convertView == null) {
             if (inflater != null)
                 row = inflater.inflate(R.layout.notification_list, parent, false);
@@ -128,3 +140,4 @@ public class BookingListAdapter extends BaseAdapter {
         return row;
     }
 }
+

@@ -45,12 +45,15 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.se491.app.two2er.Fragments.Bookings.BookingsFragment;
+import com.se491.app.two2er.Activities.BookingsActivity;
+import com.se491.app.two2er.Activities.LoginActivity;
+import com.se491.app.two2er.Activities.UserProfileActivity;
 import com.se491.app.two2er.Fragments.Bookings.CreateBooking;
 import com.se491.app.two2er.Fragments.ScheduleFragment;
 import com.se491.app.two2er.GetUsers.DistanceRefreshStrategy;
 import com.se491.app.two2er.GetUsers.GetUsers;
-import com.se491.app.two2er.MenuActivities.UserProfile.UserProfileActivity;
+import com.se491.app.two2er.HelperObjects.MyGoogleApiClient_Singleton;
+import com.se491.app.two2er.HelperObjects.UserObject;
 import com.se491.app.two2er.SearchView.MyFloatingSearchView;
 import com.se491.app.two2er.Services.LocationRefreshService;
 import com.se491.app.two2er.Utilities.HelpActivity;
@@ -282,7 +285,7 @@ public class SideMenuActivity extends AppCompatActivity
         } else if (id == R.id.nav_schedule) {
             fm.beginTransaction().replace(R.id.content_frame, new ScheduleFragment()).commit();
         } else if (id == R.id.nav_manage) {
-            fm.beginTransaction().replace(R.id.content_frame, new BookingsFragment()).commit();
+            startActivity(new Intent(SideMenuActivity.this, BookingsActivity.class));
             //fm.beginTransaction().replace(R.id.content_framePad, new BookingsFragment()).commit();
         } else if (id == R.id.nav_logout) {
             Stormpath.logout();

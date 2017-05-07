@@ -1,4 +1,4 @@
-package com.se491.app.two2er;
+package com.se491.app.two2er.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.se491.app.two2er.R;
+import com.se491.app.two2er.SideMenuActivity;
 import com.stormpath.sdk.Stormpath;
 import com.stormpath.sdk.StormpathCallback;
 import com.stormpath.sdk.models.RegistrationForm;

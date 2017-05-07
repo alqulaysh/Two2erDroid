@@ -17,7 +17,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.se491.app.two2er.Fragments.PWDDialogFragment;
-import com.se491.app.two2er.PostUpdates;
 import com.se491.app.two2er.R;
 
 import java.io.InputStream;
@@ -135,7 +134,7 @@ public class UserProfileFragment extends Fragment implements
 
 
     public void upDateMyUser() throws ExecutionException, InterruptedException {
-        new PostUpdates(myName).execute().get();
+        //new PostUpdates(myName).execute().get();
     }
 
     @Override

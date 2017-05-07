@@ -6,6 +6,7 @@ package com.se491.app.two2er.Fragments.Bookings;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.se491.app.two2er.HelperObjects.BookingObject;
 import com.stormpath.sdk.Stormpath;
 import com.stormpath.sdk.utils.StringUtils;
 

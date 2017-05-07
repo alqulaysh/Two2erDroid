@@ -10,6 +10,12 @@ import okhttp3.Headers;
 
 public class ServerApiUtilities {
 
+
+    //API Endpoint Routes:
+    public static final String SERVER_API_URL_ROUTE_BOOKING = "booking/";
+    public static final String SERVER_API_URL_ROUTE_USERS = "users/";
+    public static final String SERVER_API_URL_ROUTE_SUBJECTS = "subjects/";
+
     private static final String SERVER_API_URL_AUTH = "http://lowcost-env.niuk5squp9.us-east-2.elasticbeanstalk.com/apiauth/";
     private static final String SERVER_API_URL_NOAUTH = "http://lowcost-env.niuk5squp9.us-east-2.elasticbeanstalk.com/api/";
     private static final String SERVER_API_URL_ROUTES_TEST = "http://lowcost-env.niuk5squp9.us-east-2.elasticbeanstalk.com/";
