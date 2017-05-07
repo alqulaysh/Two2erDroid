@@ -262,10 +262,10 @@ public class LocationRefreshService extends IntentService implements GoogleApiCl
     }
 
     private String getUrl() {
-        if (SessionState.UserMode() == eUserMode.STUDENT) {
+        if (SessionState.getUserMode() == eUserMode.STUDENT) {
             return ServerApiUtilities.GetServerApiUrl() + "studentlocations";
         }
-        else if (SessionState.UserMode() == eUserMode.TUTOR) {
+        else if (SessionState.getUserMode() == eUserMode.TUTOR) {
             return ServerApiUtilities.GetServerApiUrl() + "tutorlocations";
         }
 

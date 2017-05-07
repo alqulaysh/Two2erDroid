@@ -60,6 +60,7 @@ import com.se491.app.two2er.Activities.HelpActivity;
 import com.stormpath.sdk.Stormpath;
 
 import java.io.InputStream;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -110,8 +111,10 @@ public class SideMenuActivity extends AppCompatActivity
     //Search EditText
     private FloatingSearchView searchView;
 
-    private String TAG = "GetUsers";
-    private static volatile int lock = 0;
+    private String TAG = "SideMenuActivity";
+    private static volatile Date lastRefreshedAt = new Date();
+    private Thread automatedMapRefresh;
+    private static volatile boolean isRunningAutomatedRefresh = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -219,10 +222,41 @@ public class SideMenuActivity extends AppCompatActivity
         sMapFragment.getMapAsync(this);
 
         Intent intent = new Intent(this, LocationRefreshService.class);
-        if (intent != null)
+        if (intent != null) {
             this.startService(intent);
+        }
+
+        automatedMapRefresh = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(isRunningAutomatedRefresh) {
+                    try {
+                        Date now = new Date();
+                        if ((now.getTime() - lastRefreshedAt.getTime()) / 60000 > 1) {
+                            Thread.sleep(60000);
+                            refreshMap();
+                        }
+                    }
+                    catch (Exception ex) {
+                        Log.e(TAG, ex.toString() + "\n" + ex.getStackTrace());
+                    }
+                }
+            }
+        });
+        automatedMapRefresh.start();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        isRunningAutomatedRefresh = false;
+        try {
+            automatedMapRefresh.join();
+        }
+        catch (Exception ex) {
+            Log.e(TAG, ex.toString());
+        }
+    }
 
     @Override
     public void onBackPressed() {
@@ -323,8 +357,6 @@ public class SideMenuActivity extends AppCompatActivity
         //Move map camera
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
-
-
         //stop location updates.36
 
         if (mGoogleApiClient != null) {
@@ -447,6 +479,8 @@ public class SideMenuActivity extends AppCompatActivity
         double myCameraLong = ltMyCameraCoords.longitude;
         double myCameraLat = ltMyCameraCoords.latitude;
         float fMyCameraZoom = fMyCameraPostion.zoom;
+
+        refreshMap();
     }
 
     @Override
@@ -523,27 +557,6 @@ public class SideMenuActivity extends AppCompatActivity
 
 
     private void refreshMap() {
-//        Thread asyncRefresh = new Thread(new Runnable() {
-//
-//            @Override
-//            public void run() {
-//                GetUsers test = new DistanceRefreshStrategy();
-//                if (test.isAlive())
-//                    return;
-//
-//                test.start();
-//
-//                try {
-//                    test.join();
-//                }
-//                catch (Exception ex) {
-//                    Log.e(TAG, ex.toString());
-//                }
-//
-//                tempRecUsers = test.getUsersList();
-//            }
-//        });
-
         GetUsers test = new DistanceRefreshStrategy();
         test.start();
 
@@ -551,18 +564,13 @@ public class SideMenuActivity extends AppCompatActivity
             test.join();
         }
         catch (Exception ex) {
-            Log.e(TAG, ex.toString());
+            Log.e("RefreshMap", ex.toString() + "\n" + ex.getStackTrace());
         }
 
         tempRecUsers = test.getUsersList();
 
-//        asyncRefresh.start();
-//        try {
-//            asyncRefresh.join();
-//        }
-//        catch (Exception ex) {Log.e(TAG, ex.toString()); }
-
         addUsersToMap(tempRecUsers);
+        lastRefreshedAt = new Date();
     }
 
     private void addUsersToMap(HashMap<String, UserObject> users) {
@@ -583,5 +591,9 @@ public class SideMenuActivity extends AppCompatActivity
             //Add the markers on the map:
             mGoogleMap.addMarker(markerOptions);
         }
+    }
+
+    private void timedAutomatedMapRefresh() {
+
     }
 }

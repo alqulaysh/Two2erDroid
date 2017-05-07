@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.se491.app.two2er.OkHttpClientFactory;
 import com.se491.app.two2er.HelperObjects.UserObject;
+import com.se491.app.two2er.SessionState;
 import com.se491.app.two2er.Utilities.ServerApiUtilities;
 import com.stormpath.sdk.Stormpath;
 
@@ -11,7 +12,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 import okhttp3.Request;
 import okhttp3.Response;
@@ -26,6 +26,13 @@ public class DistanceRefreshStrategy extends GetUsers {
     private double dLat = 41.8782;
 
     private String getURL() {
+        if (!SessionState.getIsUsingLocationTables()) {
+            return ServerApiUtilities.GetServerApiUrl() + String.format("tutorlocations/findWithin/milesLonLat/%1$.4f/%2$.4f/%3$.4f"
+                    , distance
+                    , dLong
+                    , dLat);
+        }
+
         return ServerApiUtilities.GetServerApiUrl() + String.format("users/findWithin/milesLonLat/%1$.4f/%2$.4f/%3$.4f"
                 , distance
                 , dLong

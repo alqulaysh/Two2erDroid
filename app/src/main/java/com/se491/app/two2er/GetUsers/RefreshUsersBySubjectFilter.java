@@ -47,11 +47,6 @@ public class RefreshUsersBySubjectFilter extends GetUsers {
             for (int i = 0; i < users.length(); i++) {
                 UserObject user = new UserObject(users.getJSONObject(i));
                 tempUsersList.put(user.id, user);
-//                    if (!myMapActivity.usersAround.containsKey(user.id)) {
-//                        Log.e("Inside doInBackGround", "User to usersAround ID: " + user.id);
-//                        Log.e("Inside doInBackGround", "User to usersAround First Name: " + user.fname);
-//                        myMapActivity.usersAround.put(user.id, user);
-//                    }
             }
 
         } catch (IOException e) {

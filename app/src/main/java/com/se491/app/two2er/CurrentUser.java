@@ -45,43 +45,44 @@ public class CurrentUser {
     }
 
     public static void Refresh() {
-        Request request = new Request.Builder()
-                .url(ServerApiUtilities.GetServerApiUrl() +
-                        ServerApiUtilities.SERVER_API_URL_ROUTE_USERS +
-                        ServerApiUtilities.SERVER_API_URL_ROUTE_USERS_ME)
-                .headers(ServerApiUtilities.buildStandardHeaders(Stormpath.getAccessToken()))
-                .get()
-                .build();
+        try {
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Request request = new Request.Builder()
+                            .url(ServerApiUtilities.GetServerApiUrl() +
+                                    ServerApiUtilities.SERVER_API_URL_ROUTE_USERS +
+                                    ServerApiUtilities.SERVER_API_URL_ROUTE_USERS_ME)
+                            .headers(ServerApiUtilities.buildStandardHeaders(Stormpath.getAccessToken()))
+                            .get()
+                            .build();
 
-        OkHttpClient okHttpClient = OkHttpClientFactory.Create();
-        okHttpClient.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Log.e(TAG, e.toString());
-            }
+                    try {
+                        Response response = OkHttpClientFactory.Create().newCall(request).execute();
+                        String jsonResponse = response.body().string();
 
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                try {
-                    String jsonResponse = response.body().string();
+                        Log.i(TAG, "URL used in CurrentUser: " + ServerApiUtilities.GetServerApiUrl() + "/me");
 
-                    Log.i(TAG, "URL used in CurrentUser: " + ServerApiUtilities.GetServerApiUrl() + "/me");
+                        JSONObject myUser = new JSONObject(jsonResponse);
+                        UserObject myTempUser = new UserObject(myUser);
+                        setCurrentUser(myTempUser);
 
-                    JSONObject myUser = new JSONObject(jsonResponse);
-                    UserObject myTempUser = new UserObject(myUser);
-                    setCurrentUser(myTempUser);
-
-                    Log.i(TAG, "My user ID: " + myTempUser.id);
-                    Log.i(TAG, "My user name: " + myTempUser.fname);
-                    Log.i(TAG, "My user img URL: " + myTempUser.userImage);
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                        Log.i(TAG, "My user ID: " + myTempUser.id);
+                        Log.i(TAG, "My user name: " + myTempUser.fname);
+                        Log.i(TAG, "My user img URL: " + myTempUser.userImage);
+                    }
+                    catch (Exception ex) {
+                        Log.e(TAG, ex.toString() + "\n" + ex.getStackTrace());
+                    }
                 }
-            }
-        });
+            });
+            t.start();
+            t.join();
+        }
+        catch(Exception ex) {
+            Log.e(TAG, ex.toString() + "\n" + ex.getStackTrace());
+        }
+
     }
 }
 
