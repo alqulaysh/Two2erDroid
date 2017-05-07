@@ -75,7 +75,5 @@ public class UserObject {
         //Split the array into the proper double varaibales:
         this.dLong = Double.parseDouble(coords[0]);
         this.dLat = Double.parseDouble(coords[1]);
-
-        //
     }
 }

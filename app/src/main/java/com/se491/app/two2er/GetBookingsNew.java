@@ -14,6 +14,7 @@ import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import okhttp3.Request;
 import okhttp3.Response;
@@ -30,7 +31,8 @@ public class GetBookingsNew extends Thread {
     public GetBookingsNew() {
     }
 
-    public ArrayList<BookingObject> getBookingList() { return bookingList; }
+    public ArrayList<BookingObject> getBookingList() {
+        return bookingList; }
 
     @Override
     public void run() {
@@ -50,6 +52,7 @@ public class GetBookingsNew extends Thread {
                     BookingObject booking = new BookingObject(bookings.getJSONObject(i));
                     bookingList.add(booking);
                 }
+                Collections.reverse(bookingList);
                 Log.i(TAG, "Size of bookingList: " + bookingList.size());
 
             } catch (IOException e) {

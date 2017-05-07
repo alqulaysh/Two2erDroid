@@ -88,7 +88,7 @@ public class BookingListAdapterNew extends BaseAdapter {
         String currStatus = apList.get(position).status;
         final String bookingId = apList.get(position).bookingId;
         final String timekit_booking_id = apList.get(position).timekit_booking_id;
-        Button acceptButton = (Button) row.findViewById(R.id.button_accept);
+        final Button acceptButton = (Button) row.findViewById(R.id.button_accept);
         final Button declineButton = (Button) row.findViewById(R.id.button_decline);
 
         row.setBackgroundColor(Color.YELLOW);
@@ -96,6 +96,7 @@ public class BookingListAdapterNew extends BaseAdapter {
         if(currStatus.equals("confirmed")){
             row.setBackgroundColor(Color.GREEN);
             declineButton.setText("Cancel");
+            acceptButton.setText("Decline");
         }
 
         if(currStatus.equals("declined")){
@@ -119,12 +120,18 @@ public class BookingListAdapterNew extends BaseAdapter {
             public void onClick(View v) {
                 // Do the stuff you want for the case when the row TextView is clicked
                 // you may want to set as the tag for the TextView the position paremeter of the `getView` method and then retrieve it here
-                Integer realPosition = (Integer) v.getTag();
-                System.out.println("This is my timekit_booking_id for this row: " + timekit_booking_id);
-                new PostToBookings(finalRow, timekit_booking_id, ServerApiUtilities.SERVER_API_URL_ROUTE_BOOKING_CONFIRM);
-                finalRow.setBackgroundColor(Color.GREEN);
-                //Set the decline button to Cancel:
-                declineButton.setText("Cancel");
+                if(acceptButton.getText().toString().equals("Decline")){
+                    new PostToBookings(finalRow, timekit_booking_id, ServerApiUtilities.SERVER_API_URL_ROUTE_BOOKING_DELCINE);
+                    finalRow.setBackgroundColor(Color.RED);
+                }
+                else {
+                    Integer realPosition = (Integer) v.getTag();
+                    System.out.println("This is my timekit_booking_id for this row: " + timekit_booking_id);
+                    new PostToBookings(finalRow, timekit_booking_id, ServerApiUtilities.SERVER_API_URL_ROUTE_BOOKING_CONFIRM);
+                    finalRow.setBackgroundColor(Color.GREEN);
+                    //Set the decline button to Cancel:
+                    declineButton.setText("Cancel");
+                }
                 // using realPosition , now you know the row where this TextView was clicked
             }
         });
@@ -136,7 +143,7 @@ public class BookingListAdapterNew extends BaseAdapter {
                 // Do the stuff you want for the case when the row TextView is clicked
                 // you may want to set as the tag for the TextView the position paremeter of the `getView` method and then retrieve it here
                 Integer realPosition = (Integer) v.getTag();
-                if(declineButton.getText().toString() == "Decline"){
+                if(declineButton.getText().toString().equals("Decline")){
                     new PostToBookings(finalRow, timekit_booking_id, ServerApiUtilities.SERVER_API_URL_ROUTE_BOOKING_DELCINE);
                     finalRow.setBackgroundColor(Color.RED);
                 }
@@ -153,8 +160,6 @@ public class BookingListAdapterNew extends BaseAdapter {
         String[] date = meetingDate.split("T");
         //Set our views:
         //Show a student the tutors name and show the tutor the students name:
-        System.out.println("CurrentUser.getCurrentUser().userMode: " + CurrentUser.getCurrentUser().userMode);
-
         if(CurrentUser.getCurrentUser().userMode.equals("Student")){
             msgDesc.setText("Session with: " + tutor_name);
         }
