@@ -183,11 +183,13 @@ public class SideMenuActivity extends AppCompatActivity
         NavigationView botDrawerView = (NavigationView) findViewById(R.id.navigation_drawer_bottom);
         //Set the sidemenu image to users profile picture:
         View hView = navigationView.getHeaderView(0);
-        ImageView nav_user = (ImageView) hView.findViewById(R.id.circleImageView);
+        ImageView nav_userImage = (ImageView) hView.findViewById(R.id.circleImageView);
+        TextView nav_username = (TextView) hView.findViewById(R.id.UserName_nav);
+        nav_username.setText(myUserProfile.fname + " " + myUserProfile.lname);
 
         if (!myUserProfile.userImage.isEmpty() || myUserProfile.userImage == "") {
             try {
-                new DownloadImageTask(nav_user)
+                new DownloadImageTask(nav_userImage)
                         .execute(myUserProfile.userImage).get();
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
