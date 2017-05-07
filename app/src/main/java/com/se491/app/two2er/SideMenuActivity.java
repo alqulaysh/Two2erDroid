@@ -56,7 +56,7 @@ import com.se491.app.two2er.HelperObjects.MyGoogleApiClient_Singleton;
 import com.se491.app.two2er.HelperObjects.UserObject;
 import com.se491.app.two2er.SearchView.MyFloatingSearchView;
 import com.se491.app.two2er.Services.LocationRefreshService;
-import com.se491.app.two2er.Utilities.HelpActivity;
+import com.se491.app.two2er.Activities.HelpActivity;
 import com.stormpath.sdk.Stormpath;
 
 import java.io.InputStream;

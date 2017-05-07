@@ -1,5 +1,6 @@
-package com.se491.app.two2er.Utilities;
+package com.se491.app.two2er.Activities;
 
+import android.app.ListActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -33,7 +34,7 @@ public class HelpActivity extends AppCompatActivity {
 
 
 //        String [] UserProfileInfo={ "First Name", "Last Name", "Email", "University", "Subject"};
-//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getListView().getContext(), android.R.layout.activity_list_item, UserProfileInfo)
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getListView().getContext(), android.R.layout.activity_list_item, UserProfileInfo);
 //        getListView().setAdapter(adapter);
 
 

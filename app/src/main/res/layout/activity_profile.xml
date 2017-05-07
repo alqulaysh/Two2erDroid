@@ -246,14 +246,27 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
-        <ListView
-            android:id="@+id/ListViewProfile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <!--<EditText-->
+            <!--android:id="@+id/emailField"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:hint="Email"-->
+            <!--android:inputType="textEmailAddress|textEmailSubject|textPersonName"-->
+            <!--android:padding="10dp"-->
+            <!--android:text="none@gmail.com"-->
+            <!--/>-->
 
 
 
-             />
+
+
+
+
+
+
+
+
+
     </android.support.v4.widget.NestedScrollView>
 
 
