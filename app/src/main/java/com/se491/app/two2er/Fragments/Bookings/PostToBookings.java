@@ -57,7 +57,9 @@ public class PostToBookings extends AsyncTask<Void, Void, Void> {
         Log.e(TAG, "PostToApi");
 
         Request request = new Request.Builder()
-                .url(ServerApiUtilities.GetServerApiUrl() + endPoint)
+                .url(ServerApiUtilities.GetServerApiUrl() +
+                        ServerApiUtilities.SERVER_API_URL_ROUTE_BOOKING +
+                        endPoint)
                 .headers(ServerApiUtilities.buildStandardHeaders(Stormpath.getAccessToken()))
                 .post(requestBody)
                 .build();

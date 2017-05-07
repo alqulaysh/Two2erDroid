@@ -47,6 +47,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.se491.app.two2er.Activities.AdditionalProfileActivity;
 import com.se491.app.two2er.Activities.BookingsActivity;
+import com.se491.app.two2er.Activities.HelpActivity;
 import com.se491.app.two2er.Activities.LoginActivity;
 import com.se491.app.two2er.Activities.UserProfileActivity;
 import com.se491.app.two2er.Fragments.Bookings.CreateBooking;
@@ -57,7 +58,6 @@ import com.se491.app.two2er.HelperObjects.MyGoogleApiClient_Singleton;
 import com.se491.app.two2er.HelperObjects.UserObject;
 import com.se491.app.two2er.SearchView.MyFloatingSearchView;
 import com.se491.app.two2er.Services.LocationRefreshService;
-import com.se491.app.two2er.Activities.HelpActivity;
 import com.stormpath.sdk.Stormpath;
 
 import java.io.InputStream;
@@ -212,20 +212,26 @@ public class SideMenuActivity extends AppCompatActivity
             }
         });
 
-        //Set the onClick listener for "Do you want to be a tutor?":
-        nav_title_tutor_sub.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(SideMenuActivity.this, AdditionalProfileActivity.class));
-            }
-        });
-
-        nav_title_tutor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(SideMenuActivity.this, AdditionalProfileActivity.class));
-            }
-        });
+        //If the student does not have a tutor profile give them option to set one up:
+        if(!myUserProfile.userGroupsContains("Tutor")){
+            nav_title_tutor_sub.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(SideMenuActivity.this, AdditionalProfileActivity.class));
+                }
+            });
+            nav_title_tutor.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(SideMenuActivity.this, AdditionalProfileActivity.class));
+                }
+            });
+        }
+        //Otherwise just hide the buttons:
+        else{
+            nav_title_tutor.setVisibility(View.GONE);
+            nav_title_tutor_sub.setVisibility(View.GONE);
+        }
 
         //Set our nav view Item Selected listener(its implemented by this activity):
         navigationView.setNavigationItemSelectedListener(this);

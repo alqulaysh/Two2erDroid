@@ -116,6 +116,8 @@ public class BookingListAdapterNew extends BaseAdapter {
                 System.out.println("This is my booking ID for this row: " + bookingId);
                 new PostToBookings(finalRow, bookingId, ServerApiUtilities.SERVER_API_URL_ROUTE_BOOKING_CONFIRM);
                 finalRow.setBackgroundColor(Color.GREEN);
+                //Set the decline button to Cancel:
+                declineButton.setText("Cancel");
                 // using realPosition , now you know the row where this TextView was clicked
             }
         });

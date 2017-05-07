@@ -33,6 +33,19 @@ public class UserObject {
         return fname + " " + lname;
     }
 
+    public boolean userGroupsContains(String mode){
+        for(int i = 0; i < userGroups.length; i++){
+            if(userGroups[i] == mode){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public String[] getListArray(){
+        return new String[]{fname, lname, email, age};
+    }
+
     public UserObject(JSONObject user) throws JSONException {
         this.id = user.getString("_id");
         String[] fullName = user.getString("name").split(" ");
