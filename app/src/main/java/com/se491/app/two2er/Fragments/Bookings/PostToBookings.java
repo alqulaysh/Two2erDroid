@@ -39,7 +39,7 @@ public class PostToBookings extends AsyncTask<Void, Void, Void> {
 
     public void postToStatus(String bookingId, String type){
         RequestBody requestBody = new FormBody.Builder()
-                .add("booking_id", bookingId)
+                .add("timekit_booking_id", bookingId)
                 .build();
         Log.i(TAG, "Posting to Booking");
         postToApi(type, requestBody);
