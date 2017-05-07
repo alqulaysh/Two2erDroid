@@ -14,6 +14,7 @@ public class BookingObject {
     public String CreationDate;
     public String tutorUserId;
     public String tutor_name;
+    public String student_name;
     public String studentUserId;
     public String timekit_booking_id;
 
@@ -27,6 +28,7 @@ public class BookingObject {
         this.CreationDate = user.getString("bookingcreationdate");
         this.tutorUserId = user.getString("student_user_id");
         this.tutor_name = user.getString("tutor_name");
+        this.student_name = user.getString("student_name");
         this.studentUserId = user.getString("student_user_id");
         this.timekit_booking_id = user.getString("timekit_booking_id");
     }

@@ -13,6 +13,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.se491.app.two2er.CurrentUser;
 import com.se491.app.two2er.Fragments.Bookings.PostToBookings;
 import com.se491.app.two2er.GetBookingsNew;
 import com.se491.app.two2er.HelperObjects.BookingObject;
@@ -81,7 +82,8 @@ public class BookingListAdapterNew extends BaseAdapter {
         TextView mDate = (TextView) row.findViewById(R.id.MeetingDate);
 
         //Set our views for the List view:
-        String name = apList.get(position).tutor_name;
+        String tutor_name = apList.get(position).tutor_name;
+        String student_name = apList.get(position).student_name;
         String meetingDate = apList.get(position).MeetingDate;
         String currStatus = apList.get(position).status;
         final String bookingId = apList.get(position).bookingId;
@@ -100,10 +102,15 @@ public class BookingListAdapterNew extends BaseAdapter {
             row.setBackgroundColor(Color.RED);
         }
 
+        if(currStatus.equals("completed")){
+            row.setBackgroundColor(Color.GREEN);
+            acceptButton.setVisibility(View.GONE);
+            declineButton.setVisibility(View.GONE);
+        }
+
         //set as the tag the position parameter
         acceptButton.setTag(new Integer(position));
         declineButton.setTag(new Integer(position));
-
 
         final View finalRow = row;
         //Handle the case where the accept button is clicked:
@@ -145,7 +152,13 @@ public class BookingListAdapterNew extends BaseAdapter {
         //Get the Drawable resource assoicated with the type:
         String[] date = meetingDate.split("T");
         //Set our views:
-        msgDesc.setText("Session with: " + name);
+        //Show a student the tutors name and show the tutor the students name:
+        if(CurrentUser.getCurrentUser().userMode == "Student"){
+            msgDesc.setText("Session with: " + tutor_name);
+        }
+        else{
+            msgDesc.setText("Session with: " + student_name);
+        }
         mDate.setText(date[0].trim());
         return row;
     }

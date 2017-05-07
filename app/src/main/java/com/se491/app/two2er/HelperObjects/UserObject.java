@@ -14,6 +14,7 @@ public class UserObject {
     public String age = "";
     public String email = "";
     public String userImage = "";
+    public String userMode = "";
     public double dLong = 0.0;
     public double dLat = 0.0;
     public String[] userGroups = new String[10];
@@ -60,6 +61,8 @@ public class UserObject {
         this.age = user.getString("age");
         this.email = user.getString("email");
         this.userImage = user.getString("image_url");
+
+        this.userMode = user.getString("userMode");
 
         //Get an array of our usergorups:
         String tempuserGroups = user.getString("usergroups");
