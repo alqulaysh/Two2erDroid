@@ -209,7 +209,7 @@ public class ChangeProfileImageDialog extends DialogFragment {
                                 .build();
 
                         Request request = new Request.Builder()
-                                .url("http://10.0.0.37/s3")
+                                .url("http://lowcost-env.niuk5squp9.us-east-2.elasticbeanstalk.com/s3")
                                 .headers(buildStandardHeaders(Stormpath.getAccessToken()))
                                 .get()
                                 .build();
