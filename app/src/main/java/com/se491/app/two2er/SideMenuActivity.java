@@ -54,6 +54,8 @@ import com.se491.app.two2er.Fragments.Bookings.CreateBooking;
 import com.se491.app.two2er.Fragments.ScheduleFragment;
 import com.se491.app.two2er.GetUsers.DistanceRefreshStrategy;
 import com.se491.app.two2er.GetUsers.GetUsers;
+import com.se491.app.two2er.GetUsers.RefreshStrategyBase;
+import com.se491.app.two2er.GetUsers.RefreshUsersBySubjectFilter;
 import com.se491.app.two2er.HelperObjects.MyGoogleApiClient_Singleton;
 import com.se491.app.two2er.HelperObjects.UserObject;
 import com.se491.app.two2er.SearchView.MyFloatingSearchView;
@@ -116,6 +118,7 @@ public class SideMenuActivity extends AppCompatActivity
     private static volatile Date lastRefreshedAt = new Date();
     private Thread automatedMapRefresh;
     private static volatile boolean isRunningAutomatedRefresh = true;
+    private RefreshStrategyBase refreshStrategy = new DistanceRefreshStrategy();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -253,11 +256,6 @@ public class SideMenuActivity extends AppCompatActivity
         sFm.beginTransaction().replace(R.id.map, sMapFragment, "ContentFrag").commit();
 
         sMapFragment.getMapAsync(this);
-
-        Intent intent = new Intent(this, LocationRefreshService.class);
-        if (intent != null) {
-            this.startService(intent);
-        }
 
         automatedMapRefresh = new Thread(new Runnable() {
             @Override
@@ -432,27 +430,10 @@ public class SideMenuActivity extends AppCompatActivity
         }
 
 
-        searchView.setOnKeyListener(new View.OnKeyListener() {
+        searchView.setOnMenuItemClickListener(new FloatingSearchView.OnMenuItemClickListener() {
             @Override
-            public boolean onKey(View v, int actionId, KeyEvent event) {
-                //This is the filter
-
-                if (event.getAction() != KeyEvent.ACTION_DOWN)
-                    return true;
-
-
-                switch (event.getKeyCode()) {
-                    case KeyEvent.KEYCODE_ENTER:
-                        if (searchView.getQuery() != null) {
-                            Log.d("TEST RESPONSE2", "searchView.getQuery() = " + searchView.getQuery());
-                        }
-                    case KeyEvent.KEYCODE_2:
-                        break;
-                    case KeyEvent.KEYCODE_3:
-                        break;
-
-                }
-                return true;
+            public void onActionMenuItemSelected(MenuItem menuItem) {
+                Log.i(TAG, menuItem.getTitle().toString());
             }
         });
 
@@ -577,9 +558,8 @@ public class SideMenuActivity extends AppCompatActivity
         }
     }
 
-
     private void refreshMap() {
-        GetUsers test = new DistanceRefreshStrategy();
+        GetUsers test = new GetUsers(refreshStrategy);
         test.start();
 
         try {
@@ -613,9 +593,5 @@ public class SideMenuActivity extends AppCompatActivity
             //Add the markers on the map:
             mGoogleMap.addMarker(markerOptions);
         }
-    }
-
-    private void timedAutomatedMapRefresh() {
-
     }
 }

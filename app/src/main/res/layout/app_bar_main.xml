@@ -106,7 +106,8 @@
                 android:layout_width="129dp"
                 android:layout_height="52dp"
                 android:layout_gravity="center_horizontal"
-                android:text="Refresh" />
+                android:text="Refresh"
+                android:visibility="invisible" />
 
         </LinearLayout>
 

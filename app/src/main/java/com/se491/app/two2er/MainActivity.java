@@ -25,6 +25,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.se491.app.two2er.Activities.LoginActivity;
 import com.se491.app.two2er.Activities.RegisterActivity;
 import com.se491.app.two2er.HelperObjects.MyGoogleApiClient_Singleton;
+import com.se491.app.two2er.Services.LocationRefreshService;
 import com.stormpath.sdk.Stormpath;
 import com.stormpath.sdk.StormpathCallback;
 import com.stormpath.sdk.StormpathConfiguration;
@@ -66,7 +67,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 .build();
 
         mGoogleApiClient.connect();
-
 
 
     }
@@ -146,7 +146,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
         }
 
-
+        Intent intent = new Intent(this, LocationRefreshService.class);
+        if (intent != null) {
+            this.startService(intent);
+        }
 
     }
 

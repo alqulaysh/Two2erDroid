@@ -1,5 +1,6 @@
 package com.se491.app.two2er.GetUsers;
 
+import android.location.Location;
 import android.util.Log;
 
 import com.se491.app.two2er.HelperObjects.UserObject;
@@ -21,19 +22,12 @@ import okhttp3.Response;
  * Created by pazra on 5/3/2017.
  */
 
-public class DistanceRefreshStrategy extends GetUsers {
+public class DistanceRefreshStrategy extends RefreshStrategyBase {
     private double distance = 100;
     private double dLong = LocationRefreshService.getLongitude();
     private double dLat = LocationRefreshService.getLatitude();
 
     private String getURL() {
-        if (!SessionState.getIsUsingLocationTables()) {
-            return ServerApiUtilities.GetServerApiUrl() + String.format("tutorlocations/findWithin/milesLonLat/%1$.4f/%2$.4f/%3$.4f"
-                    , distance
-                    , dLong
-                    , dLat);
-        }
-
         return ServerApiUtilities.GetServerApiUrl() + String.format("users/findWithin/milesLonLat/%1$.4f/%2$.4f/%3$.4f"
                 , distance
                 , dLong
@@ -55,6 +49,11 @@ public class DistanceRefreshStrategy extends GetUsers {
 
     @Override
     public void run() {
+        Log.i(TAG, "Running refresh users by distance");
+
+        dLong = LocationRefreshService.getLongitude();
+        dLat = LocationRefreshService.getLatitude();
+
         Request request = new Request.Builder()
                 .url(getURL())
                 .headers(ServerApiUtilities.buildStandardHeaders(Stormpath.getAccessToken()))

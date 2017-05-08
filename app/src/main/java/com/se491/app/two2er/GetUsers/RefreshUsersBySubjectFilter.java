@@ -19,7 +19,7 @@ import okhttp3.Response;
  * Created by pazra on 5/3/2017.
  */
 
-public class RefreshUsersBySubjectFilter extends GetUsers {
+public class RefreshUsersBySubjectFilter extends RefreshStrategyBase {
     private String filterValue = "";
     public RefreshUsersBySubjectFilter(String filter) {
         filterValue = filter;
@@ -32,6 +32,7 @@ public class RefreshUsersBySubjectFilter extends GetUsers {
 
     @Override
     public void run() {
+        Log.i(TAG, "Running refresh users by subject filter");
         Request request = new Request.Builder()
                 .url(getURL())
                 .headers(ServerApiUtilities.buildStandardHeaders(Stormpath.getAccessToken()))

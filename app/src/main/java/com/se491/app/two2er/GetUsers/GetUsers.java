@@ -9,11 +9,20 @@ import java.util.HashMap;
 
 
 public class GetUsers extends Thread {
-    protected HashMap<String, UserObject> tempUsersList = new HashMap<String, UserObject>();
-
-    public GetUsers() { }
-
+    private HashMap<String, UserObject> tempUsersList = new HashMap<String, UserObject>();
     public HashMap<String, UserObject> getUsersList() { return tempUsersList; }
+
+    private RefreshStrategyBase refreshStrategy = new DistanceRefreshStrategy();
+
+    public GetUsers(RefreshStrategyBase refreshStrat) {
+        refreshStrategy = refreshStrat;
+    }
+
+    @Override
+    public void run() {
+        refreshStrategy.run();
+        tempUsersList = refreshStrategy.getUsersList();
+    }
 }
 
 

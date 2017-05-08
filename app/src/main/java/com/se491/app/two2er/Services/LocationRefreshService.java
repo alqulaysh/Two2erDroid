@@ -81,21 +81,24 @@ public class LocationRefreshService extends IntentService implements GoogleApiCl
             return super.onStartCommand(intent, flags, startId);
         }
 
+        initLocationRequest();
+        startLocationUpdate();
+
         Location loc = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
 
         if (loc != null) {
-            Log.i(serviceLogTag, "lat " + loc.getLatitude() + " : long " + loc.getLongitude());
+            Log.i(serviceLogTag, "Initial load: lat " + loc.getLatitude() + " : long " + loc.getLongitude());
             latitude = loc.getLatitude();
             longitude = loc.getLongitude();
         }
 
+        Log.i(serviceLogTag, "loc is null");
         return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         try {
-            startLocationUpdate();
             while (isRunning) {
                 updateLocation();
                 Thread.sleep(10000);
@@ -125,8 +128,8 @@ public class LocationRefreshService extends IntentService implements GoogleApiCl
     public void onLocationChanged(Location location) {
         Log.i(serviceLogTag, "lat " + location.getLatitude());
         Log.i(serviceLogTag, "lng " + location.getLongitude());
-        LatLng mLocation = (new LatLng(location.getLatitude(), location.getLongitude()));
-
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
     }
 
     @Override
@@ -159,7 +162,6 @@ public class LocationRefreshService extends IntentService implements GoogleApiCl
 
     private void startLocationUpdate() {
         Log.i(serviceLogTag, "startLocationUpdate");
-        initLocationRequest();
 
         if ( Build.VERSION.SDK_INT >= 23 &&
                 ContextCompat.checkSelfPermission( LocationRefreshService.this, android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED &&
@@ -270,24 +272,5 @@ public class LocationRefreshService extends IntentService implements GoogleApiCl
         }
 
         return "";
-    }
-
-    private void runLocationRefreshThread() {
-        Thread t = new Thread(new Runnable() {
-           public void run() {
-               try {
-                   startLocationUpdate();
-                   while (isRunning) {
-                       updateLocation();
-                       Thread.sleep(10000);
-                   }
-               }
-               catch (Exception ex) {
-                   Thread.currentThread().interrupt();
-               }
-           }
-        });
-
-        t.start();
     }
 }
