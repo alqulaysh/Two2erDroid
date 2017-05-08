@@ -60,6 +60,7 @@ public class ChangeProfileImageDialog extends DialogFragment {
     public String urlImg = "";
     View rootView;
     onDialogDismissListener mListener;
+    private String userId = "";
 
     // Container Activity must implement this interface
     public interface onDialogDismissListener {
@@ -162,91 +163,116 @@ public class ChangeProfileImageDialog extends DialogFragment {
         }
     }
 
-
-
     public void saveImage(View view) throws InterruptedException {
         Thread myThread = new Thread() {
             public void run() {
-                if(fileName != null & !fileName.equals("")){
-                    fileToUpload = new File(fileName);
+            if(fileName != null & !fileName.equals("")){
+                fileToUpload = new File(fileName);
 
-                    int i = fileName.lastIndexOf('.');
-                    if (i > 0) {
-                        extension = fileName.substring(i + 1);
+                int i = fileName.lastIndexOf('.');
+                if (i > 0) {
+                    extension = fileName.substring(i + 1);
+                }
+                Log.d("Android : ", extension);
+
+                OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                        .build();
+
+                Request request = new Request.Builder()
+                        .url("http://lowcost-env.niuk5squp9.us-east-2.elasticbeanstalk.com/apiauth/users/me")
+                        .headers(buildStandardHeaders(Stormpath.getAccessToken()))
+                        .get()
+                        .build();
+
+                okHttpClient.newCall(request).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        Log.d("Android : ", e.getMessage());
                     }
-                    Log.d("Android : ", extension);
 
-                    OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                            .build();
+                    @Override
+                    public void onResponse(Call call, Response response)
+                            throws IOException {
+                        final String responseStr = response.body().string();
+                        Log.d("Android : ", responseStr);
 
-                    Request request = new Request.Builder()
-                            .url("http://lowcost-env.niuk5squp9.us-east-2.elasticbeanstalk.com/apiauth/users/me")
-                            .headers(buildStandardHeaders(Stormpath.getAccessToken()))
-                            .get()
-                            .build();
-
-                    okHttpClient.newCall(request).enqueue(new Callback() {
-                        @Override
-                        public void onFailure(Call call, IOException e) {
-                            Log.d("Android : ", e.getMessage());
+                        try {
+                            JSONObject userData = new JSONObject(responseStr);
+                            userId = userData.getString("_id");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
 
-                        @Override
-                        public void onResponse(Call call, Response response)
-                                throws IOException {
-                            final String responseStr = response.body().string();
-                            Log.d("Android : ", responseStr);
+                        Log.d("Android : ", "User ID=" + userId);
 
-                            String userId = "";
+                        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                                .build();
 
-                            try {
-                                JSONObject userData = new JSONObject(responseStr);
-                                userId = userData.getString("_id");
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                        Request request = new Request.Builder()
+                                .url("http://10.0.0.37/s3")
+                                .headers(buildStandardHeaders(Stormpath.getAccessToken()))
+                                .get()
+                                .build();
+
+                        okHttpClient.newCall(request).enqueue(new Callback() {
+                            @Override
+                            public void onFailure(Call call, IOException e) {
+                                Log.d("Android : ", e.getMessage());
                             }
 
-                            Log.d("Android : ", "User ID=" + userId);
+                            @Override
+                            public void onResponse(Call call, Response response)
+                                    throws IOException {
+                                final String responseStr = response.body().string();
+                                Log.d("Android : ", responseStr);
 
-                            AmazonS3 s3 = new AmazonS3Client(new BasicAWSCredentials("AKIAIQI5PG7PW7ZEOQ7A", "7PvprdK3qErADi10IOmHZyK+KMazfdCu+9iBfdss"));
-                            s3.setRegion(Region.getRegion(Regions.US_EAST_2));
+                                String AccessKey = responseStr.split(":")[0];
+                                String SecretKey = responseStr.split(":")[1];
 
-                            PutObjectRequest putObj = new PutObjectRequest("two2er", "images/" + userId + "." + extension, fileToUpload);
-                            putObj.setCannedAcl(CannedAccessControlList.PublicRead);
-                            s3.putObject(putObj);
+                                Log.d("Android : ", "AccessKey=" + AccessKey);
 
-                            urlImg = "https://s3.us-east-2.amazonaws.com/two2er/images/" + userId + "." + extension;
+                                AmazonS3 s3 = new AmazonS3Client(new BasicAWSCredentials(AccessKey, SecretKey));
+                                s3.setRegion(Region.getRegion(Regions.US_EAST_2));
 
-                            OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                                    .build();
+                                PutObjectRequest putObj = new PutObjectRequest("two2er", "images/" + userId + "." + extension, fileToUpload);
+                                putObj.setCannedAcl(CannedAccessControlList.PublicRead);
+                                s3.putObject(putObj);
 
-                            RequestBody requestBody = new FormBody.Builder()
-                                    .add("user_id", userId)
-                                    .add("image_url", urlImg)
-                                    .build();
+                                urlImg = "https://s3.us-east-2.amazonaws.com/two2er/images/" + userId + "." + extension;
 
-                            Request request = new Request.Builder()
-                                    .url("http://lowcost-env.niuk5squp9.us-east-2.elasticbeanstalk.com/apiauth/users/update")
-                                    .headers(buildStandardHeaders(Stormpath.getAccessToken()))
-                                    .post(requestBody)
-                                    .build();
+                                OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                                        .build();
 
-                            okHttpClient.newCall(request).enqueue(new Callback() {
-                                @Override
-                                public void onFailure(Call call, IOException e) {
-                                    Log.d("Android : ", e.getMessage());
-                                }
+                                RequestBody requestBody = new FormBody.Builder()
+                                        .add("user_id", userId)
+                                        .add("image_url", urlImg)
+                                        .build();
 
-                                @Override
-                                public void onResponse(Call call, Response response)
-                                        throws IOException {
-                                    final String responseStr = response.body().string();
-                                    Log.d("Android responseStr : ", responseStr);
-                                    dismiss();
-                                }
-                            });
-                        }
-                    });
+                                Request request = new Request.Builder()
+                                        .url("http://lowcost-env.niuk5squp9.us-east-2.elasticbeanstalk.com/apiauth/users/update")
+                                        .headers(buildStandardHeaders(Stormpath.getAccessToken()))
+                                        .post(requestBody)
+                                        .build();
+
+                                okHttpClient.newCall(request).enqueue(new Callback() {
+                                    @Override
+                                    public void onFailure(Call call, IOException e) {
+                                        Log.d("Android : ", e.getMessage());
+                                    }
+
+                                    @Override
+                                    public void onResponse(Call call, Response response)
+                                            throws IOException {
+                                        final String responseStr = response.body().string();
+                                        Log.d("Android responseStr : ", responseStr);
+                                        dismiss();
+                                    }
+                                });
+
+                            }
+                        });
+                    }
+                });
             }
         }
         };
