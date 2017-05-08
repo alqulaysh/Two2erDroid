@@ -41,6 +41,10 @@ public class DistanceRefreshStrategy extends RefreshStrategyBase {
 
     public DistanceRefreshStrategy() { }
 
+    public DistanceRefreshStrategy(double dist) {
+        distance = dist;
+    }
+
     public DistanceRefreshStrategy(double dist, double longitude, double latitude) {
         distance = dist;
         dLong = longitude;

@@ -103,6 +103,7 @@ public class SideMenuActivity extends AppCompatActivity
     HashMap<String, UserObject> usersAround;
     HashMap<String, UserObject> tempRecUsers = new HashMap<String, UserObject>();
 
+
     //MyUser Profile:
     UserObject myUserProfile;
 
@@ -116,9 +117,13 @@ public class SideMenuActivity extends AppCompatActivity
 
     private String TAG = "SideMenuActivity";
     private static volatile Date lastRefreshedAt = new Date();
+
     private Thread automatedMapRefresh;
     private static volatile boolean isRunningAutomatedRefresh = true;
+
     private RefreshStrategyBase refreshStrategy = new DistanceRefreshStrategy();
+
+    public HashMap<String, UserObject> getTempRecUsers() { return tempRecUsers; }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -249,6 +254,12 @@ public class SideMenuActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 refreshMap();
+            }
+        });
+        findViewById(R.id.resetBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setDistanceSearchStrategy(100);
             }
         });
 
@@ -429,14 +440,6 @@ public class SideMenuActivity extends AppCompatActivity
             });
         }
 
-
-        searchView.setOnMenuItemClickListener(new FloatingSearchView.OnMenuItemClickListener() {
-            @Override
-            public void onActionMenuItemSelected(MenuItem menuItem) {
-                Log.i(TAG, menuItem.getTitle().toString());
-            }
-        });
-
         // Create booking button
         mGoogleMap.setOnMarkerClickListener(this);
         mGoogleMap.setOnInfoWindowCloseListener(this);
@@ -580,10 +583,13 @@ public class SideMenuActivity extends AppCompatActivity
         markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.tutormapicon));
         Iterator it = users.entrySet().iterator();
 
+        mGoogleMap.clear();
+
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry) it.next();
             UserObject user = (UserObject) pair.getValue();
             LatLng lNewLocation = new LatLng(user.dLat, user.dLong);
+
             //Get the users name:
             String sTitle = user.fname + " " + user.lname;
 
@@ -594,4 +600,15 @@ public class SideMenuActivity extends AppCompatActivity
             mGoogleMap.addMarker(markerOptions);
         }
     }
+
+    public void setDistanceSearchStrategy(double distance) {
+        Log.i(TAG, "Switching to distance users filter: " + distance);
+        refreshStrategy = new DistanceRefreshStrategy(distance);
+    }
+
+    public void setFilterSearchStrategy(String filter) {
+        Log.i(TAG, "Switching to subject users filter: " + filter);
+        refreshStrategy = new RefreshUsersBySubjectFilter(this, filter);
+    }
+
 }

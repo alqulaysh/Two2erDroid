@@ -1,7 +1,10 @@
 package com.se491.app.two2er.HelperObjects;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * Created by eoliv on 2/28/2017.
@@ -18,6 +21,7 @@ public class UserObject {
     public double dLong = 0.0;
     public double dLat = 0.0;
     public String[] userGroups = new String[10];
+    public ArrayList<String> subjects = new ArrayList<String>();
 
     public UserObject(){}
 
@@ -75,5 +79,13 @@ public class UserObject {
         //Split the array into the proper double varaibales:
         this.dLong = Double.parseDouble(coords[0]);
         this.dLat = Double.parseDouble(coords[1]);
+
+        if(user.has("tutor")) {
+            JSONObject tutorObj = user.getJSONObject("tutor");
+            JSONArray subs = tutorObj.getJSONArray("subjects");
+            for(int i = 0; i< subs.length(); i++) {
+                subjects.add(String.valueOf(subs.get(i)).toLowerCase());
+            }
+        }
     }
 }

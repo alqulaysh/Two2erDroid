@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.se491.app.two2er.OkHttpClientFactory;
 import com.se491.app.two2er.HelperObjects.UserObject;
+import com.se491.app.two2er.SideMenuActivity;
 import com.se491.app.two2er.Utilities.ServerApiUtilities;
 import com.stormpath.sdk.Stormpath;
 
@@ -11,6 +12,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import okhttp3.Request;
 import okhttp3.Response;
@@ -21,7 +23,10 @@ import okhttp3.Response;
 
 public class RefreshUsersBySubjectFilter extends RefreshStrategyBase {
     private String filterValue = "";
-    public RefreshUsersBySubjectFilter(String filter) {
+    private SideMenuActivity seActivity;
+
+    public RefreshUsersBySubjectFilter(SideMenuActivity myActivity, String filter) {
+        seActivity = myActivity;
         filterValue = filter;
     }
 
@@ -33,27 +38,38 @@ public class RefreshUsersBySubjectFilter extends RefreshStrategyBase {
     @Override
     public void run() {
         Log.i(TAG, "Running refresh users by subject filter");
-        Request request = new Request.Builder()
-                .url(getURL())
-                .headers(ServerApiUtilities.buildStandardHeaders(Stormpath.getAccessToken()))
-                .get()
-                .build();
-        try {
-            Response response = OkHttpClientFactory.Create().newCall(request).execute();
-
-            String jsonResponse = response.body().string();
-            Log.e("Inside doInBackGround", "URL used in GetUsers(): " + getURL());
-
-            JSONArray users = new JSONArray(jsonResponse);
-            for (int i = 0; i < users.length(); i++) {
-                UserObject user = new UserObject(users.getJSONObject(i));
-                tempUsersList.put(user.id, user);
+        HashMap<String, UserObject> currentUsers = seActivity.getTempRecUsers();
+        for(UserObject u : currentUsers.values()) {
+            if (u.subjects.contains(filterValue.toLowerCase())) {
+                tempUsersList.put(u.id, u);
             }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
     }
+
+//    @Override
+//    public void run() {
+//        Log.i(TAG, "Running refresh users by subject filter");
+//        Request request = new Request.Builder()
+//                .url(getURL())
+//                .headers(ServerApiUtilities.buildStandardHeaders(Stormpath.getAccessToken()))
+//                .get()
+//                .build();
+//        try {
+//            Response response = OkHttpClientFactory.Create().newCall(request).execute();
+//
+//            String jsonResponse = response.body().string();
+//            Log.e("Inside doInBackGround", "URL used in GetUsers(): " + getURL());
+//
+//            JSONArray users = new JSONArray(jsonResponse);
+//            for (int i = 0; i < users.length(); i++) {
+//                UserObject user = new UserObject(users.getJSONObject(i));
+//                tempUsersList.put(user.id, user);
+//            }
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }

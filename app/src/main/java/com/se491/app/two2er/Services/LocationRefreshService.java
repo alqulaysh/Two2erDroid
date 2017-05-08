@@ -82,17 +82,9 @@ public class LocationRefreshService extends IntentService implements GoogleApiCl
         }
 
         initLocationRequest();
-        startLocationUpdate();
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+        //Location loc = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
 
-        Location loc = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-
-        if (loc != null) {
-            Log.i(serviceLogTag, "Initial load: lat " + loc.getLatitude() + " : long " + loc.getLongitude());
-            latitude = loc.getLatitude();
-            longitude = loc.getLongitude();
-        }
-
-        Log.i(serviceLogTag, "loc is null");
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -158,18 +150,6 @@ public class LocationRefreshService extends IntentService implements GoogleApiCl
         mLocationRequest.setInterval(LOCATION_INTERVAL);
         mLocationRequest.setFastestInterval(LOCATION_INTERVAL);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-    }
-
-    private void startLocationUpdate() {
-        Log.i(serviceLogTag, "startLocationUpdate");
-
-        if ( Build.VERSION.SDK_INT >= 23 &&
-                ContextCompat.checkSelfPermission( LocationRefreshService.this, android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission( LocationRefreshService.this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-
-        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
     }
 
     private void stopLocationUpdate() {

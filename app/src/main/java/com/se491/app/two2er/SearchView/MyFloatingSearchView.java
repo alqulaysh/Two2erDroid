@@ -55,7 +55,6 @@ public class MyFloatingSearchView {
 
             @Override
             public void onSearchTextChanged(String oldQuery, final String newQuery) {
-
                 if (!oldQuery.equals("") && newQuery.equals("")) {
                     mSearchView.clearSuggestions();
                 } else {
@@ -122,6 +121,7 @@ public class MyFloatingSearchView {
 //                            }
 //
 //                        });
+                myActivity.setFilterSearchStrategy(mLastQuery);
                 Log.d(TAG, "onSearchAction()");
             }
         });
@@ -144,6 +144,8 @@ public class MyFloatingSearchView {
 
                 //you can also set setSearchText(...) to make keep the query there when not focused and when focus returns
                 //mSearchView.setSearchText(searchSuggestion.getBody());
+
+
 
                 Log.d(TAG, "onFocusCleared()");
             }
@@ -258,6 +260,4 @@ public class MyFloatingSearchView {
         mSearchResultsList.setAdapter(mSearchResultsAdapter);
         mSearchResultsList.setLayoutManager(new LinearLayoutManager(myActivity));
     }
-
-
 }
