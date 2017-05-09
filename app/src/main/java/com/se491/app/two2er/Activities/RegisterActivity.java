@@ -47,7 +47,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     String[] plants = new String[]{
             "Select Type of User",
             "I want to be a student",
-            "I want to be a tutor",
+            "I want to be a Tutor",
             //////////////////////////////////////////////////////////
             ///////////////////////END//////////////////////////////
             //////////////////////////////////////////////////////////
@@ -186,9 +186,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         else if( myText.getText() == "I want to be a student" ){
             Toast.makeText(this,"Student account selected" , Toast.LENGTH_SHORT).show();
             userMode = "Student";}
-        else if( myText.getText() == "I want to be a tutor" ) {
-            Toast.makeText(this, "Tutor account selected", Toast.LENGTH_SHORT).show();
-            userMode = "Tutor";
+        else if( myText.getText() == "I want to be a Tutor" ) {
+            Toast.makeText(this, "TutorObject account selected", Toast.LENGTH_SHORT).show();
+            userMode = "TutorObject";
         }
     }
 

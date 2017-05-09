@@ -122,6 +122,7 @@ public class MyFloatingSearchView {
 //
 //                        });
                 myActivity.setFilterSearchStrategy(mLastQuery);
+                myActivity.refreshMap();
                 Log.d(TAG, "onSearchAction()");
             }
         });

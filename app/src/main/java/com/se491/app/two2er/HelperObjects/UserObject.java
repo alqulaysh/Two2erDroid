@@ -1,16 +1,21 @@
 package com.se491.app.two2er.HelperObjects;
 
+import android.util.Log;
+
+import com.se491.app.two2er.GetBookingsNew;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 /**
  * Created by eoliv on 2/28/2017.
  */
 
 public class UserObject {
+    public String[] userGroups = new String[10];
+    public TutorObject Tutor = new TutorObject();
+
     public String id = "";
     public String fname = "";
     public String lname = "";
@@ -20,8 +25,9 @@ public class UserObject {
     public String userMode = "";
     public double dLong = 0.0;
     public double dLat = 0.0;
-    public String[] userGroups = new String[10];
-    public ArrayList<String> subjects = new ArrayList<String>();
+    public int BookingsCount = 0;
+
+    private String TAG = "UserObject";
 
     public UserObject(){}
 
@@ -80,12 +86,25 @@ public class UserObject {
         this.dLong = Double.parseDouble(coords[0]);
         this.dLat = Double.parseDouble(coords[1]);
 
-        if(user.has("tutor")) {
-            JSONObject tutorObj = user.getJSONObject("tutor");
+        if(user.has("Tutor")) {
+            JSONObject tutorObj = user.getJSONObject("Tutor");
             JSONArray subs = tutorObj.getJSONArray("subjects");
             for(int i = 0; i< subs.length(); i++) {
-                subjects.add(String.valueOf(subs.get(i)).toLowerCase());
+                Tutor.Subjects.add(String.valueOf(subs.get(i)).toLowerCase());
             }
         }
+    }
+
+    public void setCountOfBookings() {
+        GetBookingsNew task = new GetBookingsNew();
+        task.start();
+        try {
+            task.join();
+        }
+        catch (Exception ex) {
+            Log.e(TAG, "Error in setCountOfBookings: " + ex.toString() + "\n" + ex.getStackTrace());
+        }
+
+        BookingsCount = task.getBookingList().size();
     }
 }

@@ -59,7 +59,7 @@
                     <!--android:background="@android:color/white"-->
                     <!--android:ems="10"-->
                     <!--android:gravity="center"-->
-                    <!--android:hint="Find A Tutor"-->
+                    <!--android:hint="Find A TutorObject"-->
                     <!--android:singleLine="true"></AutoCompleteTextView>-->
 
                 <!--<Spinner-->

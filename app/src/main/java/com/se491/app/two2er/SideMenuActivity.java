@@ -107,7 +107,7 @@ public class SideMenuActivity extends AppCompatActivity
     //MyUser Profile:
     UserObject myUserProfile;
 
-    //Book Tutor Button:
+    //Book TutorObject Button:
     // Custom view
     private Button bookingButton;
     private RelativeLayout lContainerLayout;
@@ -220,8 +220,8 @@ public class SideMenuActivity extends AppCompatActivity
             }
         });
 
-        //If the student does not have a tutor profile give them option to set one up:
-        if(!myUserProfile.userGroupsContains("Tutor")){
+        //If the student does not have a Tutor profile give them option to set one up:
+        if(!myUserProfile.userGroupsContains("TutorObject")){
             nav_title_tutor_sub.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -276,6 +276,7 @@ public class SideMenuActivity extends AppCompatActivity
                         Date now = new Date();
                         if ((now.getTime() - lastRefreshedAt.getTime()) / 60000 > 1) {
                             Thread.sleep(60000);
+                            refreshUsersList();
                             refreshMap();
                         }
                     }
@@ -497,7 +498,7 @@ public class SideMenuActivity extends AppCompatActivity
         lContainerLayout.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
         // Custom view
         bookingButton = new Button(this);
-        bookingButton.setText("Book Tutor");
+        bookingButton.setText("Book TutorObject");
         RelativeLayout.LayoutParams lButtonParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         lButtonParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         bookingButton.setLayoutParams(lButtonParams);
@@ -561,20 +562,36 @@ public class SideMenuActivity extends AppCompatActivity
         }
     }
 
-    private void refreshMap() {
-        GetUsers test = new GetUsers(refreshStrategy);
-        test.start();
+    public void refreshMap() {
+        GetUsers usersRefreshTask = new GetUsers(refreshStrategy);
+        usersRefreshTask.start();
 
         try {
-            test.join();
+            usersRefreshTask.join();
         }
         catch (Exception ex) {
-            Log.e("RefreshMap", ex.toString() + "\n" + ex.getStackTrace());
+            Log.e(TAG, "Error in refreshMap: " + ex.toString() + "\n" + ex.getStackTrace());
         }
 
-        tempRecUsers = test.getUsersList();
+        tempRecUsers = usersRefreshTask.getUsersList();
 
         addUsersToMap(tempRecUsers);
+        lastRefreshedAt = new Date();
+    }
+
+    private void refreshUsersList() {
+        GetUsers usersRefreshTask = new GetUsers(new DistanceRefreshStrategy(100));
+        usersRefreshTask.start();
+
+        try {
+            usersRefreshTask.join();
+        }
+        catch (Exception ex) {
+            Log.e(TAG, "Error in refreshUsersList: " + ex.toString() + "\n" + ex.getStackTrace());
+        }
+
+        tempRecUsers = usersRefreshTask.getUsersList();
+
         lastRefreshedAt = new Date();
     }
 
@@ -608,6 +625,11 @@ public class SideMenuActivity extends AppCompatActivity
 
     public void setFilterSearchStrategy(String filter) {
         Log.i(TAG, "Switching to subject users filter: " + filter);
+
+        if (refreshStrategy instanceof RefreshUsersBySubjectFilter) {
+            refreshUsersList();
+        }
+
         refreshStrategy = new RefreshUsersBySubjectFilter(this, filter);
     }
 

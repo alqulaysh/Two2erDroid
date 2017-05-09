@@ -65,6 +65,7 @@ public class CurrentUser {
 
                         JSONObject myUser = new JSONObject(jsonResponse);
                         UserObject myTempUser = new UserObject(myUser);
+                        myTempUser.setCountOfBookings();
                         setCurrentUser(myTempUser);
 
                         Log.i(TAG, "My user ID: " + myTempUser.id);

@@ -159,7 +159,7 @@ public class BookingListAdapterNew extends BaseAdapter {
         //Get the Drawable resource assoicated with the type:
         String[] date = meetingDate.split("T");
         //Set our views:
-        //Show a student the tutors name and show the tutor the students name:
+        //Show a student the tutors name and show the Tutor the students name:
         if(CurrentUser.getCurrentUser().userMode.equals("Student")){
             msgDesc.setText("Session with: " + tutor_name);
         }
