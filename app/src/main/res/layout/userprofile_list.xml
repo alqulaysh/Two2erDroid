@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -19,47 +19,31 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_gravity="center"
+            android:layout_gravity="left"
             android:layout_weight="1"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
             android:text="FieldValue"
-            android:textSize="10sp" />
-
-        <TextView
-            android:id="@+id/FieldId"
-            android:layout_width="10dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:textSize="10sp"
-            android:paddingRight="5dp"
-            android:paddingLeft="5dp"
-            android:background="#4BABF4" />
-
-        <ImageView
-            android:layout_gravity="center"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:id="@+id/list_img"
-            android:paddingLeft="5dp"
-            />
+            android:textColor="@color/cardview_shadow_start_color"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/FieldValue"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Value Placehold"
-            android:textSize="10sp"
-            android:textStyle="bold"
-            android:paddingLeft="10dp"
-            android:freezesText="false"
-            android:forceHasOverlappingRendering="false"
-            android:ellipsize="end"
-            android:elevation="0dp"
-            android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
-            android:layout_width="150dp" />
+            android:layout_alignParentStart="true"
+            android:layout_gravity="left"
+            android:elevation="0dp"
+            android:ellipsize="end"
+            android:forceHasOverlappingRendering="false"
+            android:freezesText="false"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:text="Value Placehold"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
 
     </LinearLayout>
