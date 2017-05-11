@@ -29,7 +29,7 @@ import java.util.List;
 
 public class MyFloatingSearchView {
 
-    private final String TAG = "BlankFragment";
+    private final String TAG = "SearchView";
 
     public static final long FIND_SUGGESTION_SIMULATED_DELAY = 250;
 
@@ -91,39 +91,22 @@ public class MyFloatingSearchView {
         mSearchView.setOnSearchListener(new FloatingSearchView.OnSearchListener() {
             @Override
             public void onSuggestionClicked(final SearchSuggestion searchSuggestion) {
-
-                //SubjectSuggestion colorSuggestion = (SubjectSuggestion) searchSuggestion;
-//                DataHelper.findColors(myActivity, colorSuggestion.getBody(),
-//                        new DataHelper.OnFindColorsListener() {
-//
-//                            @Override
-//                            public void onResults(List<SubjectWrapper> results) {
-//                                mSearchResultsAdapter.swapData(results);
-//                            }
-//
-//                        });
-                //myActivity.myGetNewUsers();
                 Log.d(TAG, "onSuggestionClicked()");
+
+                myActivity.setFilterSearchStrategy(mLastQuery);
+                myActivity.refreshMap();
 
                 mLastQuery = searchSuggestion.getBody();
             }
 
             @Override
             public void onSearchAction(String query) {
+                Log.d(TAG, "onSearchAction()");
+
                 mLastQuery = query;
 
-//                DataHelper.findColors(myActivity, query,
-//                        new DataHelper.OnFindColorsListener() {
-//
-//                            @Override
-//                            public void onResults(List<SubjectWrapper> results) {
-//                                mSearchResultsAdapter.swapData(results);
-//                            }
-//
-//                        });
                 myActivity.setFilterSearchStrategy(mLastQuery);
                 myActivity.refreshMap();
-                Log.d(TAG, "onSearchAction()");
             }
         });
 

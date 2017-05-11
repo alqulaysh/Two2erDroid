@@ -16,8 +16,9 @@ import java.util.List;
  */
 
 public class UserObject {
-    public String[] userGroups = new String[10];
+    public ArrayList<String> userGroups = new ArrayList<String>();
     public TutorObject Tutor = new TutorObject();
+    public EducationObject Education = new EducationObject();
 
     public String id = "";
     public String fname = "";
@@ -29,6 +30,7 @@ public class UserObject {
     public double dLong = 0.0;
     public double dLat = 0.0;
     public int BookingsCount = 0;
+    public int Rating = 0;
 
     private String TAG = "UserObject";
 
@@ -48,16 +50,11 @@ public class UserObject {
     }
 
     public boolean userGroupsContains(String mode){
-        for(int i = 0; i < userGroups.length; i++){
-            if(userGroups[i].equals(mode)){
-                return true;
-            }
-        }
-        return false;
+        return userGroups.contains(mode);
     }
 
     public String[] getListArray(){
-        return new String[]{fname, lname, email, age};
+        return new String[]{fname, lname, email, age, Education.School};
     }
 
     public List<FieldPair> getListFieldPair(){
@@ -66,6 +63,7 @@ public class UserObject {
         myFields.add(new FieldPair("Last Name: ", lname));
         myFields.add(new FieldPair("Email: ", email));
         myFields.add(new FieldPair("Age: ", age));
+        myFields.add(new FieldPair("School: ", Education.School));
         return myFields;
     }
 
@@ -88,7 +86,10 @@ public class UserObject {
 
         //Get an array of our usergorups:
         String tempuserGroups = user.getString("usergroups");
-        this.userGroups = tempuserGroups.replace("[", "").replace("]", "").split(",");
+        String[] tempArray = tempuserGroups.replace("[", "").replace("]", "").split(",");
+        for (int i = 0; i < tempArray.length; i++) {
+            userGroups.add(tempArray[i]);
+        }
 
         // GeoJSON node in JSON Object
         JSONObject location = user.getJSONObject("location");
@@ -98,11 +99,15 @@ public class UserObject {
         this.dLong = Double.parseDouble(coords[0]);
         this.dLat = Double.parseDouble(coords[1]);
 
-        if(user.has("Tutor")) {
-            JSONObject tutorObj = user.getJSONObject("Tutor");
-            JSONArray subs = tutorObj.getJSONArray("subjects");
-            for(int i = 0; i< subs.length(); i++) {
-                Tutor.Subjects.add(String.valueOf(subs.get(i)).toLowerCase());
+        if(user.has("tutor")) {
+            JSONObject tutorObj = user.getJSONObject("tutor");
+            Tutor = new TutorObject(tutorObj);
+        }
+
+        if (user.has("education")) {
+            JSONArray eduObj = user.getJSONArray("education");
+            if (eduObj.length() > 0) {
+                Education = new EducationObject(eduObj.getJSONObject(0));
             }
         }
     }

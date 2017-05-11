@@ -114,6 +114,7 @@
 
 
                 <TextView
+                    android:id="@+id/TutorExperience"
                     android:text="182"
                     android:textColor="@android:color/white"
                     android:layout_gravity="center"
@@ -125,6 +126,7 @@
 
 
                 <TextView
+                    android:id="@+id/TutorRate"
                     android:text="4.8"
                     android:textSize="15dp"
                     android:textColor="@android:color/white"

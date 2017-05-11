@@ -79,8 +79,8 @@ public class UserProfileActivity extends AppCompatActivity implements
 
         Log.e(TAG, "userEmail: " + userImgURL);
 
-        for(int i = 0; i < myCurrentUser.userGroups.length; i++) {
-            Log.e(TAG, "userGroups: " + myCurrentUser.userGroups[i]);
+        for(int i = 0; i < myCurrentUser.userGroups.size(); i++) {
+            Log.e(TAG, "userGroups: " + myCurrentUser.userGroups.get(i));
         }
 
         if(!userImgURL.isEmpty() || userImgURL == "") {
