@@ -19,7 +19,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -59,7 +58,6 @@ import com.se491.app.two2er.GetUsers.RefreshUsersBySubjectFilter;
 import com.se491.app.two2er.HelperObjects.MyGoogleApiClient_Singleton;
 import com.se491.app.two2er.HelperObjects.UserObject;
 import com.se491.app.two2er.SearchView.MyFloatingSearchView;
-import com.se491.app.two2er.Services.LocationRefreshService;
 import com.stormpath.sdk.Stormpath;
 
 import java.io.InputStream;

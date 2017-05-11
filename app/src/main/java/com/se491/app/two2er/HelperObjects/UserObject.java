@@ -8,6 +8,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by eoliv on 2/28/2017.
  */
@@ -55,6 +58,15 @@ public class UserObject {
 
     public String[] getListArray(){
         return new String[]{fname, lname, email, age};
+    }
+
+    public List<FieldPair> getListFieldPair(){
+        List<FieldPair> myFields = new ArrayList<FieldPair>();
+        myFields.add(new FieldPair("First Name: ", fname));
+        myFields.add(new FieldPair("Last Name: ", lname));
+        myFields.add(new FieldPair("Email: ", email));
+        myFields.add(new FieldPair("Age: ", age));
+        return myFields;
     }
 
     public UserObject(JSONObject user) throws JSONException {
