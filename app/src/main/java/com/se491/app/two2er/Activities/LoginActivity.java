@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.se491.app.two2er.CurrentUser;
 import com.se491.app.two2er.R;
 import com.se491.app.two2er.SideMenuActivity;
 import com.stormpath.sdk.Stormpath;
@@ -102,6 +103,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Stormpath.login(email, password, new StormpathCallback<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
+                CurrentUser.Refresh();
                 Intent loginIntent = new Intent(LoginActivity.this, SideMenuActivity.class);
                 loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(loginIntent);
