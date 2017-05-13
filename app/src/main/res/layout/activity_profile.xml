@@ -227,6 +227,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="300dp" />
 
+            <Button
+                android:id="@+id/update_btn"
+                android:layout_width="250dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/bluebuttonbackground"
+                android:text="Update My Profile"
+                android:textColor="@color/common_google_signin_btn_text_dark_default"
+                app:layout_constraintBottom_toTopOf="@+id/changepwd_btn"
+                app:layout_constraintHorizontal_bias="0.495"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/majorField"
+                app:layout_constraintVertical_bias="1.0" />
 
         </LinearLayout>
 

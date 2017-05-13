@@ -22,6 +22,7 @@ import com.stormpath.sdk.models.StormpathError;
 import com.stormpath.sdk.utils.StringUtils;
 
 import java.io.IOException;
+import java.util.TimeZone;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -130,6 +131,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         .add("name", firstNameInput.getText().toString() + " " + lastNameInput.getText().toString())
                         .add("email", emailInput.getText().toString())
                         .add("userMode", userMode)
+                        .add("password", passwordInput.getText().toString())
+                        .add("timezone", TimeZone.getDefault().toString())
                         .build();
 
                 Request request = new Request.Builder()
