@@ -1,12 +1,10 @@
 package com.se491.app.two2er.GetUsers;
 
-import android.location.Location;
 import android.util.Log;
 
 import com.se491.app.two2er.HelperObjects.UserObject;
 import com.se491.app.two2er.OkHttpClientFactory;
 import com.se491.app.two2er.Services.LocationRefreshService;
-import com.se491.app.two2er.SessionState;
 import com.se491.app.two2er.Utilities.ServerApiUtilities;
 import com.stormpath.sdk.Stormpath;
 
@@ -14,7 +12,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 import okhttp3.Request;
 import okhttp3.Response;
@@ -76,9 +73,7 @@ public class DistanceRefreshStrategy extends RefreshStrategyBase {
                 UserObject user = new UserObject(users.getJSONObject(i));
                 tempUsersList.put(user.id, user);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
     }

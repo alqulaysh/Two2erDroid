@@ -20,6 +20,7 @@ import com.se491.app.two2er.Fragments.PWDDialogFragment;
 import com.se491.app.two2er.R;
 
 import java.io.InputStream;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 public class UserProfileFragment extends Fragment implements
@@ -61,7 +62,7 @@ public class UserProfileFragment extends Fragment implements
 
         Log.e("Inside UserFrag", "userEmail: " + userImgURL);
 
-        if(!userImgURL.isEmpty() || userImgURL == "") {
+        if(!userImgURL.isEmpty() || Objects.equals(userImgURL, "")) {
             try {
                 new DownloadImageTask((ImageView) v.findViewById(R.id.userProfileImgV))
                         .execute(userImgURL).get();

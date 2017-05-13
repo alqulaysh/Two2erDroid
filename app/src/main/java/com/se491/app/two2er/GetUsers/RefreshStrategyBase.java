@@ -11,6 +11,6 @@ import java.util.HashMap;
 public abstract class RefreshStrategyBase implements Runnable {
     protected String TAG = "RefreshStrategy";
 
-    protected HashMap<String, UserObject> tempUsersList = new HashMap<String, UserObject>();
+    protected HashMap<String, UserObject> tempUsersList = new HashMap<>();
     public HashMap<String, UserObject> getUsersList() { return tempUsersList; }
 }

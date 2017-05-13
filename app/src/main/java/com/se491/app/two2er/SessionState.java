@@ -6,7 +6,7 @@ import com.se491.app.two2er.Enums.eUserMode;
  * Created by pazra on 4/23/2017.
  */
 
-public class SessionState {
+class SessionState {
     private static String Tag = "SessionState";
 
     private static eUserMode _userMode = eUserMode.STUDENT;

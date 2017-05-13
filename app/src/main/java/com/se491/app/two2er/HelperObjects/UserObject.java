@@ -9,6 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ import java.util.List;
  */
 
 public class UserObject {
-    public ArrayList<String> userGroups = new ArrayList<String>();
+    public ArrayList<String> userGroups = new ArrayList<>();
     public TutorObject Tutor = new TutorObject();
     public EducationObject Education = new EducationObject();
 
@@ -59,7 +60,7 @@ public class UserObject {
     }
 
     public List<FieldPair> getListFieldPair(){
-        List<FieldPair> myFields = new ArrayList<FieldPair>();
+        List<FieldPair> myFields = new ArrayList<>();
         myFields.add(new FieldPair("First Name: ", fname));
         myFields.add(new FieldPair("Last Name: ", lname));
         myFields.add(new FieldPair("Email: ", email));
@@ -88,9 +89,7 @@ public class UserObject {
         //Get an array of our usergorups:
         String tempuserGroups = user.getString("usergroups");
         String[] tempArray = tempuserGroups.replace("[", "").replace("]", "").split(",");
-        for (int i = 0; i < tempArray.length; i++) {
-            userGroups.add(tempArray[i]);
-        }
+        Collections.addAll(userGroups, tempArray);
 
         // GeoJSON node in JSON Object
         JSONObject location = user.getJSONObject("location");

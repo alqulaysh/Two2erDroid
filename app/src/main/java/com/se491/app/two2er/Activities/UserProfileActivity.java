@@ -23,6 +23,7 @@ import com.se491.app.two2er.R;
 import com.se491.app.two2er.HelperObjects.UserObject;
 
 import java.io.InputStream;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 public class UserProfileActivity extends AppCompatActivity implements
@@ -83,7 +84,7 @@ public class UserProfileActivity extends AppCompatActivity implements
             Log.e(TAG, "userGroups: " + myCurrentUser.userGroups.get(i));
         }
 
-        if(!userImgURL.isEmpty() || userImgURL == "") {
+        if(!userImgURL.isEmpty() || Objects.equals(userImgURL, "")) {
             try {
                 new DownloadImageTask((ImageView) findViewById(R.id.userProfileImgV))
                         .execute(userImgURL).get();

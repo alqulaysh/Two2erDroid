@@ -15,6 +15,7 @@ import com.stormpath.sdk.Stormpath;
 import com.stormpath.sdk.utils.StringUtils;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -48,7 +49,7 @@ public class PWDDialogFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 String newPassword = passwordInput.getText().toString();
-                if(newPassword != "" & !newPassword.isEmpty()) {
+                if(!Objects.equals(newPassword, "") & !newPassword.isEmpty()) {
                     changePassword();
                     dismiss();
                 }

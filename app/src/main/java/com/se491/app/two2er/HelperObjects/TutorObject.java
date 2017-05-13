@@ -11,7 +11,7 @@ import java.util.ArrayList;
  */
 
 public class TutorObject {
-    public ArrayList<String> Subjects = new ArrayList<String>();
+    public ArrayList<String> Subjects = new ArrayList<>();
     public int Rating = 0;
 
     public TutorObject() { }

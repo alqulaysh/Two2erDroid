@@ -22,7 +22,7 @@ import okhttp3.Response;
 
 public class GetSubjects extends Thread {
 
-    public static String TAG = "GetSubjects";
+    private static String TAG = "GetSubjects";
     private ArrayList<SubjectSuggestion> subjectList = new ArrayList<SubjectSuggestion>();
 
     private String getURL() {
@@ -54,10 +54,8 @@ public class GetSubjects extends Thread {
                 }
                 Log.i(TAG, "Size of subjectList: " + subjectList.size());
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
+            } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
-        }
+    }
 }

@@ -31,7 +31,7 @@ public class MyFloatingSearchView {
 
     private final String TAG = "SearchView";
 
-    public static final long FIND_SUGGESTION_SIMULATED_DELAY = 250;
+    private static final long FIND_SUGGESTION_SIMULATED_DELAY = 250;
 
     private FloatingSearchView mSearchView;
 
@@ -41,7 +41,7 @@ public class MyFloatingSearchView {
     private boolean mIsDarkSearchTheme = false;
 
     private String mLastQuery = "";
-    SideMenuActivity myActivity;
+    private SideMenuActivity myActivity;
 
     public MyFloatingSearchView(SideMenuActivity myActivity, FloatingSearchView mySearch){
         this.myActivity = myActivity;

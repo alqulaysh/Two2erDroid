@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 
 public class GetUsers extends Thread {
-    private HashMap<String, UserObject> tempUsersList = new HashMap<String, UserObject>();
+    private HashMap<String, UserObject> tempUsersList = new HashMap<>();
     public HashMap<String, UserObject> getUsersList() { return tempUsersList; }
 
     private RefreshStrategyBase refreshStrategy = new DistanceRefreshStrategy();

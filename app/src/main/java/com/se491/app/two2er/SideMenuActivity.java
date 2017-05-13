@@ -65,6 +65,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 public class SideMenuActivity extends AppCompatActivity
@@ -195,7 +196,7 @@ public class SideMenuActivity extends AppCompatActivity
 
         nav_username.setText(myUserProfile.getUserFullName());
 
-        if (!myUserProfile.userImage.isEmpty() || myUserProfile.userImage == "") {
+        if (!myUserProfile.userImage.isEmpty() || Objects.equals(myUserProfile.userImage, "")) {
             try {
                 new DownloadImageTask(nav_userImage)
                         .execute(myUserProfile.userImage).get();
