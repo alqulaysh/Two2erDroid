@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private static final int PERMISSION_ACCESS_FINE_LOCATION = 1;
     static final Integer GPS_SETTINGS = 0x7;
     static final Integer READ_EXST = 0x4;
+    private final String TAG = "MainActivity";
 
 
 
@@ -143,16 +144,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
         if (FirebaseInstanceId.getInstance() != null) {
             Log.d("Refreshed Token", "FB Token: " + FirebaseInstanceId.getInstance().getToken());
-
         }
 
-        Intent intent = new Intent(this, LocationRefreshService.class);
-        if (intent != null) {
-            this.startService(intent);
-        }
-
+        SetupForApplication();
     }
-
 
     @Override
     public void onConnectionSuspended(int i) {
@@ -162,6 +157,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Log.i(MainActivity.class.getSimpleName(), "Can't connect to Google Play Services!");
+    }
+
+    private void SetupForApplication() {
+        Log.i(TAG, "Running SetupForApplication");
+        CurrentUser.Init();
+
+        Intent intent = new Intent(this, LocationRefreshService.class);
+        if (intent != null) {
+            this.startService(intent);
+        }
     }
 
 

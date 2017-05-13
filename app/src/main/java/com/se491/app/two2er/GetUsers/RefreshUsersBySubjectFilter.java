@@ -14,53 +14,22 @@ import java.util.HashMap;
 
 public class RefreshUsersBySubjectFilter extends RefreshStrategyBase {
     private String filterValue = "";
-    private SideMenuActivity seActivity;
+    private HashMap<String, UserObject> userList;
 
-    public RefreshUsersBySubjectFilter(SideMenuActivity myActivity, String filter) {
-        seActivity = myActivity;
+    public RefreshUsersBySubjectFilter(HashMap<String, UserObject> users, String filter) {
+        userList = users;
         filterValue = filter;
-    }
-
-    // TODO get the correct URL
-    private String getURL() {
-        return ServerApiUtilities.GetServerApiUrl() + String.format("users/findWithin/milesLonLat/%1$.4f/%2$.4f/%3$.4f", filterValue);
     }
 
     @Override
     public void run() {
         Log.i(TAG, "Running refresh users by subject filter");
-        HashMap<String, UserObject> currentUsers = seActivity.getTempRecUsers();
-        for(UserObject u : currentUsers.values()) {
-            if (u.Tutor.Subjects.contains(filterValue.toLowerCase())) {
-                tempUsersList.put(u.id, u);
+        for(UserObject u : userList.values()) {
+            for (String sub : u.Tutor.Subjects) {
+                if (sub.toLowerCase().equals(filterValue.toLowerCase())) {
+                    tempUsersList.put(u.id, u);
+                }
             }
         }
     }
-
-//    @Override
-//    public void run() {
-//        Log.i(TAG, "Running refresh users by subject filter");
-//        Request request = new Request.Builder()
-//                .url(getURL())
-//                .headers(ServerApiUtilities.buildStandardHeaders(Stormpath.getAccessToken()))
-//                .get()
-//                .build();
-//        try {
-//            Response response = OkHttpClientFactory.Create().newCall(request).execute();
-//
-//            String jsonResponse = response.body().string();
-//            Log.e("Inside doInBackGround", "URL used in GetUsers(): " + getURL());
-//
-//            JSONArray users = new JSONArray(jsonResponse);
-//            for (int i = 0; i < users.length(); i++) {
-//                UserObject user = new UserObject(users.getJSONObject(i));
-//                tempUsersList.put(user.id, user);
-//            }
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//    }
 }

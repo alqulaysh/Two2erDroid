@@ -98,9 +98,7 @@ public class SideMenuActivity extends AppCompatActivity
     Marker mCurrLocationMarker;
 
     //Get list of users around me:
-    HashMap<String, UserObject> usersAround;
-    HashMap<String, UserObject> tempRecUsers = new HashMap<String, UserObject>();
-
+    HashMap<String, UserObject> usersAround = new HashMap<>();
 
     //MyUser Profile:
     UserObject myUserProfile;
@@ -121,7 +119,7 @@ public class SideMenuActivity extends AppCompatActivity
 
     private RefreshStrategyBase refreshStrategy = new DistanceRefreshStrategy();
 
-    public HashMap<String, UserObject> getTempRecUsers() { return tempRecUsers; }
+    public HashMap<String, UserObject> getUsersAround() { return usersAround; }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,10 +136,6 @@ public class SideMenuActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final FragmentManager fm = getFragmentManager();
-        usersAround = new HashMap<String, UserObject>();
-
-        CurrentUser.Init();
         myUserProfile = CurrentUser.getCurrentUser();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -248,21 +242,23 @@ public class SideMenuActivity extends AppCompatActivity
 
         new MyFloatingSearchView(this, searchView);
 
-        findViewById(R.id.refreshBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                refreshMap();
-            }
-        });
-        findViewById(R.id.resetBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setDistanceSearchStrategy(100);
-            }
-        });
+//        findViewById(R.id.refreshBtn).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                refreshMap();
+//            }
+//        });
+//        findViewById(R.id.resetBtn).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                setDistanceSearchStrategy(100);
+//            }
+//        });
 
         //Set our map fragment to our content view and tag it as "ContentFrag":
         sFm.beginTransaction().replace(R.id.map, sMapFragment, "ContentFrag").commit();
+
+        refreshUsersList();
 
         sMapFragment.getMapAsync(this);
 
@@ -275,7 +271,6 @@ public class SideMenuActivity extends AppCompatActivity
                         if ((now.getTime() - lastRefreshedAt.getTime()) / 60000 > 1) {
                             Thread.sleep(60000);
                             refreshUsersList();
-                            refreshMap();
                         }
                     }
                     catch (Exception ex) {
@@ -414,14 +409,11 @@ public class SideMenuActivity extends AppCompatActivity
     public void onMapReady(GoogleMap googleMap) {
         mGoogleMap = googleMap;
 
-
         if (mGoogleMap != null) {
-
             //Set the listener for the Camera
             mGoogleMap.setOnCameraIdleListener(this);
 
             mGoogleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
-
                 @Override
                 public View getInfoWindow(Marker marker) {
                     return null;
@@ -484,12 +476,13 @@ public class SideMenuActivity extends AppCompatActivity
         double myCameraLong = ltMyCameraCoords.longitude;
         double myCameraLat = ltMyCameraCoords.latitude;
         float fMyCameraZoom = fMyCameraPostion.zoom;
-
-        refreshMap();
     }
 
     @Override
     public boolean onMarkerClick(final Marker marker) {
+        if (!CurrentUser.getCurrentUser().IsValidTimekitUser) {
+            return true;
+        }
 
         // Fake empty container layout
         lContainerLayout = new RelativeLayout(this);
@@ -502,25 +495,21 @@ public class SideMenuActivity extends AppCompatActivity
         bookingButton.setLayoutParams(lButtonParams);
         lContainerLayout.addView(bookingButton);
 
-
         // Adding full screen container
         addContentView(lContainerLayout, new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
-
 
         bookingButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                //Toast.makeText(SideMenuActivity.this, marker.getSnippet(), Toast.LENGTH_LONG).show();
-
                 Bundle args = new Bundle();
                 args.putString("uID", marker.getSnippet());
                 System.out.println("this is my id: " + marker.getSnippet());
                 CreateBooking bFragment = new CreateBooking();
+
                 // Show DialogFragment
                 bFragment.setArguments(args);
                 bFragment.show(fm, "Dialog Fragment");
-
             }
         });
 
@@ -560,25 +549,17 @@ public class SideMenuActivity extends AppCompatActivity
         }
     }
 
-    public void refreshMap() {
-        GetUsers usersRefreshTask = new GetUsers(refreshStrategy);
-        usersRefreshTask.start();
-
-        try {
-            usersRefreshTask.join();
-        }
-        catch (Exception ex) {
-            Log.e(TAG, "Error in refreshMap: " + ex.toString() + "\n" + ex.getStackTrace());
-        }
-
-        tempRecUsers = usersRefreshTask.getUsersList();
-
-        addUsersToMap(tempRecUsers);
-        lastRefreshedAt = new Date();
+    public void refreshUsersList() {
+        usersAround = runRefreshStrategy(new DistanceRefreshStrategy(100));
     }
 
-    private void refreshUsersList() {
-        GetUsers usersRefreshTask = new GetUsers(new DistanceRefreshStrategy(100));
+    public void refreshMap() {
+        HashMap<String, UserObject> users = runRefreshStrategy(refreshStrategy);
+        addUsersToMap(users);
+    }
+
+    private HashMap<String, UserObject> runRefreshStrategy(RefreshStrategyBase strat) {
+        GetUsers usersRefreshTask = new GetUsers(strat);
         usersRefreshTask.start();
 
         try {
@@ -588,9 +569,7 @@ public class SideMenuActivity extends AppCompatActivity
             Log.e(TAG, "Error in refreshUsersList: " + ex.toString() + "\n" + ex.getStackTrace());
         }
 
-        tempRecUsers = usersRefreshTask.getUsersList();
-
-        lastRefreshedAt = new Date();
+        return usersRefreshTask.getUsersList();
     }
 
     private void addUsersToMap(HashMap<String, UserObject> users) {
@@ -623,12 +602,7 @@ public class SideMenuActivity extends AppCompatActivity
 
     public void setFilterSearchStrategy(String filter) {
         Log.i(TAG, "Switching to subject users filter: " + filter);
-
-        if (refreshStrategy instanceof RefreshUsersBySubjectFilter) {
-            refreshUsersList();
-        }
-
-        refreshStrategy = new RefreshUsersBySubjectFilter(this, filter);
+        refreshStrategy = new RefreshUsersBySubjectFilter(usersAround, filter);
     }
 
 }

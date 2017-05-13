@@ -55,6 +55,7 @@ public class MyFloatingSearchView {
 
             @Override
             public void onSearchTextChanged(String oldQuery, final String newQuery) {
+                Log.d(TAG, "onSearchTextChanged()");
                 if (!oldQuery.equals("") && newQuery.equals("")) {
                     mSearchView.clearSuggestions();
                 } else {
@@ -83,8 +84,6 @@ public class MyFloatingSearchView {
                                 }
                             });
                 }
-
-                Log.d(TAG, "onSearchTextChanged()");
             }
         });
 
@@ -92,46 +91,35 @@ public class MyFloatingSearchView {
             @Override
             public void onSuggestionClicked(final SearchSuggestion searchSuggestion) {
                 Log.d(TAG, "onSuggestionClicked()");
-
-                myActivity.setFilterSearchStrategy(mLastQuery);
-                myActivity.refreshMap();
-
                 mLastQuery = searchSuggestion.getBody();
+                setSearchStrategy();
             }
 
             @Override
             public void onSearchAction(String query) {
                 Log.d(TAG, "onSearchAction()");
-
                 mLastQuery = query;
-
-                myActivity.setFilterSearchStrategy(mLastQuery);
-                myActivity.refreshMap();
+                setSearchStrategy();
             }
         });
 
         mSearchView.setOnFocusChangeListener(new FloatingSearchView.OnFocusChangeListener() {
             @Override
             public void onFocus() {
+                Log.d(TAG, "onFocus()");
 
                 //show suggestions when search bar gains focus (typically history suggestions)
                 mSearchView.swapSuggestions(DataHelper.getHistory(myActivity, 3));
-
-                Log.d(TAG, "onFocus()");
             }
 
             @Override
             public void onFocusCleared() {
-
+                Log.d(TAG, "onFocusCleared()");
                 //set the title of the bar so that when focus is returned a new query begins
                 mSearchView.setSearchBarTitle(mLastQuery);
 
                 //you can also set setSearchText(...) to make keep the query there when not focused and when focus returns
                 //mSearchView.setSearchText(searchSuggestion.getBody());
-
-
-
-                Log.d(TAG, "onFocusCleared()");
             }
         });
 
@@ -237,6 +225,17 @@ public class MyFloatingSearchView {
 //                Log.d(TAG, "onClearSearchClicked()");
 //            }
 //        });
+    }
+
+    private void setSearchStrategy() {
+        if (mLastQuery.equals("")) {
+            myActivity.setDistanceSearchStrategy(100);
+        }
+        else {
+            myActivity.setFilterSearchStrategy(mLastQuery);
+        }
+
+        myActivity.refreshMap();
     }
 
     private void setupResultsList() {

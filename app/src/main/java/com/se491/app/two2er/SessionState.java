@@ -22,8 +22,4 @@ public class SessionState {
             setUserMode(eUserMode.STUDENT);
         }
     }
-
-    private static boolean isUsingLocationTables = true;
-    public static synchronized boolean getIsUsingLocationTables() { return isUsingLocationTables; }
-    public static synchronized void setIsUsingLocationTables(boolean value) { isUsingLocationTables = value; }
 }

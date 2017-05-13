@@ -31,6 +31,7 @@ public class UserObject {
     public double dLat = 0.0;
     public int BookingsCount = 0;
     public int Rating = 0;
+    public boolean IsValidTimekitUser = false;
 
     private String TAG = "UserObject";
 
@@ -109,6 +110,10 @@ public class UserObject {
             if (eduObj.length() > 0) {
                 Education = new EducationObject(eduObj.getJSONObject(0));
             }
+        }
+
+        if (user.has("timekit_token")) {
+            IsValidTimekitUser = true;
         }
     }
 

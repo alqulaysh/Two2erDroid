@@ -18,6 +18,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.se491.app.two2er.CurrentUser;
 import com.se491.app.two2er.Enums.eUserMode;
 import com.se491.app.two2er.HelperObjects.MyGoogleApiClient_Singleton;
+import com.se491.app.two2er.HelperObjects.UserObject;
 import com.se491.app.two2er.SessionState;
 import com.se491.app.two2er.Utilities.ServerApiUtilities;
 import com.stormpath.sdk.Stormpath;
@@ -68,6 +69,10 @@ public class LocationRefreshService extends IntentService implements GoogleApiCl
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i(serviceLogTag, "Starting Location Refresh Service");
 
+        UserObject curr = CurrentUser.getCurrentUser();
+        latitude = curr.dLat;
+        longitude = curr.dLong;
+
         mGoogleApiClient = MyGoogleApiClient_Singleton.getInstance(null).get_GoogleApiClient();
         setupOkHttpClient();
 
@@ -83,7 +88,6 @@ public class LocationRefreshService extends IntentService implements GoogleApiCl
 
         initLocationRequest();
         LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
-        //Location loc = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
 
         return super.onStartCommand(intent, flags, startId);
     }
@@ -205,7 +209,7 @@ public class LocationRefreshService extends IntentService implements GoogleApiCl
             okHttpClient.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(okhttp3.Call call, IOException e) {
-                    Log.e(serviceLogTag, "Error on post to studentlocations: " + e.toString());
+                    Log.e(serviceLogTag, "Error on post to locations: " + e.toString());
                     responseStatus = 2;
                 }
 
@@ -244,13 +248,6 @@ public class LocationRefreshService extends IntentService implements GoogleApiCl
     }
 
     private String getUrl() {
-        if (SessionState.getUserMode() == eUserMode.STUDENT) {
-            return ServerApiUtilities.GetServerApiUrl() + "studentlocations";
-        }
-        else if (SessionState.getUserMode() == eUserMode.TUTOR) {
-            return ServerApiUtilities.GetServerApiUrl() + "tutorlocations";
-        }
-
-        return "";
+        return ServerApiUtilities.GetServerApiUrl() + "/" + ServerApiUtilities.SERVER_API_URL_ROUTE_USERS;
     }
 }

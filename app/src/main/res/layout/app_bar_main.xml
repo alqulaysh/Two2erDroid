@@ -98,23 +98,22 @@
                 app:floatingSearch_searchHint="What subject?"
                 app:floatingSearch_showSearchKey="true"
                 app:floatingSearch_suggestionsListAnimDuration="250">
-
             </com.arlib.floatingsearchview.FloatingSearchView>
 
-            <Button
-                android:id="@+id/resetBtn"
-                android:layout_width="118dp"
-                android:layout_height="52dp"
-                android:text="Reset"
-                android:visibility="visible" />
+            <!--<Button-->
+                <!--android:id="@+id/resetBtn"-->
+                <!--android:layout_width="118dp"-->
+                <!--android:layout_height="52dp"-->
+                <!--android:text="Reset"-->
+                <!--android:visibility="visible" />-->
 
-            <Button
-                android:id="@+id/refreshBtn"
-                android:layout_width="129dp"
-                android:layout_height="52dp"
-                android:layout_gravity="center_horizontal"
-                android:text="Refresh"
-                android:visibility="visible" />
+            <!--<Button-->
+                <!--android:id="@+id/refreshBtn"-->
+                <!--android:layout_width="129dp"-->
+                <!--android:layout_height="52dp"-->
+                <!--android:layout_gravity="center_horizontal"-->
+                <!--android:text="Refresh"-->
+                <!--android:visibility="visible" />-->
 
         </LinearLayout>
 
