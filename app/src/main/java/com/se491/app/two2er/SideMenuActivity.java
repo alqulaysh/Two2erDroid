@@ -58,6 +58,7 @@ import com.se491.app.two2er.GetUsers.RefreshUsersBySubjectFilter;
 import com.se491.app.two2er.HelperObjects.MyGoogleApiClient_Singleton;
 import com.se491.app.two2er.HelperObjects.UserObject;
 import com.se491.app.two2er.SearchView.MyFloatingSearchView;
+import com.se491.app.two2er.Services.LocationRefreshService;
 import com.stormpath.sdk.Stormpath;
 
 import java.io.InputStream;
@@ -461,6 +462,10 @@ public class SideMenuActivity extends AppCompatActivity
         }
         Log.i(TAG, "Second isConnected: " + mGoogleApiClient.isConnected());
         LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationReq, this);
+
+        LatLng latLng = new LatLng(LocationRefreshService.getLatitude(), LocationRefreshService.getLongitude());
+        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
 
         refreshMap();
     }
