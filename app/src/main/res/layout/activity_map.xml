@@ -8,8 +8,8 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
         <fragment
-            android:layout_width="2dp"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:name="com.google.android.gms.maps.MapFragment"
             android:id="@+id/mapFragment" />
 </android.support.v4.widget.DrawerLayout>

@@ -48,6 +48,7 @@ import com.se491.app.two2er.Activities.AdditionalProfileActivity;
 import com.se491.app.two2er.Activities.BookingsActivity;
 import com.se491.app.two2er.Activities.HelpActivity;
 import com.se491.app.two2er.Activities.LoginActivity;
+import com.se491.app.two2er.Activities.SchduleActivity;
 import com.se491.app.two2er.Activities.UserProfileActivity;
 import com.se491.app.two2er.Fragments.Bookings.CreateBooking;
 import com.se491.app.two2er.Fragments.ScheduleFragment;
@@ -187,7 +188,7 @@ public class SideMenuActivity extends AppCompatActivity
 
         //NAVIGATION HEADER VIEW:
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        NavigationView botDrawerView = (NavigationView) findViewById(R.id.navigation_drawer_bottom);
+      //  NavigationView botDrawerView = (NavigationView) findViewById(R.id.navigation_drawer_bottom);
         //Set the sidemenu image to users profile picture:
         View hView = navigationView.getHeaderView(0);
         ImageView nav_userImage = (ImageView) hView.findViewById(R.id.circleImageView);
@@ -237,7 +238,7 @@ public class SideMenuActivity extends AppCompatActivity
 
         //Set our nav view Item Selected listener(its implemented by this activity):
         navigationView.setNavigationItemSelectedListener(this);
-        botDrawerView.setNavigationItemSelectedListener(this);
+        //botDrawerView.setNavigationItemSelectedListener(this);
 
         //Get our search EditText:
         searchView = (FloatingSearchView) findViewById(R.id.searchView);
@@ -338,16 +339,16 @@ public class SideMenuActivity extends AppCompatActivity
 
         if (id == R.id.nav_userprofile) {
             if (myUserProfile.fname != null) {
-                startActivity(new Intent(SideMenuActivity.this, UserProfileActivity.class));
+                startActivity(new Intent(SideMenuActivity.this, HelpActivity.class));
             }
-        } else if (id == R.id.nav_map) {
-            if (!sMapFragment.isAdded())
-                sFm.beginTransaction().add(R.id.map, sMapFragment).commit();
-            else
+//        } else if (id == R.id.nav_map) {
+//            if (!sMapFragment.isAdded())
+//                sFm.beginTransaction().add(R.id.map, sMapFragment).commit();
+         else
                 sFm.beginTransaction().show(sMapFragment).commit();
 
-        } else if (id == R.id.nav_schedule) {
-            fm.beginTransaction().replace(R.id.content_frame, new ScheduleFragment()).commit();
+//        } else if (id == R.id.nav_schedule) {
+//            startActivity(new Intent(SideMenuActivity.this, SchduleActivity.class));
         } else if (id == R.id.nav_manage) {
             startActivity(new Intent(SideMenuActivity.this, BookingsActivity.class));
             //fm.beginTransaction().replace(R.id.content_framePad, new BookingsFragment()).commit();
@@ -355,8 +356,11 @@ public class SideMenuActivity extends AppCompatActivity
             Stormpath.logout();
             startActivity(new Intent(SideMenuActivity.this, LoginActivity.class));
             finish();
-        } else if (id == R.id.nav_help) {
-            startActivity(new Intent(SideMenuActivity.this, HelpActivity.class));
+//        } else if (id == R.id.nav_help) {
+//            startActivity(new Intent(SideMenuActivity.this, HelpActivity.class));
+        }
+        else if (id == R.id.nav_schedule) {
+            startActivity(new Intent(SideMenuActivity.this, SchduleActivity.class));
         }
 
 

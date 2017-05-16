@@ -10,10 +10,9 @@
 
     <EditText android:id="@+id/changed_value"
         android:layout_width="300dp"
-        android:layout_height="45dp"
+        android:layout_height="55dp"
         android:hint="New Value"
         android:textSize="14dp"
-        android:fontFamily="sans-serif-condensed"
         android:textColorHint="#fff"
         android:selectAllOnFocus="false"
         android:layout_marginBottom="11dp"

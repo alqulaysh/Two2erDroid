@@ -13,19 +13,24 @@
 
     <Button
         android:id="@+id/buttonLoadPicture"
-        android:layout_width="fill_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_weight="0"
+        android:textColor="#fff"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/ripple_effect"
         android:text="Load Picture" >
     </Button>
 
     <Button
         android:id="@+id/buttonImportPicture"
-        android:layout_width="fill_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="0"
+        android:textColor="#fff"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/ripple_effect"
         android:text="Save Picture" >
     </Button>
 

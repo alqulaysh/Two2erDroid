@@ -8,25 +8,27 @@
     android:orientation="vertical">
 
 
-    <EditText android:id="@+id/changeMY_passwordDialog"
+    <EditText
+        android:id="@+id/changeMY_passwordDialog"
         android:layout_width="300dp"
         android:layout_height="45dp"
-        android:singleLine="false"
-        android:password="true"
-        android:hint="New Password"
-        android:textSize="14dp"
-        android:fontFamily="sans-serif-condensed"
-        android:textColorHint="#fff"
-        android:background="@drawable/passwordbackground"
-        android:selectAllOnFocus="false"
-        android:layout_marginBottom="11dp"
         android:layout_centerHorizontal="true"
-        android:paddingLeft="10dp" />
+        android:layout_marginBottom="11dp"
+        android:background="@drawable/passwordbackground"
+        android:fontFamily="sans-serif"
+        android:hint="New Password"
+        android:paddingLeft="10dp"
+        android:password="true"
+        android:selectAllOnFocus="false"
+        android:singleLine="false"
+        android:textColorHint="#fff"
+        android:textSize="14dp" />
 
     <Button
         android:id="@+id/changeMyPwdDialog_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/buttonclick"
+        android:layout_width="280dp"
+        android:layout_height="45dp"
+        android:background="@drawable/ripple_effect"
+        android:textColor="#fff"
         android:text="Change My Password" />
 </LinearLayout>
