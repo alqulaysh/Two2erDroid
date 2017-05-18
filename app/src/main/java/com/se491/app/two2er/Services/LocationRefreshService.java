@@ -86,7 +86,7 @@ public class LocationRefreshService extends IntentService implements GoogleApiCl
         initLocationRequest();
         LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
 
-        Log.i(serviceLogTag, String.format("StartupLocation long: %f lat: %f", longitude, latitude));
+        Log.i("MapStartup", String.format("StartupLocation long: %f lat: %f", longitude, latitude));
 
         return super.onStartCommand(intent, flags, startId);
     }
