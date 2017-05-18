@@ -73,6 +73,9 @@ public class CurrentUser {
             });
             t.start();
             t.join();
+
+            Log.i(TAG, String.format("CurrentUser long: %f lat: %f", currentUser.dLong, currentUser.dLat));
+            Log.i("MapStartup", String.format("CurrentUser long: %f lat: %f", currentUser.dLong, currentUser.dLat));
         }
         catch(Exception ex) {
             Log.e(TAG, ex.toString() + "\n" + ex.getStackTrace());
