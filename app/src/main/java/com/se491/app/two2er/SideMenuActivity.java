@@ -51,7 +51,6 @@ import com.se491.app.two2er.Activities.LoginActivity;
 import com.se491.app.two2er.Activities.SchduleActivity;
 import com.se491.app.two2er.Activities.UserProfileActivity;
 import com.se491.app.two2er.Fragments.Bookings.CreateBooking;
-import com.se491.app.two2er.Fragments.ScheduleFragment;
 import com.se491.app.two2er.GetUsers.DistanceRefreshStrategy;
 import com.se491.app.two2er.GetUsers.GetUsers;
 import com.se491.app.two2er.GetUsers.RefreshStrategyBase;
@@ -584,7 +583,7 @@ public class SideMenuActivity extends AppCompatActivity
 
     private void addUsersToMap(HashMap<String, UserObject> users) {
         MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.tutormapicon));
+        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.mipmap.loction));
         Iterator it = users.entrySet().iterator();
 
         mGoogleMap.clear();

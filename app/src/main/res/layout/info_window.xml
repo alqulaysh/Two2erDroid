@@ -6,61 +6,68 @@
     android:layout_width="wrap_content">
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="120dp"
+        android:orientation="horizontal">
 
-        <ImageView
-            app:srcCompat="@drawable/genuser"
-            android:id="@+id/user_image"
-            android:layout_width="64dp"
-            android:layout_height="78dp"
-            android:padding="8dp" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/circleImageView"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/james"
+            app:civ_border_color="@color/dark_gray"
+            app:civ_border_width="1dp" />
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:orientation="vertical"
             android:padding="5dp">
 
             <TextView
-                android:text="Ron Swanson"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:id="@+id/user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ron Swanson"
+                android:textStyle="bold"
                 android:textSize="18sp" />
 
             <TextView
-                android:text="Harvard University, Ph.D"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:id="@+id/user_subjects"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Harvard University, Ph.D"
                 android:textSize="14sp" />
 
             <TextView
-                android:text="Major: Finance"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:id="@+id/user_major"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Major: Finance"
                 android:textSize="14sp" />
 
             <TextView
-                android:text="Availability: Now"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:id="@+id/user_availability"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Availability: Now"
                 android:textSize="14sp" />
 
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="110dp"
+                android:layout_height="30dp"
+                android:layout_gravity="left"
+                app:srcCompat="@drawable/stars" />
         </LinearLayout>
+
+
+
     </LinearLayout>
 
-    <RatingBar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/ratingBar"
-        android:numStars="5"
-        android:rating="4"
-        style="@android:style/Widget.Holo.RatingBar" />
+
 
 </LinearLayout>
+
