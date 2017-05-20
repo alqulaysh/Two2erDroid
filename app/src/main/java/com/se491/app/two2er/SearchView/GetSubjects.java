@@ -5,7 +5,7 @@ package com.se491.app.two2er.SearchView;
 
 import android.util.Log;
 
-import com.se491.app.two2er.OkHttpClientFactory;
+import com.se491.app.two2er.HelperObjects.OkHttpClientFactory;
 import com.se491.app.two2er.SearchView.Data.SubjectSuggestion;
 import com.se491.app.two2er.Utilities.ServerApiUtilities;
 import com.stormpath.sdk.Stormpath;

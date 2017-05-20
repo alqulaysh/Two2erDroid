@@ -1,8 +1,9 @@
-package com.se491.app.two2er;
+package com.se491.app.two2er.HelperObjects;
 
 import android.util.Log;
+import android.widget.ImageView;
 
-import com.se491.app.two2er.HelperObjects.UserObject;
+import com.se491.app.two2er.Activities.UserProfile.DownloadImageTask;
 import com.se491.app.two2er.Utilities.ServerApiUtilities;
 import com.stormpath.sdk.Stormpath;
 
@@ -31,6 +32,12 @@ public class CurrentUser {
 
     public static synchronized void setCurrentUser(UserObject obj) {
         currentUser = obj;
+    }
+
+    //This method will update the provided image view with the Current Users userImage:
+    public static void updateProfilePics(ImageView profileImageView){
+        new DownloadImageTask(profileImageView)
+                .execute(CurrentUser.getCurrentUser().userImage);
     }
 
     public static void Init() {
@@ -75,7 +82,7 @@ public class CurrentUser {
             t.join();
 
             Log.i(TAG, String.format("CurrentUser long: %f lat: %f", currentUser.dLong, currentUser.dLat));
-            Log.i("MapStartup", String.format("CurrentUser long: %f lat: %f", currentUser.dLong, currentUser.dLat));
+            Log.i(TAG, String.format("CurrentUser long: %f lat: %f", currentUser.dLong, currentUser.dLat));
         }
         catch(Exception ex) {
             Log.e(TAG, ex.toString() + "\n" + ex.getStackTrace());

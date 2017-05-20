@@ -1,4 +1,4 @@
-package com.se491.app.two2er.Activities;
+package com.se491.app.two2er.Activities.UserProfile;
 
 /**
  * Created by eoliv on 5/3/2017.
@@ -14,7 +14,7 @@ import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.se491.app.two2er.CurrentUser;
+import com.se491.app.two2er.HelperObjects.CurrentUser;
 import com.se491.app.two2er.HelperObjects.FieldPair;
 import com.se491.app.two2er.R;
 

@@ -1,4 +1,4 @@
-package com.se491.app.two2er.Activities;
+package com.se491.app.two2er.Activities.Bookings;
 
 import android.content.Context;
 import android.os.Bundle;

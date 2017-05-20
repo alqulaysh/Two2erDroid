@@ -1,4 +1,4 @@
-package com.se491.app.two2er.Activities;
+package com.se491.app.two2er.Activities.StartPage;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

@@ -256,13 +256,13 @@
             android:background="#ffffff">
 
             <Button
-                android:id="@+id/update_btn2"
+                android:id="@+id/changepwd_btn"
                 android:layout_width="300dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/ripple_effect"
                 android:text="Change Password"
-                android:layout_marginBottom="10dp"
                 android:textColor="#ffffffff"
                 app:layout_constraintBottom_toTopOf="@+id/changepwd_btn"
                 app:layout_constraintHorizontal_bias="0.495"

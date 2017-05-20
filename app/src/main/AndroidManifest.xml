@@ -33,7 +33,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".Activities.RegisterActivity"
+            android:name=".Activities.StartPage.RegisterActivity"
             android:label="New Account"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -41,11 +41,11 @@
             android:label="Schdule"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activities.LoginActivity"
+            android:name=".Activities.StartPage.LoginActivity"
             android:label="Sign in"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activities.HelpActivity"
+            android:name=".Activities.UserProfile.UserProfileActivity"
             android:label="Help"
             android:theme="@style/AppTheme.NoActionBar" />
 
@@ -60,17 +60,11 @@
             android:label=""
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".Activities.UserProfileActivity"
+        <activity android:name=".Activities.Bookings.BookingsActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
 
-        <activity android:name=".Activities.BookingsActivity"
+        <activity android:name=".Activities.StartPage.ForgotPasswordActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-
-        <activity android:name=".Activities.ChangePasswordActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".Activities.ForgotPasswordActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".Activities.UploadImageActivity"></activity>
 
         <service
             android:name=".Services.MyFirebaseInstanceIDService">

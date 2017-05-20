@@ -9,12 +9,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.se491.app.two2er.Fragments.UserProfile.ChangeProfileImageDialog;
 import com.se491.app.two2er.R;
 
 public class AdditionalProfileActivity extends AppCompatActivity implements
-        DialogInterface.OnDismissListener,
-        ChangeProfileImageDialog.onDialogDismissListener {
+        DialogInterface.OnDismissListener
+        {
     private static String TAG = "UserProfileActivity";
     Fragment myThis;
     ImageView userProfileImage;
@@ -43,12 +42,6 @@ public class AdditionalProfileActivity extends AppCompatActivity implements
             }
         });
 
-
-    }
-
-
-    @Override
-    public void onDismissDialog(String userImgURL) {
 
     }
 

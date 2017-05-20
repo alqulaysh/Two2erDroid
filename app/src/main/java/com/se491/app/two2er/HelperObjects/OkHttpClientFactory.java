@@ -1,4 +1,4 @@
-package com.se491.app.two2er;
+package com.se491.app.two2er.HelperObjects;
 
 import com.stormpath.sdk.Stormpath;
 

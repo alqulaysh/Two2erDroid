@@ -1,4 +1,4 @@
-package com.se491.app.two2er.Fragments.Bookings;
+package com.se491.app.two2er.Activities.Bookings;
 
 
 import android.os.Build;

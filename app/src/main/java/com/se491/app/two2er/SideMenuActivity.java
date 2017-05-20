@@ -1,5 +1,6 @@
 package com.se491.app.two2er;
 
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -45,16 +46,16 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.se491.app.two2er.Activities.AdditionalProfileActivity;
-import com.se491.app.two2er.Activities.BookingsActivity;
-import com.se491.app.two2er.Activities.HelpActivity;
-import com.se491.app.two2er.Activities.LoginActivity;
+import com.se491.app.two2er.Activities.Bookings.BookingsActivity;
+import com.se491.app.two2er.Activities.UserProfile.UserProfileActivity;
+import com.se491.app.two2er.Activities.StartPage.LoginActivity;
 import com.se491.app.two2er.Activities.SchduleActivity;
-import com.se491.app.two2er.Activities.UserProfileActivity;
-import com.se491.app.two2er.Fragments.Bookings.CreateBooking;
+import com.se491.app.two2er.Activities.Bookings.CreateBooking;
 import com.se491.app.two2er.GetUsers.DistanceRefreshStrategy;
 import com.se491.app.two2er.GetUsers.GetUsers;
 import com.se491.app.two2er.GetUsers.RefreshStrategyBase;
 import com.se491.app.two2er.GetUsers.RefreshUsersBySubjectFilter;
+import com.se491.app.two2er.HelperObjects.CurrentUser;
 import com.se491.app.two2er.HelperObjects.MyGoogleApiClient_Singleton;
 import com.se491.app.two2er.HelperObjects.UserObject;
 import com.se491.app.two2er.SearchView.MyFloatingSearchView;
@@ -80,6 +81,7 @@ public class SideMenuActivity extends AppCompatActivity
         GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowCloseListener {
 
     private static final int PERMISSION_ACCESS_FINE_LOCATION = 1;
+    public static int RESULT_USER_PROFILE = 1;
     SupportMapFragment sMapFragment;
     //GoogleApi Client Services:
     GoogleApiClient mGoogleApiClient;
@@ -104,6 +106,8 @@ public class SideMenuActivity extends AppCompatActivity
 
     //MyUser Profile:
     UserObject myUserProfile;
+    //User side menu profile image:
+    private ImageView nav_userImage;
 
     //Book TutorObject Button:
     // Custom view
@@ -190,7 +194,7 @@ public class SideMenuActivity extends AppCompatActivity
       //  NavigationView botDrawerView = (NavigationView) findViewById(R.id.navigation_drawer_bottom);
         //Set the sidemenu image to users profile picture:
         View hView = navigationView.getHeaderView(0);
-        ImageView nav_userImage = (ImageView) hView.findViewById(R.id.circleImageView);
+        nav_userImage = (ImageView) hView.findViewById(R.id.circleImageView);
         TextView nav_username = (TextView) hView.findViewById(R.id.UserName_nav);
         TextView nav_title_tutor = (TextView) hView.findViewById(R.id.nav_title_tutor);
         TextView nav_title_tutor_sub = (TextView) hView.findViewById(R.id.nav_title_tutor_sub);
@@ -210,7 +214,8 @@ public class SideMenuActivity extends AppCompatActivity
         nav_userImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SideMenuActivity.this, UserProfileActivity.class));
+                //startActivity(new Intent(SideMenuActivity.this, UserProfileActivity.class));
+                startActivityForResult(new Intent(SideMenuActivity.this, UserProfileActivity.class), RESULT_USER_PROFILE);
             }
         });
 
@@ -338,7 +343,8 @@ public class SideMenuActivity extends AppCompatActivity
 
         if (id == R.id.nav_userprofile) {
             if (myUserProfile.fname != null) {
-                startActivity(new Intent(SideMenuActivity.this, HelpActivity.class));
+                //startActivity(new Intent(SideMenuActivity.this, UserProfileActivity.class));
+                startActivityForResult(new Intent(SideMenuActivity.this, UserProfileActivity.class), RESULT_USER_PROFILE);
             }
 //        } else if (id == R.id.nav_map) {
 //            if (!sMapFragment.isAdded())
@@ -350,13 +356,12 @@ public class SideMenuActivity extends AppCompatActivity
 //            startActivity(new Intent(SideMenuActivity.this, SchduleActivity.class));
         } else if (id == R.id.nav_manage) {
             startActivity(new Intent(SideMenuActivity.this, BookingsActivity.class));
-            //fm.beginTransaction().replace(R.id.content_framePad, new BookingsFragment()).commit();
         } else if (id == R.id.nav_logout) {
             Stormpath.logout();
             startActivity(new Intent(SideMenuActivity.this, LoginActivity.class));
             finish();
 //        } else if (id == R.id.nav_help) {
-//            startActivity(new Intent(SideMenuActivity.this, HelpActivity.class));
+//            startActivity(new Intent(SideMenuActivity.this, UserProfileActivity.class));
         }
         else if (id == R.id.nav_schedule) {
             startActivity(new Intent(SideMenuActivity.this, SchduleActivity.class));
@@ -613,5 +618,25 @@ public class SideMenuActivity extends AppCompatActivity
         Log.i(TAG, "Switching to subject users filter: " + filter);
         refreshStrategy = new RefreshUsersBySubjectFilter(usersAround, filter);
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.i(TAG, "Im inside onActivityResult");
+        Log.i(TAG, "Im inside onActivityResult requestCode" + requestCode);
+        Log.i(TAG, "Im inside onActivityResult RESULT_USER_PROFILE" + RESULT_USER_PROFILE);
+        Log.i(TAG, "Im inside onActivityResult resultCode" + resultCode);
+        Log.i(TAG, "Im inside onActivityResult RESULT_OK" + RESULT_OK);
+        if (requestCode ==  RESULT_USER_PROFILE
+                && resultCode == Activity.RESULT_OK
+                //&& null != data
+                ){
+            Log.i(TAG, "Im inside onActivityResult2");
+            //Update the user side menu profile pic:
+            CurrentUser.updateProfilePics(nav_userImage);
+        }
+
+    }
+
 
 }

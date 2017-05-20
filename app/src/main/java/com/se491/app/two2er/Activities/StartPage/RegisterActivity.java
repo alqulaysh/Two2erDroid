@@ -1,4 +1,4 @@
-package com.se491.app.two2er.Activities;
+package com.se491.app.two2er.Activities.StartPage;
 
 import android.content.Intent;
 import android.os.Bundle;

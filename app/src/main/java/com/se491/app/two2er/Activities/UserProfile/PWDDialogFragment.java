@@ -1,4 +1,4 @@
-package com.se491.app.two2er.Fragments;
+package com.se491.app.two2er.Activities.UserProfile;
 
 import android.app.DialogFragment;
 import android.os.Bundle;
@@ -10,9 +10,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.se491.app.two2er.HelperObjects.OkHttpClientFactory;
 import com.se491.app.two2er.R;
+import com.se491.app.two2er.Utilities.ServerApiUtilities;
 import com.stormpath.sdk.Stormpath;
-import com.stormpath.sdk.utils.StringUtils;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -20,7 +21,6 @@ import java.util.Objects;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
-import okhttp3.Headers;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -60,46 +60,37 @@ public class PWDDialogFragment extends DialogFragment {
     }
 
     private void changePassword(){
-    String newPassword = passwordInput.getText().toString();
+        String newPassword = passwordInput.getText().toString();
 
-    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
 
-    OkHttpClient okHttpClient = new OkHttpClient.Builder()
-            .build();
+            OkHttpClient okHttpClient = OkHttpClientFactory.Create();
 
-    RequestBody requestBody = new FormBody.Builder()
-            .add("password", newPassword)
-            .build();
+            RequestBody requestBody = new FormBody.Builder()
+                    .add("password", newPassword)
+                    .build();
 
-    Request request = new Request.Builder()
-            .url("http://lowcost-env.niuk5squp9.us-east-2.elasticbeanstalk.com/apiauth/users/changepassword")
-            .headers(buildStandardHeaders(Stormpath.getAccessToken()))
-            .post(requestBody)
-            .build();
+            Request request = new Request.Builder()
+                    .url(ServerApiUtilities.GetServerApiUrl() +
+                            ServerApiUtilities.SERVER_API_URL_ROUTE_USERS +
+                            ServerApiUtilities.SERVER_API_URL_ROUTE_CHANGEPWD)
+                    .headers(ServerApiUtilities.buildStandardHeaders(Stormpath.getAccessToken()))
+                    .post(requestBody)
+                    .build();
 
-        okHttpClient.newCall(request).enqueue(new Callback() {
-        @Override public
-        void onFailure(Call call, IOException e) {
-            Log.d("Android : ", e.getMessage());
-        }
+            okHttpClient.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Log.d("Android : ", e.getMessage());
+                }
 
-        @Override public void onResponse(Call call, Response response)
-                    throws IOException {
-            final String responseStr = response.body().string();
-            Log.d("Android : ", responseStr);
-        }
-    });
-}
-
-    private Headers buildStandardHeaders(String accessToken) {
-        Headers.Builder builder = new Headers.Builder();
-        builder.add("Accept", "application/json");
-
-        if (StringUtils.isNotBlank(accessToken)) {
-            builder.add("Authorization", "Bearer " + accessToken);
-        }
-
-        return builder.build();
+                @Override
+                public void onResponse(Call call, Response response)
+                        throws IOException {
+                    final String responseStr = response.body().string();
+                    Log.d("Android : ", responseStr);
+                }
+            });
     }
 }

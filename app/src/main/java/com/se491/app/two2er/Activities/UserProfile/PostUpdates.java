@@ -1,7 +1,8 @@
-package com.se491.app.two2er;
+package com.se491.app.two2er.Activities.UserProfile;
 
 import android.os.AsyncTask;
 
+import com.se491.app.two2er.HelperObjects.OkHttpClientFactory;
 import com.se491.app.two2er.HelperObjects.UserObject;
 import com.se491.app.two2er.Utilities.ServerApiUtilities;
 import com.stormpath.sdk.Stormpath;
@@ -32,9 +33,9 @@ public class PostUpdates  extends AsyncTask<Void, Void, Void> {
     public void postToApi(UserObject user) {
         RequestBody requestBody = new FormBody.Builder()
                 .add("name", user.fname + " " + user.lname)
-                //.add("age", user.age)
-                //.add("education", user.)
-                //.add("usergroups", name)
+                .add("age", user.age)
+                .add("education", user.Education.School)
+                //.add("usergroups", user.Education)
                 .build();
 
         Request request = new Request.Builder()

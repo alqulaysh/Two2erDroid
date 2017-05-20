@@ -20,10 +20,12 @@ public class ServerApiUtilities {
     public static final String SERVER_API_URL_ROUTE_USERS_ME = "me/";
     public static final String SERVER_API_URL_ROUTE_USERS_UPDATE = "update/";
     public static final String SERVER_API_URL_ROUTE_SUBJECTS = "subjects/";
+    public static final String SERVER_API_URL_ROUTE_CHANGEPWD = "changepassword/";
 
     private static final String SERVER_API_URL_AUTH = "http://lowcost-env.niuk5squp9.us-east-2.elasticbeanstalk.com/apiauth/";
     private static final String SERVER_API_URL_NOAUTH = "http://lowcost-env.niuk5squp9.us-east-2.elasticbeanstalk.com/api/";
     private static final String SERVER_API_URL_ROUTES_TEST = "http://lowcost-env.niuk5squp9.us-east-2.elasticbeanstalk.com/";
+    private static final String SERVER_API_URL_S3 = "http://lowcost-env.niuk5squp9.us-east-2.elasticbeanstalk.com/s3";
 
     public static Headers buildStandardHeaders(String accessToken) {
         Headers.Builder builder = new Headers.Builder();
@@ -37,6 +39,7 @@ public class ServerApiUtilities {
     }
 
     public static String GetServerApiUrl() { return SERVER_API_URL_AUTH; }
+    public static String GetServerS3Url() { return SERVER_API_URL_S3; }
     public static String GetServerApiUrl_NoAuth() {
         return SERVER_API_URL_NOAUTH;
     }

@@ -2,14 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
 
-    <ImageView
+
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imgView"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" >
-    </ImageView>
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:paddingBottom="10dp"
+        android:src="@drawable/james"
+        app:civ_border_color="?attr/colorPrimaryDark"
+        app:civ_border_width="3dp" />
 
     <Button
         android:id="@+id/buttonLoadPicture"
@@ -22,16 +28,16 @@
         android:text="Load Picture" >
     </Button>
 
-    <Button
-        android:id="@+id/buttonImportPicture"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="0"
-        android:textColor="#fff"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/ripple_effect"
-        android:text="Save Picture" >
-    </Button>
+    <!--<Button-->
+        <!--android:id="@+id/buttonImportPicture"-->
+        <!--android:layout_width="300dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_weight="0"-->
+        <!--android:textColor="#fff"-->
+        <!--android:layout_marginBottom="10dp"-->
+        <!--android:background="@drawable/ripple_effect"-->
+        <!--android:text="Save Picture" >-->
+    <!--</Button>-->
 
 </LinearLayout>

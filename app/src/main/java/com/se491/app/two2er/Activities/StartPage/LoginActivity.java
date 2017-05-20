@@ -1,4 +1,4 @@
-package com.se491.app.two2er.Activities;
+package com.se491.app.two2er.Activities.StartPage;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.se491.app.two2er.CurrentUser;
+import com.se491.app.two2er.HelperObjects.CurrentUser;
 import com.se491.app.two2er.R;
 import com.se491.app.two2er.SideMenuActivity;
 import com.stormpath.sdk.Stormpath;

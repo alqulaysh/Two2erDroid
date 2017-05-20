@@ -2,7 +2,7 @@ package com.se491.app.two2er.HelperObjects;
 
 import android.util.Log;
 
-import com.se491.app.two2er.GetBookingsNew;
+import com.se491.app.two2er.Activities.Bookings.GetBookingsNew;
 
 import org.json.JSONArray;
 import org.json.JSONException;

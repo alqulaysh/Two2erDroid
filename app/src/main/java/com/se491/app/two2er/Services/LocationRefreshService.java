@@ -14,7 +14,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.se491.app.two2er.CurrentUser;
+import com.se491.app.two2er.HelperObjects.CurrentUser;
 import com.se491.app.two2er.HelperObjects.MyGoogleApiClient_Singleton;
 import com.se491.app.two2er.HelperObjects.UserObject;
 import com.se491.app.two2er.Utilities.ServerApiUtilities;
@@ -201,9 +201,6 @@ public class LocationRefreshService extends IntentService implements GoogleApiCl
                     .post(requestBody)
                     .build();
 
-//        Log.i(serviceLogTag, "Before Request url: " + ServerApiUtilities.GetServerApiUrl() + "studentlocations");
-//        Log.i(serviceLogTag, "Request body :" + OkHttpUtilities.bodyToString(request));
-//        Log.i(serviceLogTag, "Request url: " + request.url());
 
             okHttpClient.newCall(request).enqueue(new Callback() {
                 @Override

@@ -1,9 +1,9 @@
-package com.se491.app.two2er.Fragments.Bookings;
+package com.se491.app.two2er.Activities.Bookings;
 
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
-import com.se491.app.two2er.OkHttpClientFactory;
+import com.se491.app.two2er.HelperObjects.OkHttpClientFactory;
 import com.se491.app.two2er.Utilities.ServerApiUtilities;
 import com.stormpath.sdk.Stormpath;
 import java.io.IOException;
