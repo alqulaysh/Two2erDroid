@@ -99,21 +99,25 @@ public class UserObject {
         this.dLong = Double.parseDouble(coords[0]);
         this.dLat = Double.parseDouble(coords[1]);
 
-        if(user.has("tutor")) {
+        if(!JsonValueIsNull(user, "tutor")) {
             JSONObject tutorObj = user.getJSONObject("tutor");
             Tutor = new TutorObject(tutorObj);
         }
 
-        if (user.has("education")) {
+        if (!JsonValueIsNull(user, "education")) {
             JSONArray eduObj = user.getJSONArray("education");
             if (eduObj.length() > 0) {
                 Education = new EducationObject(eduObj.getJSONObject(0));
             }
         }
 
-        if (user.has("timekit_token")) {
+        if (!JsonValueIsNull(user, "timekit_token")) {
             IsValidTimekitUser = true;
         }
+    }
+
+    private boolean JsonValueIsNull(JSONObject obj, String name) throws JSONException {
+        return !(obj.has(name) && !obj.isNull(name) && !obj.getString(name).equals("[null]"));
     }
 
     public void setCountOfBookings() {
