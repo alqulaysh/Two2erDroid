@@ -39,4 +39,14 @@ public class EducationObject {
             InProgress = obj.getBoolean("inprogress");
         }
     }
+
+    public JSONObject toJson() throws JSONException {
+        JSONObject obj = new JSONObject();
+        obj.put("school", School);
+        obj.put("degree", Degree);
+        obj.put("field", Field);
+        obj.put("year", Year);
+        obj.put("inprogress", InProgress);
+        return obj;
+    }
 }

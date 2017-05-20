@@ -110,7 +110,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 CurrentUser.Refresh();
                 Intent loginIntent = new Intent(LoginActivity.this, SideMenuActivity.class);
                 loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                SetupForApplication();
                 startActivity(loginIntent);
             }
 
@@ -121,14 +120,4 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         });
     }
 
-    private void SetupForApplication() {
-        Log.i(TAG, "Running SetupForApplication");
-
-        CurrentUser.Init();
-
-        Intent intent = new Intent(this, LocationRefreshService.class);
-        if (intent != null) {
-            this.startService(intent);
-        }
-    }
 }
