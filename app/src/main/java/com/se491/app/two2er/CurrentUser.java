@@ -55,7 +55,7 @@ public class CurrentUser {
                         Response response = OkHttpClientFactory.Create().newCall(request).execute();
                         String jsonResponse = response.body().string();
 
-                        Log.i(TAG, "URL used in CurrentUser: " + ServerApiUtilities.GetServerApiUrl() + "/me");
+                        Log.i(TAG, "URL used in CurrentUser: " + ServerApiUtilities.GetServerApiUrl() + "me");
 
                         JSONObject myUser = new JSONObject(jsonResponse);
                         UserObject myTempUser = new UserObject(myUser);
