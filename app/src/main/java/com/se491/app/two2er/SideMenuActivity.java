@@ -47,6 +47,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.se491.app.two2er.Activities.AdditionalProfileActivity;
 import com.se491.app.two2er.Activities.Bookings.BookingsActivity;
+import com.se491.app.two2er.Activities.Payment.PaymentActivity;
 import com.se491.app.two2er.Activities.UserProfile.UserProfileActivity;
 import com.se491.app.two2er.Activities.StartPage.LoginActivity;
 import com.se491.app.two2er.Activities.SchduleActivity;
@@ -365,6 +366,9 @@ public class SideMenuActivity extends AppCompatActivity
         }
         else if (id == R.id.nav_schedule) {
             startActivity(new Intent(SideMenuActivity.this, SchduleActivity.class));
+        }
+        else if (id == R.id.nav_payment) {
+            startActivity(new Intent(SideMenuActivity.this, PaymentActivity.class));
         }
 
 
