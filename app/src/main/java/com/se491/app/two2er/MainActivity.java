@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     @Override
     public void onConnected(Bundle bundle) {
-        Log.e(MainActivity.class.getSimpleName(), "Connected to Google Play Services!");
+        Log.i(MainActivity.class.getSimpleName(), "Connected to Google Play Services!");
         MyGoogleApiClient_Singleton.getInstance(mGoogleApiClient);
 
         askForPermission(new String []{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.ACCESS_COARSE_LOCATION},PERMISSION_ACCESS_FINE_LOCATION | READ_EXST);
@@ -146,8 +146,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         if (FirebaseInstanceId.getInstance() != null) {
             Log.d("Refreshed Token", "FB Token: " + FirebaseInstanceId.getInstance().getToken());
         }
-
-        SetupForApplication();
     }
 
     @Override
@@ -160,15 +158,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         Log.i(MainActivity.class.getSimpleName(), "Can't connect to Google Play Services!");
     }
 
-    private void SetupForApplication() {
-        Log.i(TAG, "Running SetupForApplication");
-        CurrentUser.Init();
 
-        Intent intent = new Intent(this, LocationRefreshService.class);
-        if (intent != null) {
-            this.startService(intent);
-        }
-    }
 
 
     private void askForPermission(String[] permissions, Integer requestCode) {

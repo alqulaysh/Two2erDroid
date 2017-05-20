@@ -132,6 +132,7 @@ public class SideMenuActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        SetupForApplication();
         //this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -282,7 +283,8 @@ public class SideMenuActivity extends AppCompatActivity
                         }
                     }
                     catch (Exception ex) {
-                        Log.e(TAG, ex.toString() + "\n" + ex.getStackTrace());
+                        Log.e(TAG, ex.toString());
+                        ex.printStackTrace();
                     }
                 }
             }
@@ -584,7 +586,8 @@ public class SideMenuActivity extends AppCompatActivity
             usersRefreshTask.join();
         }
         catch (Exception ex) {
-            Log.e(TAG, "Error in refreshUsersList: " + ex.toString() + "\n" + ex.getStackTrace());
+            Log.e(TAG, "Error in refreshUsersList: " + ex.toString());
+            ex.printStackTrace();
         }
 
         return usersRefreshTask.getUsersList();
@@ -643,4 +646,14 @@ public class SideMenuActivity extends AppCompatActivity
     }
 
 
+    private void SetupForApplication() {
+        Log.i(TAG, "Running SetupForApplication");
+
+        CurrentUser.Init();
+
+        Intent intent = new Intent(this, LocationRefreshService.class);
+        if (intent != null) {
+            this.startService(intent);
+        }
+    }
 }

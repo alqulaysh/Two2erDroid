@@ -65,7 +65,7 @@ public class DistanceRefreshStrategy extends RefreshStrategyBase {
             Response response = OkHttpClientFactory.Create().newCall(request).execute();
 
             String jsonResponse = response.body().string();
-            Log.e("Inside doInBackGround", "URL used in GetUsers(): " + getURL());
+            Log.i(TAG, "URL used in GetUsers(): " + getURL());
 
             JSONArray users = new JSONArray(jsonResponse);
 

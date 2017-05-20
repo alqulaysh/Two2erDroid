@@ -7,6 +7,10 @@ import com.se491.app.two2er.HelperObjects.UserObject;
 import com.se491.app.two2er.Utilities.ServerApiUtilities;
 import com.stormpath.sdk.Stormpath;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 
 import okhttp3.Callback;
@@ -34,7 +38,7 @@ public class PostUpdates  extends AsyncTask<Void, Void, Void> {
         RequestBody requestBody = new FormBody.Builder()
                 .add("name", user.fname + " " + user.lname)
                 .add("age", user.age)
-                .add("education", user.Education.School)
+                .add("education", buildEducationArrayString(user))
                 //.add("usergroups", user.Education)
                 .build();
 
@@ -58,6 +62,20 @@ public class PostUpdates  extends AsyncTask<Void, Void, Void> {
             }
 
         });
+    }
+
+    private String buildEducationArrayString(UserObject user) {
+        String toRtn = "";
+        try {
+            JSONArray arEducation = new JSONArray();
+            arEducation.put(0, user.Education.toJson());
+            toRtn = arEducation.toString();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return toRtn;
     }
 
     @Override

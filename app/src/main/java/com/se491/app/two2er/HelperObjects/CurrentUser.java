@@ -19,6 +19,7 @@ import okhttp3.Response;
 public class CurrentUser {
     private static UserObject currentUser;
     private static String TAG = "CurrentUser";
+    private static boolean IsSuccessOnRefresh = false;
 
     private CurrentUser() {
     }
@@ -34,6 +35,14 @@ public class CurrentUser {
         currentUser = obj;
     }
 
+    public static synchronized boolean IsReady() { return IsSuccessOnRefresh; }
+
+    private static String getURL() {
+        return ServerApiUtilities.GetServerApiUrl() +
+            ServerApiUtilities.SERVER_API_URL_ROUTE_USERS +
+            ServerApiUtilities.SERVER_API_URL_ROUTE_USERS_ME;
+    }
+
     //This method will update the provided image view with the Current Users userImage:
     public static void updateProfilePics(ImageView profileImageView){
         new DownloadImageTask(profileImageView)
@@ -47,13 +56,12 @@ public class CurrentUser {
 
     public static void Refresh() {
         try {
+
             Thread t = new Thread(new Runnable() {
                 @Override
                 public void run() {
                     Request request = new Request.Builder()
-                            .url(ServerApiUtilities.GetServerApiUrl() +
-                                    ServerApiUtilities.SERVER_API_URL_ROUTE_USERS +
-                                    ServerApiUtilities.SERVER_API_URL_ROUTE_USERS_ME)
+                            .url(getURL())
                             .headers(ServerApiUtilities.buildStandardHeaders(Stormpath.getAccessToken()))
                             .get()
                             .build();
@@ -62,7 +70,8 @@ public class CurrentUser {
                         Response response = OkHttpClientFactory.Create().newCall(request).execute();
                         String jsonResponse = response.body().string();
 
-                        Log.i(TAG, "URL used in CurrentUser: " + ServerApiUtilities.GetServerApiUrl() + "me");
+                        Log.i(TAG, "URL used in CurrentUser: " + getURL());
+                        Log.i(TAG, "Response:\n" + jsonResponse);
 
                         JSONObject myUser = new JSONObject(jsonResponse);
                         UserObject myTempUser = new UserObject(myUser);
@@ -72,9 +81,14 @@ public class CurrentUser {
                         Log.i(TAG, "My user ID: " + myTempUser.id);
                         Log.i(TAG, "My user name: " + myTempUser.fname);
                         Log.i(TAG, "My user img URL: " + myTempUser.userImage);
+
+                        IsSuccessOnRefresh = true;
                     }
                     catch (Exception ex) {
-                        Log.e(TAG, ex.toString() + "\n" + ex.getStackTrace());
+                        Log.e(TAG, ex.toString());
+                        ex.printStackTrace();
+
+                        IsSuccessOnRefresh = false;
                     }
                 }
             });
@@ -85,7 +99,8 @@ public class CurrentUser {
             Log.i(TAG, String.format("CurrentUser long: %f lat: %f", currentUser.dLong, currentUser.dLat));
         }
         catch(Exception ex) {
-            Log.e(TAG, ex.toString() + "\n" + ex.getStackTrace());
+            Log.e(TAG, ex.toString());
+            ex.printStackTrace();
         }
 
     }

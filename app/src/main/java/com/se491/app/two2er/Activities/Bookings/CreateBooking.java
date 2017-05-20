@@ -43,7 +43,8 @@ public class CreateBooking extends DialogFragment implements MonthLoader.MonthCh
     private String selectedUserID = null;
     // Used for posting to API endpoint
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
-
+    private static View rootView = null;
+    private static WeekView mWeekView = null;
     public CreateBooking(){
         // Empty constructor
     }
@@ -51,11 +52,12 @@ public class CreateBooking extends DialogFragment implements MonthLoader.MonthCh
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_create_booking, container);
-        WeekView mWeekView = (WeekView) rootView.findViewById(R.id.weekView);
+        rootView = inflater.inflate(R.layout.fragment_create_booking, container);
+        mWeekView = (WeekView) rootView.findViewById(R.id.weekView);
         mWeekView.setMonthChangeListener(this);
         mWeekView.setOnEventClickListener(this);
         mWeekView.goToHour(Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
+
         // Do something else
         return rootView;
     }
@@ -146,6 +148,9 @@ public class CreateBooking extends DialogFragment implements MonthLoader.MonthCh
             xCreateMyBookingRequest(selectedUserID, weekViewEvent.getStartTime());
             weekViewEvent.setColor(getResources().getColor(R.color.event_color_04));
             weekViewEvent.setName("Booking Pending...");
+            // update the weekViewEvent so that the new color is reflected
+            // when clicked on.
+            mWeekView.invalidate();
         }
         catch (Exception e){
             Log.d(TAG, e.getMessage());
