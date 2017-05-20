@@ -37,6 +37,14 @@
             android:label="New Account"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".Activities.Payment.PaymentActivity"
+            android:label="Payment"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activities.Help.HelpActivity"
+            android:label="Help"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".Activities.SchduleActivity"
             android:label="Schdule"
             android:theme="@style/AppTheme.NoActionBar" />
