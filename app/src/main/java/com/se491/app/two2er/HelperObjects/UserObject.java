@@ -123,7 +123,8 @@ public class UserObject {
             task.join();
         }
         catch (Exception ex) {
-            Log.e(TAG, "Error in setCountOfBookings: " + ex.toString() + "\n" + ex.getStackTrace());
+            Log.e(TAG, "Error in setCountOfBookings: " + ex.toString());
+            ex.printStackTrace();
         }
 
         BookingsCount = task.getBookingList().size();

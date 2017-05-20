@@ -281,7 +281,8 @@ public class SideMenuActivity extends AppCompatActivity
                         }
                     }
                     catch (Exception ex) {
-                        Log.e(TAG, ex.toString() + "\n" + ex.getStackTrace());
+                        Log.e(TAG, ex.toString());
+                        ex.printStackTrace();
                     }
                 }
             }
@@ -580,7 +581,8 @@ public class SideMenuActivity extends AppCompatActivity
             usersRefreshTask.join();
         }
         catch (Exception ex) {
-            Log.e(TAG, "Error in refreshUsersList: " + ex.toString() + "\n" + ex.getStackTrace());
+            Log.e(TAG, "Error in refreshUsersList: " + ex.toString());
+            ex.printStackTrace();
         }
 
         return usersRefreshTask.getUsersList();

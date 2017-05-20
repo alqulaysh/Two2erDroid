@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import com.se491.app.two2er.HelperObjects.CurrentUser;
 import com.se491.app.two2er.R;
+import com.se491.app.two2er.Services.LocationRefreshService;
 import com.se491.app.two2er.SideMenuActivity;
 import com.stormpath.sdk.Stormpath;
 import com.stormpath.sdk.StormpathCallback;
@@ -26,6 +28,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private static final int PERMISSION_ACCESS_FINE_LOCATION = 1;
     static final Integer GPS_SETTINGS = 0x7;
     static final Integer READ_EXST = 0x4;
+
+    private String TAG = "LoginActivity";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -106,6 +110,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 CurrentUser.Refresh();
                 Intent loginIntent = new Intent(LoginActivity.this, SideMenuActivity.class);
                 loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                SetupForApplication();
                 startActivity(loginIntent);
             }
 
@@ -114,5 +119,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Toast.makeText(LoginActivity.this, error.message(), Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private void SetupForApplication() {
+        Log.i(TAG, "Running SetupForApplication");
+
+        CurrentUser.Init();
+
+        Intent intent = new Intent(this, LocationRefreshService.class);
+        if (intent != null) {
+            this.startService(intent);
+        }
     }
 }
