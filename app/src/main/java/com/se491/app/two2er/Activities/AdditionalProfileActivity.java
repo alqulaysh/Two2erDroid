@@ -31,7 +31,7 @@ public class AdditionalProfileActivity extends AppCompatActivity implements
         setContentView(R.layout.additional_profile);
 
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar8);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.addltoolbar);
         setSupportActionBar(toolbar);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

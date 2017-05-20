@@ -34,15 +34,24 @@ public class UserProfileActivity extends AppCompatActivity {
     private UserProfileListAdapter LA;
     private ChangeProfImageDialog changeProfilePic;
     String imgDecodableString;
+    private String tempOriginalImgURL;
+    private String tempOriginalFullName;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         final LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
+        //Store the origianl values of the User Object to check if they were changed on Activity finish:
+        tempOriginalFullName = CurrentUser.getCurrentUser().getUserFullName();
+        tempOriginalImgURL = CurrentUser.getCurrentUser().userImage;
 
         final Button updateButton = (Button) findViewById(R.id.update_btn);
         final Button changepwdButton = (Button) findViewById(R.id.changepwd_btn);
+
+        //Change our UsersName:
+        TextView userFirstLastName = (TextView) findViewById(R.id.userFirstLastName);
+        userFirstLastName.setText(CurrentUser.getCurrentUser().getUserFullName());
 
         //Get references to the fields:
         ImageView userProfileImage = (ImageView) findViewById(R.id.circleImageView);
@@ -76,7 +85,11 @@ public class UserProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Log.e(TAG, "Pressed back button: " );
+                //If either the User's Full Name or the ImgURL was updated then update on finish():
+//                if(!tempOriginalFullName.equals(CurrentUser.getCurrentUser().getUserFullName())
+//                        || !tempOriginalImgURL.equals(CurrentUser.getCurrentUser().userImage))
                 setResult(RESULT_OK);
+
                 finish();
             }
         });

@@ -108,6 +108,9 @@ public class SideMenuActivity extends AppCompatActivity
     UserObject myUserProfile;
     //User side menu profile image:
     private ImageView nav_userImage;
+    private TextView nav_username;
+    private TextView nav_title_tutor;
+    private TextView nav_title_tutor_sub;
 
     //Book TutorObject Button:
     // Custom view
@@ -192,13 +195,11 @@ public class SideMenuActivity extends AppCompatActivity
 
         //NAVIGATION HEADER VIEW:
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-      //  NavigationView botDrawerView = (NavigationView) findViewById(R.id.navigation_drawer_bottom);
-        //Set the sidemenu image to users profile picture:
         View hView = navigationView.getHeaderView(0);
         nav_userImage = (ImageView) hView.findViewById(R.id.circleImageView);
-        TextView nav_username = (TextView) hView.findViewById(R.id.UserName_nav);
-        TextView nav_title_tutor = (TextView) hView.findViewById(R.id.nav_title_tutor);
-        TextView nav_title_tutor_sub = (TextView) hView.findViewById(R.id.nav_title_tutor_sub);
+        nav_username = (TextView) hView.findViewById(R.id.UserName_nav);
+        nav_title_tutor = (TextView) hView.findViewById(R.id.nav_title_tutor);
+        nav_title_tutor_sub = (TextView) hView.findViewById(R.id.nav_title_tutor_sub);
 
         nav_username.setText(myUserProfile.getUserFullName());
 
@@ -221,6 +222,10 @@ public class SideMenuActivity extends AppCompatActivity
         });
 
         //If the student does not have a Tutor profile give them option to set one up:
+        Menu MainMenu = navigationView.getMenu();
+
+        MenuItem switchProfile = MainMenu.findItem(R.id.switchprofile);
+
         if(!myUserProfile.userGroupsContains("TutorObject")){
             nav_title_tutor_sub.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -234,11 +239,13 @@ public class SideMenuActivity extends AppCompatActivity
                     startActivity(new Intent(SideMenuActivity.this, AdditionalProfileActivity.class));
                 }
             });
+            switchProfile.setVisible(false);
         }
         //Otherwise just hide the buttons:
         else{
             nav_title_tutor.setVisibility(View.GONE);
             nav_title_tutor_sub.setVisibility(View.GONE);
+            switchProfile.setVisible(false);
         }
 
         //Set our nav view Item Selected listener(its implemented by this activity):
@@ -249,19 +256,6 @@ public class SideMenuActivity extends AppCompatActivity
         searchView = (FloatingSearchView) findViewById(R.id.searchView);
 
         new MyFloatingSearchView(this, searchView);
-
-//        findViewById(R.id.refreshBtn).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                refreshMap();
-//            }
-//        });
-//        findViewById(R.id.resetBtn).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                setDistanceSearchStrategy(100);
-//            }
-//        });
 
         //Set our map fragment to our content view and tag it as "ContentFrag":
         sFm.beginTransaction().replace(R.id.map, sMapFragment, "ContentFrag").commit();
@@ -634,7 +628,8 @@ public class SideMenuActivity extends AppCompatActivity
                 && resultCode == Activity.RESULT_OK
                 //&& null != data
                 ){
-            Log.i(TAG, "Im inside onActivityResult2");
+            //Update the side Menu UserName:
+            nav_username.setText(CurrentUser.getCurrentUser().getUserFullName());
             //Update the user side menu profile pic:
             CurrentUser.updateProfilePics(nav_userImage);
         }
