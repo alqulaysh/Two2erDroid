@@ -55,10 +55,6 @@ public class UserObject {
         return userGroups.contains(mode);
     }
 
-    public String[] getListArray(){
-        return new String[]{fname, lname, email, age, Education.School};
-    }
-
     public List<FieldPair> getListFieldPair(){
         List<FieldPair> myFields = new ArrayList<>();
         myFields.add(new FieldPair("First Name: ", fname));
