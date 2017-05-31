@@ -56,6 +56,10 @@
             android:name=".Activities.UserProfile.UserProfileActivity"
             android:label="Help"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activities.Settings.SettingsActivity"
+            android:label="Settings"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name=".Activities.AdditionalProfileActivity"

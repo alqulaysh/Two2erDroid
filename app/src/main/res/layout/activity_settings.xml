@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:background="?attr/colorPrimaryDark"
+        android:elevation="1dp"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:navigationIcon="?android:attr/homeAsUpIndicator"
+        app:title="Account Settings" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+        <GridLayout
+            android:id="@+id/SwitchtoUserProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:rowCount="3"
+            android:columnCount="2"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            >
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/circleImageView"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="15dp"
+                android:src="@drawable/james"
+                app:civ_border_color="?attr/colorPrimaryDark"
+                app:civ_border_width="1dp"
+                />
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="19dp"
+                android:text="James Reily "
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="left"
+                android:textColor="#000"
+                android:textStyle="normal"
+                android:textSize="16dp"
+                />
+
+            <ImageView
+                android:id="@+id/settingimageView2"
+                android:layout_width="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_height="20dp"
+                app:srcCompat="@drawable/ic_email_black_24dp" />
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="jriely@gmail.com"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="left"
+                android:textColor="#000"
+                android:textStyle="normal"
+                android:textSize="16dp"
+                />
+
+            <ImageView
+                android:id="@+id/settingimageView3"
+                android:layout_width="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_height="20dp"
+                app:srcCompat="@drawable/ic_phone_black_24dp" />
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="+1 312-362-5251"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="left"
+                android:textColor="#000"
+                android:textStyle="normal"
+                android:textSize="16dp"
+                />
+
+
+            <ImageView
+                android:id="@+id/settingimageView4"
+                android:layout_width="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_height="20dp"
+                app:srcCompat="@drawable/ic_local_offer_black_24dp" />
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Shipping address "
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="left"
+                android:textColor="#000"
+                android:textStyle="normal"
+                android:textSize="16dp"
+                />
+
+
+        </GridLayout>
+
+
+
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:padding="10dp"
+        android:layout_marginTop="0dp"
+        android:background="#DDDDDD"
+        >
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+
+            />
+
+
+
+    </LinearLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:rowCount="1"
+            android:columnCount="2"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            >
+
+
+            <ImageView
+                android:id="@+id/settingimageView6"
+                android:layout_width="20dp"
+                android:layout_marginTop="0dp"
+                android:layout_height="20dp"
+                app:srcCompat="@drawable/ic_verified_user_black_24dp" />
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Verify your Account "
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="left"
+                android:textColor="#000"
+                android:textStyle="normal"
+                android:textSize="16dp"
+                />
+
+
+
+
+
+        </GridLayout>
+
+
+
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:padding="10dp"
+        android:layout_marginTop="0dp"
+        android:background="#DDDDDD"
+        >
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+
+            />
+
+
+
+    </LinearLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:rowCount="1"
+            android:columnCount="2"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            >
+
+
+            <ImageView
+                android:id="@+id/settingimageView5"
+                android:layout_width="20dp"
+                android:layout_marginTop="0dp"
+                android:layout_height="20dp"
+                app:srcCompat="@drawable/ic_school_black_24dp" />
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Become a tutor"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="left"
+                android:textColor="#000"
+                android:textStyle="normal"
+                android:textSize="16dp"
+                />
+
+
+
+
+        </GridLayout>
+
+
+
+    </ScrollView>
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:padding="10dp"
+        android:layout_marginTop="0dp"
+        android:background="#DDDDDD"
+        >
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+
+            />
+
+
+
+    </LinearLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+        <GridLayout
+            android:id="@+id/logoooot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:rowCount="1"
+            android:columnCount="2"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            >
+
+
+            <ImageView
+                android:id="@+id/logoutfromsetting2"
+                android:layout_width="20dp"
+                android:layout_marginTop="0dp"
+                android:layout_height="20dp"
+                app:srcCompat="@drawable/ic_power_settings_new_black_24dp" />
+
+            <TextView
+                android:id="@+id/logoutfromsetting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="Log out"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="left"
+                android:textColor="#000"
+                android:textStyle="normal"
+                android:textSize="16dp"
+                />
+
+
+
+
+
+        </GridLayout>
+
+
+
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:padding="10dp"
+        android:layout_marginTop="0dp"
+        android:background="#DDDDDD"
+        >
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+
+            />
+
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

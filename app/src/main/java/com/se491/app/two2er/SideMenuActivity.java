@@ -49,6 +49,7 @@ import com.se491.app.two2er.Activities.AdditionalProfileActivity;
 import com.se491.app.two2er.Activities.Bookings.BookingsActivity;
 import com.se491.app.two2er.Activities.Help.HelpActivity;
 import com.se491.app.two2er.Activities.Payment.PaymentActivity;
+import com.se491.app.two2er.Activities.Settings.SettingsActivity;
 import com.se491.app.two2er.Activities.UserProfile.UserProfileActivity;
 import com.se491.app.two2er.Activities.StartPage.LoginActivity;
 import com.se491.app.two2er.Activities.SchduleActivity;
@@ -375,6 +376,9 @@ public class SideMenuActivity extends AppCompatActivity
         }
         else if (id == R.id.nav_help) {
             startActivity(new Intent(SideMenuActivity.this, HelpActivity.class));
+        }
+        else if (id == R.id.nav_settings) {
+            startActivity(new Intent(SideMenuActivity.this, SettingsActivity.class));
         }
 
 
