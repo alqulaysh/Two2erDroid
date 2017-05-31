@@ -242,14 +242,15 @@ public class SideMenuActivity extends AppCompatActivity
                     startActivity(new Intent(SideMenuActivity.this, AdditionalProfileActivity.class));
                 }
             });
-            switchProfile.setVisible(false);
+            switchProfile.setVisible(true);
         }
         //Otherwise just hide the buttons:
         else{
             nav_title_tutor.setVisibility(View.GONE);
             nav_title_tutor_sub.setVisibility(View.GONE);
-            switchProfile.setVisible(false);
+            switchProfile.setVisible(true);
         }
+
 
         //Set our nav view Item Selected listener(its implemented by this activity):
         navigationView.setNavigationItemSelectedListener(this);
