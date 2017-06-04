@@ -106,6 +106,9 @@ public class SideMenuActivity extends AppCompatActivity
 
     //Get list of users around me:
     HashMap<String, UserObject> usersAround = new HashMap<>();
+    //Markers with userinfo
+    HashMap<Marker, UserObject> hashMapUserMarkers = new HashMap<>();
+
 
     //MyUser Profile:
     UserObject myUserProfile;
@@ -446,6 +449,17 @@ public class SideMenuActivity extends AppCompatActivity
                 @Override
                 public View getInfoContents(Marker marker) {
                     View v = getLayoutInflater().inflate(R.layout.info_window, null);
+                    Log.i(TAG, "This is inside getInfoContents");
+                    ImageView infoCircleImage = (ImageView) v.findViewById(R.id.circleImageView);
+
+                    UserObject myUser = hashMapUserMarkers.get(marker);
+
+                    if(myUser.userImageBitMap == null){
+                        myUser.xDownloadUserBitMap();
+                    }
+
+                    if(myUser.userImageBitMap != null)
+                        infoCircleImage.setImageBitmap(myUser.userImageBitMap);
 
                     TextView userName = (TextView) v.findViewById(R.id.user_name);
                     userName.setText(marker.getTitle());
@@ -566,7 +580,6 @@ public class SideMenuActivity extends AppCompatActivity
                 InputStream in = new java.net.URL(urldisplay).openStream();
                 mIcon11 = BitmapFactory.decodeStream(in);
             } catch (Exception e) {
-                Log.e("Error", e.getMessage());
                 e.printStackTrace();
             }
             return mIcon11;
@@ -620,7 +633,8 @@ public class SideMenuActivity extends AppCompatActivity
             markerOptions.position(lNewLocation).title(sTitle).snippet(user.id);
 
             //Add the markers on the map:
-            mGoogleMap.addMarker(markerOptions);
+            Marker mNewMarker = mGoogleMap.addMarker(markerOptions);
+            hashMapUserMarkers.put(mNewMarker, user);
         }
     }
 

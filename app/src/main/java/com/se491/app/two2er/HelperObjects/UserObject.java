@@ -1,8 +1,10 @@
 package com.se491.app.two2er.HelperObjects;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.se491.app.two2er.Activities.Bookings.GetBookingsNew;
+import com.se491.app.two2er.Activities.UserProfile.DownloadImageTask;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -11,6 +13,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by eoliv on 2/28/2017.
@@ -27,6 +30,7 @@ public class UserObject {
     public String age = "";
     public String email = "";
     public String userImage = "";
+    public Bitmap userImageBitMap = null;
     public String userMode = "";
     public double dLong = 0.0;
     public double dLat = 0.0;
@@ -60,6 +64,18 @@ public class UserObject {
             }
         }
         return false;
+    }
+
+    //Download the UsersBitMap:
+    public void xDownloadUserBitMap() {
+        if(!userImage.isEmpty()) {
+            try {
+                this.userImageBitMap = new DownloadImageTask()
+                        .execute(userImage).get();
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public List<FieldPair> getListFieldPair(){
