@@ -27,6 +27,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.RunnableFuture;
+
 /**
  * Created by Nithun on 4/5/2017.
  */
@@ -45,8 +47,14 @@ public class CreateBooking extends DialogFragment implements MonthLoader.MonthCh
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
     private static View rootView = null;
     private static WeekView mWeekView = null;
+    private static ArrayList<TimeBlockObject> tutorTimeBlocks = null;
+
+    // used to keep the secondary thread running to update the
+    // bookings status while the view is opened.
+    private static boolean keepRunning = true;
+
     public CreateBooking(){
-        // Empty constructor
+        keepRunning = true;
     }
 
     @Override
@@ -105,9 +113,37 @@ public class CreateBooking extends DialogFragment implements MonthLoader.MonthCh
         // wait until thread finishes
         try{
             tutorSchedule.join();
+            tutorTimeBlocks = tutorSchedule.getTimeBlockList();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        new Thread() {
+            public void run(){
+                while(keepRunning){
+                    GetTutorSchedule newtutorSchedule  = new GetTutorSchedule(selectedUserID);
+                    newtutorSchedule.start();
+                    // wait until thread finishes
+                    try{
+                        newtutorSchedule.join();
+                        tutorTimeBlocks = newtutorSchedule.getTimeBlockList();
+
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run(){
+                                mWeekView.notifyDatasetChanged();
+                            }
+                        });
+
+                        mWeekView.postInvalidate();
+                        Thread.sleep(5000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        }.start();
     }
 
     @Override
@@ -125,7 +161,7 @@ public class CreateBooking extends DialogFragment implements MonthLoader.MonthCh
             Calendar endTime = null;
             WeekViewEvent event = null;
 
-            for (TimeBlockObject timeblock : tutorSchedule.getTimeBlockList()) {
+            for (TimeBlockObject timeblock : tutorTimeBlocks) {
                 startTime = Calendar.getInstance();
                 endTime = (Calendar) startTime.clone();
                 startTime.setTime(timeblock.getStart());
@@ -193,4 +229,11 @@ public class CreateBooking extends DialogFragment implements MonthLoader.MonthCh
         return builder.toString();
     }
 
+    // Used to stop secondary thread from continuning to run
+    // when fragment is closed.
+    @Override
+    public void onDestroy() {
+        keepRunning = false;
+        super.onDestroy();
+    }
 }
