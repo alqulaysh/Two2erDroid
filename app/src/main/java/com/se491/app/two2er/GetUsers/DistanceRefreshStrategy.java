@@ -2,6 +2,7 @@ package com.se491.app.two2er.GetUsers;
 
 import android.util.Log;
 
+import com.se491.app.two2er.HelperObjects.CurrentUser;
 import com.se491.app.two2er.HelperObjects.UserObject;
 import com.se491.app.two2er.HelperObjects.OkHttpClientFactory;
 import com.se491.app.two2er.Services.LocationRefreshService;
@@ -53,8 +54,11 @@ public class DistanceRefreshStrategy extends RefreshStrategyBase {
     public void run() {
         Log.i(TAG, "Running refresh users by distance");
 
-        dLong = LocationRefreshService.getLongitude();
-        dLat = LocationRefreshService.getLatitude();
+        //dLong = LocationRefreshService.getLongitude();
+        //dLat = LocationRefreshService.getLatitude();
+
+        dLong = CurrentUser.getCurrentUser().dLong;
+        dLat = CurrentUser.getCurrentUser().dLat;
 
         Request request = new Request.Builder()
                 .url(getURL())
