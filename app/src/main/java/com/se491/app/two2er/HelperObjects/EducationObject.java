@@ -18,6 +18,14 @@ public class EducationObject {
 
     }
 
+    public String getSchoolAndDegree(){
+        String result = "";
+        if(!School.isEmpty())
+            result = School;
+        if(!Degree.isEmpty())
+            result = result + ", " + Degree;
+        return result;
+    }
     public EducationObject(JSONObject obj) throws JSONException {
         if (obj.has("school")) {
             School = obj.getString("school");

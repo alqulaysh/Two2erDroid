@@ -27,6 +27,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -452,17 +453,32 @@ public class SideMenuActivity extends AppCompatActivity
                     Log.i(TAG, "This is inside getInfoContents");
                     ImageView infoCircleImage = (ImageView) v.findViewById(R.id.circleImageView);
 
-                    UserObject myUser = hashMapUserMarkers.get(marker);
+                    UserObject myMarkerUser = hashMapUserMarkers.get(marker);
 
-                    if(myUser.userImageBitMap == null){
-                        myUser.xDownloadUserBitMap();
+                    if(myMarkerUser.userImageBitMap == null){
+                        myMarkerUser.xDownloadUserBitMap();
                     }
 
-                    if(myUser.userImageBitMap != null)
-                        infoCircleImage.setImageBitmap(myUser.userImageBitMap);
+                    if(myMarkerUser.userImageBitMap != null)
+                        infoCircleImage.setImageBitmap(myMarkerUser.userImageBitMap);
 
                     TextView userName = (TextView) v.findViewById(R.id.user_name);
                     userName.setText(marker.getTitle());
+
+                    TextView user_availability = (TextView) v.findViewById(R.id.user_availability);
+                    user_availability.setText("Availability: " + "Now");
+
+                    TextView userSchool = (TextView) v.findViewById(R.id.userSchool);
+                    if(!myMarkerUser.Education.School.isEmpty()) {
+                        userSchool.setText(myMarkerUser.Education.getSchoolAndDegree());
+                    }
+
+                    TextView user_major = (TextView) v.findViewById(R.id.user_major);
+                    if(!myMarkerUser.Education.Degree.isEmpty())
+                        user_major.setText("Major: " + myMarkerUser.Education.Field);
+
+                    RatingBar ratingBar = (RatingBar) v.findViewById(R.id.ratingBar);
+                    ratingBar.setRating((float) myMarkerUser.Tutor.Rating);
 
                     return v;
                 }

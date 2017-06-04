@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_width="wrap_content">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -21,7 +21,7 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
             android:padding="5dp">
@@ -31,11 +31,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Ron Swanson"
-                android:textStyle="bold"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/user_subjects"
+                android:id="@+id/userSchool"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Harvard University, Ph.D"
@@ -55,18 +55,29 @@
                 android:text="Availability: Now"
                 android:textSize="14sp" />
 
-            <ImageView
-                android:id="@+id/imageView4"
-                android:layout_width="110dp"
-                android:layout_height="30dp"
-                android:layout_gravity="left"
-                app:srcCompat="@drawable/stars" />
+            <RatingBar
+                android:id="@+id/ratingBar"
+                style="@android:style/Widget.DeviceDefault.Light.RatingBar.Indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:progressTint="#f6ec79"
+                android:rating="3.3"
+                android:secondaryProgressTint="#ffea64"
+                android:stepSize="0.5" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+            <!--android:backgroundTint="#f00"-->
+            <!--android:progressTint="#0f0"-->
+            <!--android:secondaryProgressTint="#00f"-->
+
         </LinearLayout>
 
 
-
     </LinearLayout>
-
 
 
 </LinearLayout>

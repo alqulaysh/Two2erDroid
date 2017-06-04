@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class TutorObject {
     public ArrayList<String> Subjects = new ArrayList<>();
-    public int Rating = 0;
+    public double Rating = 3.3;
 
     public TutorObject() { }
     public TutorObject(JSONObject obj) throws JSONException {
@@ -24,7 +24,7 @@ public class TutorObject {
         }
 
         if (obj.has("rating")) {
-            Rating = obj.getInt("rating");
+            Rating = obj.getDouble("rating");
         }
     }
 }

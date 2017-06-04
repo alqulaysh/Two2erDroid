@@ -35,7 +35,7 @@ public class UserObject {
     public double dLong = 0.0;
     public double dLat = 0.0;
     public int BookingsCount = 0;
-    public int Rating = 0;
+    public float Rating = 0.0f;
     public boolean IsValidTimekitUser = false;
 
     private String TAG = "UserObject";
