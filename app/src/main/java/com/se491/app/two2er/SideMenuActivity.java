@@ -47,13 +47,13 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.se491.app.two2er.Activities.AdditionalProfileActivity;
 import com.se491.app.two2er.Activities.Bookings.BookingsActivity;
+import com.se491.app.two2er.Activities.Bookings.CreateBooking;
 import com.se491.app.two2er.Activities.Help.HelpActivity;
 import com.se491.app.two2er.Activities.Payment.PaymentActivity;
-import com.se491.app.two2er.Activities.Settings.SettingsActivity;
-import com.se491.app.two2er.Activities.UserProfile.UserProfileActivity;
-import com.se491.app.two2er.Activities.StartPage.LoginActivity;
 import com.se491.app.two2er.Activities.SchduleActivity;
-import com.se491.app.two2er.Activities.Bookings.CreateBooking;
+import com.se491.app.two2er.Activities.Settings.SettingsActivity;
+import com.se491.app.two2er.Activities.StartPage.LoginActivity;
+import com.se491.app.two2er.Activities.UserProfile.UserProfileActivity;
 import com.se491.app.two2er.GetUsers.DistanceRefreshStrategy;
 import com.se491.app.two2er.GetUsers.GetUsers;
 import com.se491.app.two2er.GetUsers.RefreshStrategyBase;
@@ -229,22 +229,27 @@ public class SideMenuActivity extends AppCompatActivity
 
         MenuItem switchProfile = MainMenu.findItem(R.id.switchprofile);
 
-        if(!myUserProfile.userGroupsContains("TutorObject")){
-            nav_title_tutor_sub.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(SideMenuActivity.this, AdditionalProfileActivity.class));
-                }
-            });
-            nav_title_tutor.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(SideMenuActivity.this, AdditionalProfileActivity.class));
-                }
-            });
-            switchProfile.setVisible(true);
+        //If user has less than 2 profiles dont show the switch button:
+        if(myUserProfile.userGroups.size() < 2){
+            //If user is not a Tutor give the side menu option of becoming a tutor:
+            if(!myUserProfile.userGroupsContains("Tutor")) {
+                nav_title_tutor_sub.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(SideMenuActivity.this, AdditionalProfileActivity.class));
+                    }
+                });
+                nav_title_tutor.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(SideMenuActivity.this, AdditionalProfileActivity.class));
+                    }
+                });
+            }
+            //Dont display the switch button since user only has 1 profile:
+            switchProfile.setVisible(false);
         }
-        //Otherwise just hide the buttons:
+        //Otherwise just hide the buttons become tutor buttons but display the Switch button:
         else{
             nav_title_tutor.setVisibility(View.GONE);
             nav_title_tutor_sub.setVisibility(View.GONE);
@@ -512,7 +517,7 @@ public class SideMenuActivity extends AppCompatActivity
         lContainerLayout.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
         // Custom view
         bookingButton = new Button(this);
-        bookingButton.setText("Book TutorObject");
+        bookingButton.setText("Make Booking");
         RelativeLayout.LayoutParams lButtonParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         lButtonParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         bookingButton.setLayoutParams(lButtonParams);

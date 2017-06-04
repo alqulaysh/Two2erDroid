@@ -51,8 +51,15 @@ public class UserObject {
         return fname + " " + lname;
     }
 
+    //Check if the UserGroups array contains the desired string you are looking for:
     public boolean userGroupsContains(String mode){
-        return userGroups.contains(mode);
+        for(String group : userGroups){
+            if(group.toLowerCase().equals(mode.toLowerCase()))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public List<FieldPair> getListFieldPair(){
@@ -84,7 +91,7 @@ public class UserObject {
 
         //Get an array of our usergorups:
         String tempuserGroups = user.getString("usergroups");
-        String[] tempArray = tempuserGroups.replace("[", "").replace("]", "").split(",");
+        String[] tempArray = tempuserGroups.replace("[", "").replace("]", "").replace("\"", "").split(",");
         Collections.addAll(userGroups, tempArray);
 
         // GeoJSON node in JSON Object

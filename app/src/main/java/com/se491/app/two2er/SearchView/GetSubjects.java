@@ -24,6 +24,7 @@ public class GetSubjects extends Thread {
 
     private static String TAG = "GetSubjects";
     private ArrayList<SubjectSuggestion> subjectList = new ArrayList<SubjectSuggestion>();
+    private ArrayList<String> subjectStringList = new ArrayList<String>();
 
     private String getURL() {
         return ServerApiUtilities.GetServerApiUrl() + ServerApiUtilities.SERVER_API_URL_ROUTE_SUBJECTS;
@@ -32,6 +33,8 @@ public class GetSubjects extends Thread {
     }
 
     public ArrayList<SubjectSuggestion> getSubjectList() { return subjectList; }
+
+    public ArrayList<String> getSubjectStringList() { return subjectStringList; }
 
     @Override
     public void run() {
@@ -50,6 +53,7 @@ public class GetSubjects extends Thread {
                 for (int i = 0; i < subjects.length(); i++) {
                     String subjectName = subjects.getJSONObject(i).getString("name");
                     SubjectSuggestion subject = new SubjectSuggestion(subjectName);
+                    subjectStringList.add(subjectName);
                     subjectList.add(subject);
                 }
                 Log.i(TAG, "Size of subjectList: " + subjectList.size());

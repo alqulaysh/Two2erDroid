@@ -18,6 +18,7 @@ public class ServerApiUtilities {
     public static final String SERVER_API_URL_ROUTE_BOOKING_CANCLE = "cancel/";
     public static final String SERVER_API_URL_ROUTE_BOOKING_GET_TUTOR_SCHEDULE = "getTutorSchedule/";
     public static final String SERVER_API_URL_ROUTE_USERS = "users/";
+    public static final String SERVER_API_URL_ROUTE_TUTORS = "tutors/";
     public static final String SERVER_API_URL_ROUTE_USERS_ME = "me/";
     public static final String SERVER_API_URL_ROUTE_USERS_UPDATE = "update/";
     public static final String SERVER_API_URL_ROUTE_SUBJECTS = "subjects/";
