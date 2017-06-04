@@ -38,7 +38,7 @@ public class CreateBooking extends DialogFragment implements MonthLoader.MonthCh
     private Button createBookingBtn;
     TextView dateDisplay;
     TextView timeDisplay;
-    private GetTutorSchedule tutorSchedule = null;
+    private static GetTutorSchedule tutorSchedule = null;
     private static String TAG = "CreateBooking";
     private String selectedUserID = null;
     // Used for posting to API endpoint
@@ -171,10 +171,7 @@ public class CreateBooking extends DialogFragment implements MonthLoader.MonthCh
         String myBookingDate = dateFormat.format(date.getTime());
         new PostToBookings(selectedUserID, myBookingDate).execute().get();
 
-//        tutorSchedule.start();
-//        tutorSchedule.join();
-//        this.onMonthChange(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH));
-
+        //if(tutorSchedule.getState()
     }
 
     private String getCurrentDate() {
