@@ -128,12 +128,15 @@ public class CreateBooking extends DialogFragment implements MonthLoader.MonthCh
                         newtutorSchedule.join();
                         tutorTimeBlocks = newtutorSchedule.getTimeBlockList();
 
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run(){
-                                mWeekView.notifyDatasetChanged();
-                            }
-                        });
+                        //
+                        if(getActivity() != null) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mWeekView.notifyDatasetChanged();
+                                }
+                            });
+                        }
 
                         mWeekView.postInvalidate();
                         Thread.sleep(5000);
