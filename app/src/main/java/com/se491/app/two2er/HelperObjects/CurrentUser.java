@@ -104,5 +104,9 @@ public class CurrentUser {
         }
 
     }
+
+    public static void Clear() {
+        currentUser = null;
+    }
 }
 

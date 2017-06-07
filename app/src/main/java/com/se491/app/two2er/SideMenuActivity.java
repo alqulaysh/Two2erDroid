@@ -367,6 +367,7 @@ public class SideMenuActivity extends AppCompatActivity
             startActivity(new Intent(SideMenuActivity.this, BookingsActivity.class));
         } else if (id == R.id.nav_logout) {
             Stormpath.logout();
+            CurrentUser.Clear();
             startActivity(new Intent(SideMenuActivity.this, LoginActivity.class));
             finish();
 //        } else if (id == R.id.nav_help) {

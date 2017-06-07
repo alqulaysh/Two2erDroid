@@ -32,8 +32,8 @@ public class UserObject {
     public String userImage = "";
     public Bitmap userImageBitMap = null;
     public String userMode = "";
-    public double dLong = 0.0;
-    public double dLat = 0.0;
+    public double dLong = -87.6298;
+    public double dLat = 41.8781;
     public int BookingsCount = 0;
     public float Rating = 0.0f;
     public boolean IsValidTimekitUser = false;

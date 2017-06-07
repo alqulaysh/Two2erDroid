@@ -88,7 +88,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-
     public void handleLogin(View v){
         startActivity(new Intent(LoginActivity.this, SideMenuActivity.class));
     }
