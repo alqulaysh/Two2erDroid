@@ -18,6 +18,18 @@
         app:navigationIcon="?android:attr/homeAsUpIndicator"
         app:title="Create tutor account" />
 
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="30dp"
+        android:text="Subjects I can tutor"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
     <ListView
         android:id="@+id/subjects_select"
         android:layout_width="match_parent"
@@ -34,24 +46,30 @@
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
             android:text="Other:"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:textStyle="normal" />
 
         <EditText
             android:id="@+id/additionalSubjects"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:layout_marginRight="40dp"
             android:inputType="textPersonName"
+            android:layout_marginBottom="30dp"
             android:text="" />
 
     </LinearLayout>
 
     <Button
         android:id="@+id/registerAsTutorBtn"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp"
         android:layout_weight=".1"
         android:background="@drawable/ripple_effect"
         android:textColor="#ffffffff"
