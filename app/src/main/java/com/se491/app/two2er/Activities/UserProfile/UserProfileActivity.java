@@ -54,7 +54,7 @@ public class UserProfileActivity extends AppCompatActivity {
         userFirstLastName.setText(CurrentUser.getCurrentUser().getUserFullName());
 
         //Get references to the fields:
-        ImageView userProfileImage = (ImageView) findViewById(R.id.circleImageView);
+        ImageView userProfileImage = (ImageView) findViewById(R.id.circleImageView_setting);
         String userImgURL = CurrentUser.getCurrentUser().userImage;
         if(!userImgURL.isEmpty() || !userImgURL.equals("")) {
             try {

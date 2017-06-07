@@ -152,7 +152,7 @@ public class ChangeProfImageDialog extends Dialog {
                                     //Update the Users profile pic:
                                     //CurrentUser.Refresh();
                                     CurrentUser.getCurrentUser().userImage = urlImg;
-                                    CurrentUser.updateProfilePics((ImageView) myActivity.findViewById(R.id.circleImageView));
+                                    CurrentUser.updateProfilePics((ImageView) myActivity.findViewById(R.id.circleImageView_setting));
                                     dismiss();
 
                     } catch (IOException e) {

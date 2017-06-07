@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,12 +16,14 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -203,7 +207,7 @@ public class SideMenuActivity extends AppCompatActivity
         //NAVIGATION HEADER VIEW:
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View hView = navigationView.getHeaderView(0);
-        nav_userImage = (ImageView) hView.findViewById(R.id.circleImageView);
+        nav_userImage = (ImageView) hView.findViewById(R.id.circleImageView_setting);
         nav_username = (TextView) hView.findViewById(R.id.UserName_nav);
         nav_title_tutor = (TextView) hView.findViewById(R.id.nav_title_tutor);
         nav_title_tutor_sub = (TextView) hView.findViewById(R.id.nav_title_tutor_sub);
@@ -237,6 +241,8 @@ public class SideMenuActivity extends AppCompatActivity
         if(myUserProfile.userGroups.size() < 2){
             //If user is not a Tutor give the side menu option of becoming a tutor:
             if(!myUserProfile.userGroupsContains("Tutor")) {
+                nav_title_tutor.setVisibility(View.VISIBLE);
+                nav_title_tutor_sub.setVisibility(View.VISIBLE);
                 nav_title_tutor_sub.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -452,7 +458,7 @@ public class SideMenuActivity extends AppCompatActivity
                 public View getInfoContents(Marker marker) {
                     View v = getLayoutInflater().inflate(R.layout.info_window, null);
                     Log.i(TAG, "This is inside getInfoContents");
-                    ImageView infoCircleImage = (ImageView) v.findViewById(R.id.circleImageView);
+                    ImageView infoCircleImage = (ImageView) v.findViewById(R.id.circleImageView_setting);
 
                     UserObject myMarkerUser = hashMapUserMarkers.get(marker);
 
@@ -546,9 +552,14 @@ public class SideMenuActivity extends AppCompatActivity
         // Fake empty container layout
         lContainerLayout = new RelativeLayout(this);
         lContainerLayout.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
+        lContainerLayout.setPadding(150,0,150,50);
         // Custom view
         bookingButton = new Button(this);
         bookingButton.setText("Make Booking");
+        bookingButton.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+        bookingButton.setTypeface(Typeface.SANS_SERIF, Typeface.NORMAL);
+        bookingButton.setTextColor(Color.WHITE);
+        bookingButton.setBackground(ContextCompat.getDrawable(this, R.drawable.ripple_effect));
         RelativeLayout.LayoutParams lButtonParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         lButtonParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         bookingButton.setLayoutParams(lButtonParams);

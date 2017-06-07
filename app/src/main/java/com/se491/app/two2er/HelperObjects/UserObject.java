@@ -66,6 +66,14 @@ public class UserObject {
         return false;
     }
 
+    //Return the current users BitMap;
+    public Bitmap getUserBitMap() {
+        if(userImageBitMap == null){
+            xDownloadUserBitMap();
+        }
+        return userImageBitMap;
+    }
+
     //Download the UsersBitMap:
     public void xDownloadUserBitMap() {
         if(!userImage.isEmpty()) {
@@ -152,4 +160,5 @@ public class UserObject {
 
         BookingsCount = task.getBookingList().size();
     }
+
 }

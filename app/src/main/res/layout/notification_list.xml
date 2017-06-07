@@ -6,72 +6,81 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/linearLayout">
-        <TextView
-            android:id="@+id/ap_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:text="ID"
-            android:textSize="10sp"
-            android:layout_gravity="center"
-            android:paddingRight="5dp"
-            android:paddingLeft="5dp" />
+        android:background="@color/black"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/MeetingDate"
-            android:layout_width="wrap_content"
+            android:layout_width="79dp"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_gravity="center"
-            android:layout_weight="1"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:text="Time/Date"
-            android:textSize="10sp" />
+            android:textColor="#ffffffff"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/ap_type"
-            android:layout_width="10dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:textSize="10sp"
+            android:background="#4BABF4"
+            android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:paddingLeft="5dp"
-            android:background="#4BABF4" />
+            android:textColor="#ffffffff"
+            android:textSize="10sp" />
 
-        <ImageView
-            android:layout_gravity="center"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:id="@+id/list_img"
-            android:paddingLeft="5dp"
-            />
 
-        <TextView
-            android:id="@+id/ap_title"
+        <LinearLayout
+            android:layout_width="199dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/sessionWithText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="8 dp"
+                android:text="Session With:"
+                android:textColor="#ffffffff"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/ap_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_gravity="center"
+                android:elevation="0dp"
+                android:ellipsize="end"
+                android:forceHasOverlappingRendering="false"
+                android:freezesText="false"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="2dp"
+                android:text="Title Placeholdernnnnnnnnnnnnnnnnnnn"
+                android:textColor="#ffffffff"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Title Placeholdernnnnnnnnnnnnnnnnnnn"
-            android:textSize="10sp"
-            android:textStyle="bold"
-            android:paddingLeft="10dp"
-            android:freezesText="false"
-            android:forceHasOverlappingRendering="false"
-            android:ellipsize="end"
-            android:elevation="0dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_width="150dp" />
-
+            android:layout_weight="1" />
 
         <Button
             android:id="@+id/button_accept"
@@ -79,8 +88,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:allowUndo="false"
+            android:background="@drawable/ripple_effect"
             android:nestedScrollingEnabled="true"
             android:text="Accept"
+            android:textColor="#ffffffff"
             android:textSize="10sp" />
 
         <Button
@@ -88,7 +99,9 @@
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/ripple_effect"
             android:text="Decline"
+            android:textColor="#ffffffff"
             android:textSize="10sp" />
 
 

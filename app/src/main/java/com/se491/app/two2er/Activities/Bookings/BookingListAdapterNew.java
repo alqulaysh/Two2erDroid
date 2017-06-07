@@ -86,23 +86,29 @@ public class BookingListAdapterNew extends BaseAdapter {
         String currStatus = apList.get(position).status;
         final String bookingId = apList.get(position).bookingId;
         final String timekit_booking_id = apList.get(position).timekit_booking_id;
+        final TextView statusTextView = (TextView) row.findViewById(R.id.ap_type);
         final Button acceptButton = (Button) row.findViewById(R.id.button_accept);
         final Button declineButton = (Button) row.findViewById(R.id.button_decline);
 
-        row.setBackgroundColor(Color.YELLOW);
+        //row.setBackgroundColor(Color.YELLOW);
+        statusTextView.setBackgroundColor(Color.YELLOW);
+
 
         if(currStatus.equals("confirmed")){
-            row.setBackgroundColor(Color.GREEN);
+            //row.setBackgroundColor(Color.GREEN);
+            statusTextView.setBackgroundColor(Color.GREEN);
             declineButton.setText("Cancel");
             acceptButton.setText("Decline");
         }
 
         if(currStatus.equals("declined")){
-            row.setBackgroundColor(Color.RED);
+            //row.setBackgroundColor(Color.RED);
+            statusTextView.setBackgroundColor(Color.RED);
         }
 
         if(currStatus.equals("completed")){
-            row.setBackgroundColor(Color.GREEN);
+            //row.setBackgroundColor(Color.GREEN);
+            statusTextView.setBackgroundColor(Color.GREEN);
             acceptButton.setVisibility(View.GONE);
             declineButton.setVisibility(View.GONE);
         }
@@ -120,13 +126,15 @@ public class BookingListAdapterNew extends BaseAdapter {
                 // you may want to set as the tag for the TextView the position paremeter of the `getView` method and then retrieve it here
                 if(acceptButton.getText().toString().equals("Decline")){
                     new PostToBookings(finalRow, timekit_booking_id, ServerApiUtilities.SERVER_API_URL_ROUTE_BOOKING_DELCINE);
-                    finalRow.setBackgroundColor(Color.RED);
+                    //finalRow.setBackgroundColor(Color.RED);
+                    statusTextView.setBackgroundColor(Color.RED);
                 }
                 else {
                     Integer realPosition = (Integer) v.getTag();
                     System.out.println("This is my timekit_booking_id for this row: " + timekit_booking_id);
                     new PostToBookings(finalRow, timekit_booking_id, ServerApiUtilities.SERVER_API_URL_ROUTE_BOOKING_CONFIRM);
-                    finalRow.setBackgroundColor(Color.GREEN);
+                    //finalRow.setBackgroundColor(Color.GREEN);
+                    statusTextView.setBackgroundColor(Color.GREEN);
                     //Set the decline button to Cancel:
                     declineButton.setText("Cancel");
                 }
@@ -143,11 +151,13 @@ public class BookingListAdapterNew extends BaseAdapter {
                 Integer realPosition = (Integer) v.getTag();
                 if(declineButton.getText().toString().equals("Decline")){
                     new PostToBookings(finalRow, timekit_booking_id, ServerApiUtilities.SERVER_API_URL_ROUTE_BOOKING_DELCINE);
-                    finalRow.setBackgroundColor(Color.RED);
+                    //finalRow.setBackgroundColor(Color.RED);
+                    statusTextView.setBackgroundColor(Color.RED);
                 }
                 else {
                         new PostToBookings(finalRow, timekit_booking_id, ServerApiUtilities.SERVER_API_URL_ROUTE_BOOKING_CANCLE);
-                        finalRow.setBackgroundColor(Color.RED);
+                        //finalRow.setBackgroundColor(Color.RED);
+                        statusTextView.setBackgroundColor(Color.RED);
                 }
                 // using realPosition , now you know the row where this TextView was clicked
             }
@@ -159,10 +169,10 @@ public class BookingListAdapterNew extends BaseAdapter {
         //Set our views:
         //Show a student the tutors name and show the Tutor the students name:
         if(CurrentUser.getCurrentUser().userMode.equals("Student")){
-            msgDesc.setText("Session with: " + tutor_name);
+            msgDesc.setText(tutor_name);
         }
         else{
-            msgDesc.setText("Session with: " + student_name);
+            msgDesc.setText(student_name);
         }
         mDate.setText(date[0].trim());
         return row;

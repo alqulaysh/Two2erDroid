@@ -25,9 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.RunnableFuture;
 
 /**
  * Created by Nithun on 4/5/2017.
@@ -128,7 +126,6 @@ public class CreateBooking extends DialogFragment implements MonthLoader.MonthCh
                         newtutorSchedule.join();
                         tutorTimeBlocks = newtutorSchedule.getTimeBlockList();
 
-                        //
                         if(getActivity() != null) {
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
