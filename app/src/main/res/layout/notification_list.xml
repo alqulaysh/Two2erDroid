@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
-                android:paddingTop="8 dp"
+                android:paddingTop="8dp"
                 android:text="Session With:"
                 android:textColor="#ffffffff"
                 android:textSize="12sp"
